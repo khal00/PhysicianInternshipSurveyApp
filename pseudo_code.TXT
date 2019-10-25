@@ -1,0 +1,30 @@
+Security Roles:
+Administrator / OIL Administrator / User
+
+
+Login for administrator:
+Login / password
+
+Login for OIL administrator:
+Login / password
+
+
+Zatwierdzanie ankiet na podstawie loginu podawanego przy sk³adaniu dokumentów
+
+
+Login for User:
+Login / password
+Wype³nianie ankiety
+Zapisywanie ankiety
+Przes³anie ankiety
+
+
+Templates:
+Login
+Register form
+Survey
+Results
+Surveys to accept
+
+MYSQL:
+username
