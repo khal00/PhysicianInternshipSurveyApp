@@ -1,6 +1,8 @@
 DROP TABLE IF EXISTS `internal_medicine`;
 CREATE TABLE `internal_medicine` (
   `id` int NOT NULL,
+  `coordinator_name` varchar(50) NOT NULL,  
+  `coordinator_value` float DEFAULT NULL, 
   `tutor_name` varchar(50) DEFAULT NULL,
   `tutor_value` float DEFAULT NULL,
   `location` varchar(50) DEFAULT NULL,
@@ -13,5 +15,5 @@ CREATE TABLE `internal_medicine` (
   `surgery` float DEFAULT NULL,
   
   PRIMARY KEY `username_idx_1` (`id`),
-  CONSTRAINT `username_ifk_2` FOREIGN KEY (`id`) REFERENCES `questionnaire_head_section` (`id`)
+  CONSTRAINT `username_ibfk_2` FOREIGN KEY (`id`) REFERENCES `questionnaire_head_section` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

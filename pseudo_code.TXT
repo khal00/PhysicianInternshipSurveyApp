@@ -9,14 +9,14 @@ Login for OIL administrator:
 Login / password
 
 
-Zatwierdzanie ankiet na podstawie loginu podawanego przy sk³adaniu dokumentów
+Zatwierdzanie ankiet na podstawie loginu podawanego przy skï¿½adaniu dokumentï¿½w
 
 
 Login for User:
 Login / password
-Wype³nianie ankiety
+Wypeï¿½nianie ankiety
 Zapisywanie ankiety
-Przes³anie ankiety
+Przesï¿½anie ankiety
 
 
 Templates:
@@ -27,4 +27,4 @@ Results
 Surveys to accept
 
 MYSQL:
-username
+
