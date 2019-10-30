@@ -16,19 +16,18 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Table structure for table `admins`
+-- Table structure for table `admins_personal_data`
 --
 
-DROP TABLE IF EXISTS `admins`;
-CREATE TABLE `admins` (
+DROP TABLE IF EXISTS `admins_personal_data`;
+CREATE TABLE `admins_personal_data` (
   `username` varchar(50) NOT NULL,
-  `password` char(68) NOT NULL,
-  `enabled` tinyint(1) NOT NULL,
   `first_name` varchar(50) NOT NULL,
   `last_name` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `phone_number` int NOT NULL,
-  PRIMARY KEY (`username`)
+  `phone_number` int(15) NOT NULL,
+  UNIQUE KEY `admins_idx_1` (`username`),
+  CONSTRAINT `admins_ibfk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -40,7 +39,7 @@ CREATE TABLE `admins` (
 INSERT INTO `users` 
 VALUES 
 ('john','{bcrypt}$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1),
-('mary','{bcrypt}$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1,),
+('mary','{bcrypt}$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1),
 ('susan','{bcrypt}$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1);
 
 
