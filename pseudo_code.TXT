@@ -1,30 +1,13 @@
-Security Roles:
-Administrator / OIL Administrator / User
+To do:
 
+Register:
 
-Login for administrator:
-Login / password
+username
+password
+password match
+medical_chamber
+role
 
-Login for OIL administrator:
-Login / password
-
-
-Zatwierdzanie ankiet na podstawie loginu podawanego przy sk�adaniu dokument�w
-
-
-Login for User:
-Login / password
-Wype�nianie ankiety
-Zapisywanie ankiety
-Przes�anie ankiety
-
-
-Templates:
-Login
-Register form
-Survey
-Results
-Surveys to accept
-
-MYSQL:
+if role user automatically register
+if role OILadmin additionally demand firstName, lastName, email, phoneNumber
 
