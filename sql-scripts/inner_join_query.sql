@@ -1,0 +1,2 @@
+select user.username, admin_personal_data.first_name, user.id, user_admin_data.admin_data_id from ((user inner join user_admin_data on user.id = user_admin_data.user_id)
+inner join admin_personal_data on admin_personal_data.id = user_admin_data.admin_data_id);
