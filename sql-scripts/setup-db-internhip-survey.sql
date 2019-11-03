@@ -12,7 +12,7 @@ CREATE TABLE `user` (
 `id` int NOT NULL AUTO_INCREMENT,
 `username` varchar(50) NOT NULL,
 `password` char(68) NOT NULL,
-`enabled` tinyint(1) NOT NULL,
+`enabled` tinyint(1) default 1,
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
