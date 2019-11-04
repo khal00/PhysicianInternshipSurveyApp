@@ -1,19 +1,20 @@
-DROP DATABASE  IF EXISTS `internship_survey`;
+DROP DATABASE IF EXISTS `internship_survey`;
 
-CREATE DATABASE  IF NOT EXISTS `internship_survey`;
+CREATE DATABASE IF NOT EXISTS `internship_survey`;
 USE `internship_survey`;
 
 --
--- Table structure for table `user`
+-- Table structure for table `users`
 --
 
-DROP TABLE IF EXISTS `user`;
-CREATE TABLE `user` (
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
 `id` int NOT NULL AUTO_INCREMENT,
 `username` varchar(50) NOT NULL,
 `password` char(68) NOT NULL,
 `enabled` tinyint(1) default 1,
-PRIMARY KEY (`id`)
+PRIMARY KEY (`id`),
+UNIQUE KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -40,7 +41,7 @@ CREATE TABLE `user_admin_data` (
 `user_id` int NOT NULL,
 `admin_data_id` int NOT NULL,
 PRIMARY KEY (`user_id`, `admin_data_id`),
-CONSTRAINT `user_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+CONSTRAINT `user_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ON DELETE NO ACTION ON UPDATE CASCADE,
 CONSTRAINT `admin_data_fk` FOREIGN KEY (`admin_data_id`) REFERENCES `admin_personal_data` (`id`)
 ON DELETE NO ACTION ON UPDATE CASCADE
@@ -51,7 +52,7 @@ ON DELETE NO ACTION ON UPDATE CASCADE
 -- Insert some data for testing. Default passwords here are: fun123
 --
 
-INSERT INTO `user` 
+INSERT INTO `users` 
 VALUES 
 (1,'john','{bcrypt}$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1),
 (2,'mary','{bcrypt}$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1),
@@ -73,10 +74,10 @@ VALUES
 
 DROP TABLE IF EXISTS `authorities`;
 CREATE TABLE `authorities` (
-`user_id` int NOT NULL,
+`username` varchar(50) NOT NULL,
 `authority` varchar(50) NOT NULL,
-UNIQUE KEY `authorities_idx_1` (`user_id`,`authority`),
-CONSTRAINT `authorities_fk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
+UNIQUE KEY `authorities_idx_1` (`username`,`authority`),
+CONSTRAINT `authorities_fk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -85,9 +86,9 @@ CONSTRAINT `authorities_fk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
 
 INSERT INTO `authorities` 
 VALUES 
-(1,'ROLE_USER'),
-(2,'ROLE_OILADMIN'),
-(3,'ROLE_ADMIN');
+('john','ROLE_USER'),
+('mary','ROLE_OILADMIN'),
+('susan','ROLE_ADMIN');
 
 --
 -- Table structure for table `main_section`
@@ -101,7 +102,7 @@ CREATE TABLE `main_section` (
 `unit_name` varchar(50) NOT NULL,
                                                                                                                                                                                                
 PRIMARY KEY `quest_id_idx_1` (`quest_id`),
-CONSTRAINT `quest_id_fk_1` FOREIGN KEY (`quest_id`) REFERENCES `user` (`id`)
+CONSTRAINT `quest_id_fk_1` FOREIGN KEY (`quest_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
