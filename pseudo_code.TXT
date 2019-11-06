@@ -1,5 +1,11 @@
 To do:
 
+create userFormData class
+create fieldValidation package
+
+User registration:
+Register controller
+register template
 FieldValidation
 
 Register:
