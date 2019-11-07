@@ -1,6 +1,7 @@
 To do:
 
-create userFormData class
+resolve password issue
+create role service and dao
 create fieldValidation package
 
 User registration:

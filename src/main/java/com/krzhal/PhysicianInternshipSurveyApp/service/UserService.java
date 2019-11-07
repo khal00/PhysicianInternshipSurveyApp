@@ -10,5 +10,7 @@ public interface UserService {
 	public List<User> findAll();
 	
 	public void saveUser(UserFormData userFormData);
+	
+	public User findByUsername(String username);
 
 }
