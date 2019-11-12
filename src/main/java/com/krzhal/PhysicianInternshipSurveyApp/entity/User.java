@@ -31,6 +31,10 @@ public class User {
 		joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id")},
 		inverseJoinColumns = { @JoinColumn(name = "admin_data_id", referencedColumnName = "id")})
 	private AdminPersonalData adminPersonalData;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "username", referencedColumnName = "username")
+	private Role role;
 
 	public User() {
 	}
@@ -39,6 +43,7 @@ public class User {
 		this.username = username;
 		this.password = password;
 	}
+	
 
 	public Long getId() {
 		return id;
@@ -71,6 +76,19 @@ public class User {
 	public void setAdminPersonalData(AdminPersonalData adminPersonalData) {
 		this.adminPersonalData = adminPersonalData;
 	}
-	
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", adminPersonalData="
+				+ adminPersonalData + ", role=" + role + "]";
+	}
 
 }

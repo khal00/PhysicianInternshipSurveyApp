@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.krzhal.PhysicianInternshipSurveyApp.UserFormData.UserFormData;
+import com.krzhal.PhysicianInternshipSurveyApp.UserDTO.UserDTO;
+import com.krzhal.PhysicianInternshipSurveyApp.entity.Role;
 import com.krzhal.PhysicianInternshipSurveyApp.entity.User;
+import com.krzhal.PhysicianInternshipSurveyApp.service.RoleService;
 import com.krzhal.PhysicianInternshipSurveyApp.service.UserService;
 
 @Controller
@@ -23,7 +25,7 @@ import com.krzhal.PhysicianInternshipSurveyApp.service.UserService;
 public class RegistrationController {
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
@@ -36,17 +38,17 @@ public class RegistrationController {
 	@GetMapping("/showRegistrationForm")
 	public String showRegistrationForm(Model theModel) {
 		
-		theModel.addAttribute("userFormData", new UserFormData());
+		theModel.addAttribute("userDTO", new UserDTO());
 		
 		return "registration-form";
 	}
 	
 	@PostMapping("/processRegistrationForm")
-	public String processRegistrationForm(@Valid @ModelAttribute("userFormData") UserFormData userFormData
+	public String processRegistrationForm(@Valid @ModelAttribute("userDTO") UserDTO userDTO
 			, BindingResult theBindingResult
 			, Model theModel) {
 		
-		String username = userFormData.getUsername();
+		String username = userDTO.getUsername();
 		
 		// form validation
 		if (theBindingResult.hasErrors()){
@@ -56,13 +58,13 @@ public class RegistrationController {
 		// check if username exists in db
 		User existing = userService.findByUsername(username);
 		if (existing != null) {
-			theModel.addAttribute("crmUser", new UserFormData());
+			theModel.addAttribute("userDTO", new UserDTO());
 			theModel.addAttribute("registrationError", "User name already exists.");
 			return "registration-form";
 		}
 		
-		//create user account
-		userService.saveUser(userFormData);
+		// create user account
+		userService.saveUser(userDTO);
 		
 		return "registration-confirmation";
 		 

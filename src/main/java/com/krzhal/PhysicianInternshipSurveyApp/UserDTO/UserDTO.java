@@ -1,9 +1,9 @@
-package com.krzhal.PhysicianInternshipSurveyApp.UserFormData;
+package com.krzhal.PhysicianInternshipSurveyApp.UserDTO;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class UserFormData {
+public class UserDTO {
 	
 	@NotNull(message = "is required")
 	@Size(min = 1, message = "is required")
@@ -17,7 +17,7 @@ public class UserFormData {
 	@Size(min = 1, message = "is required")
 	private String matchingPassword;
 
-	public UserFormData() {
+	public UserDTO() {
 	}
 
 	public String getUsername() {

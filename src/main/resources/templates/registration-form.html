@@ -38,7 +38,7 @@
 
 					<!-- Registration Form -->
 					<form th:action="@{/register/processRegistrationForm}" 
-						  	   th:object="${userFormData}" method="POST"
+						  	   th:object="${userDTO}" method="POST"
 						  	   class="form-horizontal">
 
 					    <!-- Place for messages: error, alert etc ... -->
@@ -48,7 +48,7 @@
 								
 									<!-- Check for registration error -->
 									<div th:if="${registrationError}" class="alert alert-danger col-xs-offset-1 col-xs-10">
-										${registrationError}
+										<span th:text="${registrationError}"></span>
 									</div>
 																											
 					            </div>

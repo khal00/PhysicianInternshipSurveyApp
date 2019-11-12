@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
-			.antMatchers("/hello").hasAnyRole("OILADMIN", "ADMIN")
+			.antMatchers("/hello").hasAnyRole("USER", "OILADMIN", "ADMIN")
 			.antMatchers("/list").hasRole("ADMIN")
 			.and()
 			.formLogin()
@@ -51,6 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {
 	    return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
+	
 		
 }
 
