@@ -42,9 +42,9 @@ CREATE TABLE `user_admin_data` (
 `admin_data_id` int NOT NULL,
 PRIMARY KEY (`user_id`, `admin_data_id`),
 CONSTRAINT `user_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-ON DELETE NO ACTION ON UPDATE CASCADE,
+ON DELETE CASCADE ON UPDATE CASCADE,
 CONSTRAINT `admin_data_fk` FOREIGN KEY (`admin_data_id`) REFERENCES `admin_personal_data` (`id`)
-ON DELETE NO ACTION ON UPDATE CASCADE
+ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -78,6 +78,7 @@ CREATE TABLE `authorities` (
 `authority` varchar(50) NOT NULL,
 UNIQUE KEY `authorities_idx_1` (`username`,`authority`),
 CONSTRAINT `authorities_fk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
+ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
