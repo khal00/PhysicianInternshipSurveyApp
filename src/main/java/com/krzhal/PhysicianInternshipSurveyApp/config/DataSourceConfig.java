@@ -40,10 +40,4 @@ public class DataSourceConfig {
 				.dataSource(appDataSource)
 				.build();
 	}
-
-	@Bean
-	@ConfigurationProperties(prefix="security.datasource")
-	public DataSource securityDataSource() {
-		return DataSourceBuilder.create().build();
-	}
 }

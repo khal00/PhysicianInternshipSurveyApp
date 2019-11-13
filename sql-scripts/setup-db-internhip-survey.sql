@@ -3,10 +3,6 @@ DROP DATABASE IF EXISTS `internship_survey`;
 CREATE DATABASE IF NOT EXISTS `internship_survey`;
 USE `internship_survey`;
 
---
--- Table structure for table `users`
---
-
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
 `id` int NOT NULL AUTO_INCREMENT,
@@ -17,9 +13,6 @@ PRIMARY KEY (`id`),
 UNIQUE KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Table structure for table `admin_personal_data`
---
 
 DROP TABLE IF EXISTS `admin_personal_data`;
 CREATE TABLE `admin_personal_data` (
@@ -28,13 +21,9 @@ CREATE TABLE `admin_personal_data` (
 `last_name` varchar(50) NOT NULL,
 `email` varchar(50) NOT NULL,
 `phone_number` int(15) NOT NULL,
-PRIMARY KEY `admins_idx_1` (`id`)
+PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-
---
--- Table structure for table `user_admin_data`
---
 
 DROP TABLE IF EXISTS `user_admin_data`;
 CREATE TABLE `user_admin_data` (
@@ -48,52 +37,69 @@ ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
---
--- Insert some data for testing. Default passwords here are: fun123
---
+-- test password: x
 
 INSERT INTO `users` 
 VALUES 
-(1,'john','{bcrypt}$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1),
-(2,'mary','{bcrypt}$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1),
-(3,'susan','{bcrypt}$2a$04$eFytJDGtjbThXa80FyOOBuFdK2IwjyWefYkMpiBEFlpBwDH.5PM0K',1);
+(1,'xi','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',1),
+(2,'jin','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',1),
+(3,'ping','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',1);
 
 INSERT INTO `admin_personal_data`
 VALUES
-(1,'Mary','Kennedy','mary@tmail.com',123456789),
-(2,'Susan','Lincoln','susan@tmail.com',987654321);
+(1,'Xi','Ho','xi@tmail.com',123456789),
+(2,'Jin','Po','jin@tmail.com',987654321);
 
 INSERT INTO `user_admin_data`
 VALUES
 (2,1),
 (3,2);
 
---
--- Table structure for table `authorities`
---
 
-DROP TABLE IF EXISTS `authorities`;
-CREATE TABLE `authorities` (
-`username` varchar(50) NOT NULL,
-`authority` varchar(50) NOT NULL,
-UNIQUE KEY `authorities_idx_1` (`username`,`authority`),
-CONSTRAINT `authorities_fk_1` FOREIGN KEY (`username`) REFERENCES `users` (`username`)
-ON DELETE CASCADE ON UPDATE CASCADE
+DROP TABLE IF EXISTS `role`;
+
+CREATE TABLE `role` (
+`id` int(11) NOT NULL AUTO_INCREMENT,
+`name` varchar(50) DEFAULT NULL,
+PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+
+INSERT INTO `role` (name)
+VALUES 
+('ROLE_USER'),('ROLE_OILADMIN'),('ROLE_ADMIN');
+
+
+DROP TABLE IF EXISTS `users_roles`;
+
+CREATE TABLE `users_roles` (
+`user_id` int(11) NOT NULL,
+`role_id` int(11) NOT NULL,
+  
+PRIMARY KEY (`user_id`,`role_id`),
+KEY (`role_id`),
+  
+CONSTRAINT `user_roles_user_fk` FOREIGN KEY (`user_id`) 
+REFERENCES `users` (`id`) 
+ON DELETE NO ACTION ON UPDATE NO ACTION,
+  
+CONSTRAINT `user_roles_role_fk` FOREIGN KEY (`role_id`) 
+REFERENCES `role` (`id`) 
+ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `authorities`
---
+SET FOREIGN_KEY_CHECKS = 1;
 
-INSERT INTO `authorities` 
+
+INSERT INTO `users_roles` (user_id,role_id)
 VALUES 
-('john','ROLE_USER'),
-('mary','ROLE_OILADMIN'),
-('susan','ROLE_ADMIN');
+(1, 1),
+(2, 1),
+(2, 2),
+(3, 1),
+(3, 2),
+(3, 3);
 
---
--- Table structure for table `main_section`
---
 
 DROP TABLE IF EXISTS `main_section`;
 CREATE TABLE `main_section` (

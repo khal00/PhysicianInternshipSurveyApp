@@ -1,13 +1,17 @@
 package com.krzhal.PhysicianInternshipSurveyApp.entity;
 
+import java.util.Collection;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -26,24 +30,34 @@ public class User {
 	@Column(name = "password")
 	private String password;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "user_admin_data", 
 		joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id")},
 		inverseJoinColumns = { @JoinColumn(name = "admin_data_id", referencedColumnName = "id")})
 	private AdminPersonalData adminPersonalData;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "username", referencedColumnName = "username")
-	private Role role;
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "users_roles", 
+		joinColumns = @JoinColumn(name = "user_id"), 
+		inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Collection<Role> roles;
 
 	public User() {
 	}
 
 	public User(String username, String password) {
+		super();
 		this.username = username;
 		this.password = password;
 	}
-	
+
+	public User(String username, String password, AdminPersonalData adminPersonalData,
+			Collection<Role> roles) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.roles = roles;
+	}
 
 	public Long getId() {
 		return id;
@@ -77,18 +91,13 @@ public class User {
 		this.adminPersonalData = adminPersonalData;
 	}
 
-	public Role getRole() {
-		return role;
+	public Collection<Role> getRoles() {
+		return roles;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setRoles(Collection<Role> roles) {
+		this.roles = roles;
 	}
-
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", username=" + username + ", password=" + password + ", adminPersonalData="
-				+ adminPersonalData + ", role=" + role + "]";
-	}
+	
 
 }

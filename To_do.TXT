@@ -1,6 +1,5 @@
 To do:
 
-create role service and dao
 create fieldValidation package
 
 User registration:

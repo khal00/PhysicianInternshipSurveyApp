@@ -13,11 +13,8 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.krzhal.PhysicianInternshipSurveyApp.UserDTO.UserDTO;
-import com.krzhal.PhysicianInternshipSurveyApp.entity.Role;
 import com.krzhal.PhysicianInternshipSurveyApp.entity.User;
-import com.krzhal.PhysicianInternshipSurveyApp.service.RoleService;
 import com.krzhal.PhysicianInternshipSurveyApp.service.UserService;
 
 @Controller
