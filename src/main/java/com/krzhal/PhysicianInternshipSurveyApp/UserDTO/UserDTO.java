@@ -1,20 +1,18 @@
 package com.krzhal.PhysicianInternshipSurveyApp.UserDTO;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 public class UserDTO {
 	
-	@NotNull(message = "is required")
-	@Size(min = 1, message = "is required")
+	@NotBlank(message = "is required")
 	private String username;
 	
-	@NotNull(message = "is required")
-	@Size(min = 1, message = "is required")
+	@NotBlank(message = "is required")
 	private String password;
 	
-	@NotNull(message = "is required")
-	@Size(min = 1, message = "is required")
+	@NotBlank(message = "is required")
 	private String matchingPassword;
 
 	public UserDTO() {
