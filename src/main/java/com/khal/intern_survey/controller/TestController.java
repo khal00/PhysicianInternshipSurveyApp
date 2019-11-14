@@ -12,21 +12,11 @@ import com.khal.intern_survey.service.UserService;
 import com.khal.intern_survey.service.UserServiceImpl;
 
 @Controller
-public class UserController {
+public class TestController {
 	
 	@Autowired
 	private UserService userService;
 	
-	
-	@RequestMapping("/")
-	public String index() {
-		return "index";
-	}
-	
-	@RequestMapping("/hello")
-	public String greetings() {
-		return "hello";
-	}
 	
 	@RequestMapping("/list")
 	public String listAllUsers(Model theModel) {

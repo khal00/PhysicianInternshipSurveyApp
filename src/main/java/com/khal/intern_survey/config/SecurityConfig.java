@@ -33,16 +33,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
-			.antMatchers("/hello").hasAnyRole("USER", "OILADMIN", "ADMIN")
 			.antMatchers("/list").hasRole("ADMIN")
 			.and()
 			.formLogin()
 				.loginPage("/showLoginPage")
 				.loginProcessingUrl("/authenticateTheUser")
 				.permitAll()
-				.and()
+			.and()
 				.logout().permitAll()
-				.and()
+			.and()
 				.exceptionHandling().accessDeniedPage("/access-denied");
 		
 	// beans
