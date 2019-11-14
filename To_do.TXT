@@ -1,6 +1,10 @@
 To do:
 
 create fieldValidation package
+internationalization
+register after email confirmation
+check if email is unique
+
 
 User registration:
 Register controller

@@ -1,4 +1,4 @@
-package com.krzhal.PhysicianInternshipSurveyApp.entity;
+package com.khal.intern_survey.entity;
 
 import java.util.Collection;
 
@@ -24,8 +24,8 @@ public class User {
 	@Column(name = "id")
 	private Long id;
 	
-	@Column(name = "username")
-	private String username;
+	@Column(name = "email")
+	private String email;
 
 	@Column(name = "password")
 	private String password;
@@ -45,17 +45,19 @@ public class User {
 	public User() {
 	}
 
-	public User(String username, String password) {
+	public User(String email, String username, String password, Collection<Role> roles) {
 		super();
-		this.username = username;
+		this.email = email;
 		this.password = password;
+		this.roles = roles;
 	}
 
-	public User(String username, String password, AdminPersonalData adminPersonalData,
+	public User(String email, String username, String password, AdminPersonalData adminPersonalData,
 			Collection<Role> roles) {
 		super();
-		this.username = username;
+		this.email = email;
 		this.password = password;
+		this.adminPersonalData = adminPersonalData;
 		this.roles = roles;
 	}
 
@@ -67,12 +69,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {

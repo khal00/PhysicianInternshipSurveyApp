@@ -1,4 +1,4 @@
-package com.krzhal.PhysicianInternshipSurveyApp.service;
+package com.khal.intern_survey.service;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -16,11 +16,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.krzhal.PhysicianInternshipSurveyApp.UserDTO.UserDTO;
-import com.krzhal.PhysicianInternshipSurveyApp.dao.RoleRepository;
-import com.krzhal.PhysicianInternshipSurveyApp.dao.UserRepository;
-import com.krzhal.PhysicianInternshipSurveyApp.entity.Role;
-import com.krzhal.PhysicianInternshipSurveyApp.entity.User;
+import com.khal.intern_survey.UserDTO.UserDTO;
+import com.khal.intern_survey.dao.RoleRepository;
+import com.khal.intern_survey.dao.UserRepository;
+import com.khal.intern_survey.entity.Role;
+import com.khal.intern_survey.entity.User;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
 	public void saveUser(UserDTO userDTO) {
 		
 		User theUser = new User();
-		theUser.setUsername(userDTO.getUsername());
+		theUser.setEmail(userDTO.getEmail());
 		theUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 		
 		theUser.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
@@ -53,20 +53,22 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User findByUsername(String username) {
+	public User findByEmail(String email) {
 		
-		User theUser = userRepository.findByUsername(username);
+		User theUser = userRepository.findByEmail(email);
 		return theUser;
 	}
 
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepository.findByUsername(username);
+		
+		//use email as username
+		User user = userRepository.findByEmail(username);
 		if (user == null) {
-			throw new UsernameNotFoundException("Invalid username or password.");
+			throw new UsernameNotFoundException("Invalid email or password.");
 		}
-		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
 				mapRolesToAuthorities(user.getRoles()));
 	}
 	

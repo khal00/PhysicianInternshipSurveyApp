@@ -1,4 +1,4 @@
-package com.krzhal.PhysicianInternshipSurveyApp.controller;
+package com.khal.intern_survey.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

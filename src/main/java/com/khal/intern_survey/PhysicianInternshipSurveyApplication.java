@@ -1,4 +1,4 @@
-package com.krzhal.PhysicianInternshipSurveyApp;
+package com.khal.intern_survey;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

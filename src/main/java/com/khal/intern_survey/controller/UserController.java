@@ -1,4 +1,4 @@
-package com.krzhal.PhysicianInternshipSurveyApp.controller;
+package com.khal.intern_survey.controller;
 
 import java.util.List;
 
@@ -7,9 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.krzhal.PhysicianInternshipSurveyApp.entity.User;
-import com.krzhal.PhysicianInternshipSurveyApp.service.UserService;
-import com.krzhal.PhysicianInternshipSurveyApp.service.UserServiceImpl;
+import com.khal.intern_survey.entity.User;
+import com.khal.intern_survey.service.UserService;
+import com.khal.intern_survey.service.UserServiceImpl;
 
 @Controller
 public class UserController {

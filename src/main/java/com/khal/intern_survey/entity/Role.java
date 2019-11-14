@@ -1,4 +1,4 @@
-package com.krzhal.PhysicianInternshipSurveyApp.entity;
+package com.khal.intern_survey.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

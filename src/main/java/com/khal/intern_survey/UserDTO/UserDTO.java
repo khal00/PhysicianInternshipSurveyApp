@@ -1,4 +1,4 @@
-package com.krzhal.PhysicianInternshipSurveyApp.UserDTO;
+package com.khal.intern_survey.UserDTO;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -7,7 +7,7 @@ import javax.validation.constraints.Size;
 public class UserDTO {
 	
 	@NotBlank(message = "is required")
-	private String username;
+	private String email;
 	
 	@NotBlank(message = "is required")
 	private String password;
@@ -18,12 +18,13 @@ public class UserDTO {
 	public UserDTO() {
 	}
 
-	public String getUsername() {
-		return username;
+
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {

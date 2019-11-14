@@ -1,11 +1,11 @@
-package com.krzhal.PhysicianInternshipSurveyApp.service;
+package com.khal.intern_survey.service;
 
 import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import com.krzhal.PhysicianInternshipSurveyApp.UserDTO.UserDTO;
-import com.krzhal.PhysicianInternshipSurveyApp.entity.User;
+import com.khal.intern_survey.UserDTO.UserDTO;
+import com.khal.intern_survey.entity.User;
 
 public interface UserService extends UserDetailsService{
 	
@@ -13,6 +13,6 @@ public interface UserService extends UserDetailsService{
 	
 	public void saveUser(UserDTO userDTO);
 	
-	public User findByUsername(String username);
+	public User findByEmail(String username);
 
 }

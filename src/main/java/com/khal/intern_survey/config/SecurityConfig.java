@@ -1,4 +1,4 @@
-package com.krzhal.PhysicianInternshipSurveyApp.config;
+package com.khal.intern_survey.config;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import com.krzhal.PhysicianInternshipSurveyApp.service.UserService;
+
+import com.khal.intern_survey.service.UserService;
 
 
 @Configuration

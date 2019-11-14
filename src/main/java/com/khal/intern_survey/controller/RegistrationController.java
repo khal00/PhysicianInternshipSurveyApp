@@ -1,4 +1,4 @@
-package com.krzhal.PhysicianInternshipSurveyApp.controller;
+package com.khal.intern_survey.controller;
 
 import javax.validation.Valid;
 
@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.krzhal.PhysicianInternshipSurveyApp.UserDTO.UserDTO;
-import com.krzhal.PhysicianInternshipSurveyApp.entity.User;
-import com.krzhal.PhysicianInternshipSurveyApp.service.UserService;
+
+import com.khal.intern_survey.UserDTO.UserDTO;
+import com.khal.intern_survey.entity.User;
+import com.khal.intern_survey.service.UserService;
 
 @Controller
 @RequestMapping("/register")
@@ -44,7 +45,7 @@ public class RegistrationController {
 			, BindingResult theBindingResult
 			, Model theModel) {
 		
-		String username = userDTO.getUsername();
+		String email = userDTO.getEmail();
 		
 		// form validation
 		if (theBindingResult.hasErrors()){
@@ -52,10 +53,10 @@ public class RegistrationController {
 	    }
 		
 		// check if username exists in db
-		User existing = userService.findByUsername(username);
+		User existing = userService.findByEmail(email);
 		if (existing != null) {
 			theModel.addAttribute("userDTO", new UserDTO());
-			theModel.addAttribute("registrationError", "User name already exists.");
+			theModel.addAttribute("registrationError", "User already exists.");
 			return "registration-form";
 		}
 		

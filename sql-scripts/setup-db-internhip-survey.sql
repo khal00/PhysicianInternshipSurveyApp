@@ -6,11 +6,10 @@ USE `internship_survey`;
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
 `id` int NOT NULL AUTO_INCREMENT,
-`username` varchar(50) NOT NULL,
+`email` varchar(50) NOT NULL,
 `password` char(68) NOT NULL,
-`enabled` tinyint(1) default 1,
 PRIMARY KEY (`id`),
-UNIQUE KEY (`username`)
+UNIQUE KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
@@ -19,7 +18,6 @@ CREATE TABLE `admin_personal_data` (
 `id` int NOT NULL AUTO_INCREMENT,
 `first_name` varchar(50) NOT NULL,
 `last_name` varchar(50) NOT NULL,
-`email` varchar(50) NOT NULL,
 `phone_number` int(15) NOT NULL,
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -41,14 +39,14 @@ ON DELETE CASCADE ON UPDATE CASCADE
 
 INSERT INTO `users` 
 VALUES 
-(1,'xi','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',1),
-(2,'jin','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',1),
-(3,'ping','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',1);
+(1,'xi@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S'),
+(2,'jin@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S'),
+(3,'ping@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S');
 
 INSERT INTO `admin_personal_data`
 VALUES
-(1,'Xi','Ho','xi@tmail.com',123456789),
-(2,'Jin','Po','jin@tmail.com',987654321);
+(1,'Xi','Ho',123456789),
+(2,'Jin','Po',987654321);
 
 INSERT INTO `user_admin_data`
 VALUES

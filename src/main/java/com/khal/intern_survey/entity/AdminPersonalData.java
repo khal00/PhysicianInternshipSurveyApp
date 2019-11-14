@@ -1,4 +1,4 @@
-package com.krzhal.PhysicianInternshipSurveyApp.entity;
+package com.khal.intern_survey.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,9 +23,6 @@ public class AdminPersonalData {
 	@Column(name = "last_name")
 	private String lastName;
 	
-	@Column(name = "email")
-	private String email;
-	
 	@Column(name = "phone_number")
 	private int phoneNumber;
 	
@@ -39,7 +36,6 @@ public class AdminPersonalData {
 	public AdminPersonalData(String firstName, String lastName, String email, int phoneNumber, User user) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.email = email;
 		this.phoneNumber = phoneNumber;
 		this.user = user;
 	}
@@ -66,14 +62,6 @@ public class AdminPersonalData {
 
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public int getPhoneNumber() {
