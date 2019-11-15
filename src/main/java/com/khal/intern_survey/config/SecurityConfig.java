@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/list").hasRole("ADMIN")
 			.and()
 			.formLogin()
-				.loginPage("/showLoginPage")
+				.loginPage("/login/showLoginPage")
 				.loginProcessingUrl("/authenticateTheUser")
 				.permitAll()
 			.and()

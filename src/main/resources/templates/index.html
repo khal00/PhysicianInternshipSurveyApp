@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html class="h-100" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 
 <head>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -8,20 +8,20 @@
 	<title th:text="#{index.headline}"></title>
 </head>
 
-<body>
+<body class="h-100">
 
-	<div class="position-relative overflow-hidden p-3 p-md-5 m-md-0 text-center bg-light">
+	<div class="h-100 p-3 p-md-5 m-md-0 text-center bg-light">
   		<div class="col-md-5 p-lg-5 mx-auto my-5">
     		<h3 class="display-4 font-weight-normal" th:text="#{index.headline}"></h3>
   		</div>
   		<div>
-  			<form th:action="@{/showLoginPage}" method="GET">
+  			<form th:action="@{/login/showLoginPage}" method="GET">
 				<input type="submit" th:value="#{index.login}" class="btn btn-outline-secondary"/>
 			</form>	
 		</div>
 		<div>
-			<form th:action="@{/logout}" method="POST">
-				<input type="submit" value="Logout" class="btn btn-outline-secondary mt-5"/>
+			<form th:action="@{/register/showRegistrationForm}" method="GET">
+				<input type="submit" th:value="#{index.register}" class="btn btn-outline-secondary mt-5"/>
 			</form>
   		</div>
   		
