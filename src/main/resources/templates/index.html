@@ -2,31 +2,77 @@
 <html class="h-100" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 
 <head>
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	
+	<meta name="description" content="Physician Internship Survey" th:attr="content=#{index.description}">
+	<meta name="keywords" content="Physician Internship Survey" th:attr="content=#{index.description}">
+	<meta name="author" content="Krzysztof Halewski">
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title th:text="#{index.headline}"></title>
+	
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<style>
+		a{margin-right: 5px}
+	</style>
+
 </head>
 
 <body class="h-100">
 
-	<div class="h-100 p-3 p-md-5 m-md-0 text-center bg-light">
-  		<div class="col-md-5 p-lg-5 mx-auto my-5">
-    		<h3 class="display-4 font-weight-normal" th:text="#{index.headline}"></h3>
-  		</div>
+	<header>
+		<nav class="navbar navbar-dark bg-dark navbar-expand-md">
+			<a th:href="@{/}" class="navbar-brand d-inline-block mr-3" style="text-decoration: none;">
+				<span th:text="#{index.headline}" class="text-white"></span>
+			</a>
+			
+			<button class="navbar-dark navbar-toggler" type="button" data-toggle="collapse" data-target="#mainmenu" aria-controls="mainmenu" aria-expanded="false" 
+			aria-label="navigation switch" th:attr="aria-label=#{index.arialabel}">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			
+			<div class="collapse navbar-collapse" id="mainmenu">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" th:href="@{/}">Start</a>
+					</li>
+					
+					<li class="nav-item dropdown" >
+						<a class="nav-link dropdown-toggle" th:href="@{/}">place for navbar items...</a>
+					</li>
+				
+				</ul>
+				
+				
+				
+			</div>
+			
+		</nav>
+		
+	</header>
+	
+
+	<div class="container-fluid h-100 p-5 text-center bg-light">
+  		<div class="w-25 mx-auto border border-secondary rounded-lg shadow bg-light p-3">
   		<div>
   			<form th:action="@{/login/showLoginPage}" method="GET">
-				<input type="submit" th:value="#{index.login}" class="btn btn-outline-secondary"/>
+				<input type="submit" th:value="#{index.login}" class="btn btn-outline-secondary m-3"/>
 			</form>	
+		</div>
+		<div th:text="#{index.or}">
 		</div>
 		<div>
 			<form th:action="@{/register/showRegistrationForm}" method="GET">
-				<input type="submit" th:value="#{index.register}" class="btn btn-outline-secondary mt-5"/>
+				<input type="submit" th:value="#{index.register}" class="btn btn-outline-secondary m-3"/>
 			</form>
   		</div>
-  		
+  		</div>
 	</div>
 
+	
+	 
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 
 
