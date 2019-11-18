@@ -1,9 +1,11 @@
 To do:
 
+
+login on index page --> display errors
+create option for admin registration
 create fieldValidation package
 internationalization
 register after email confirmation
-check if email is unique
 
 
 User registration:

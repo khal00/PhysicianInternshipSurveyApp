@@ -19,7 +19,6 @@ import com.khal.intern_survey.entity.User;
 import com.khal.intern_survey.service.UserService;
 
 @Controller
-@RequestMapping("/register")
 public class RegistrationController {
 	
 	@Autowired
@@ -32,12 +31,13 @@ public class RegistrationController {
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}
 	
-	@GetMapping("/showRegistrationForm")
-	public String showRegistrationForm(Model theModel) {
+	@GetMapping("/")
+	public String showIndex(Model theModel) {
 		
 		theModel.addAttribute("userDTO", new UserDTO());
 		
-		return "registration-form";
+		return "index";
+		
 	}
 	
 	@PostMapping("/processRegistrationForm")
@@ -49,7 +49,7 @@ public class RegistrationController {
 		
 		// form validation
 		if (theBindingResult.hasErrors()){
-			 return "registration-form";
+			 return "index";
 	    }
 		
 		// check if username exists in db
@@ -57,7 +57,7 @@ public class RegistrationController {
 		if (existing != null) {
 			theModel.addAttribute("userDTO", new UserDTO());
 			theModel.addAttribute("registrationError", "User already exists.");
-			return "registration-form";
+			return "index";
 		}
 		
 		// create user account
