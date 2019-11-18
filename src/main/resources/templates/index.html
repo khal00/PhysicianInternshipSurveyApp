@@ -3,6 +3,8 @@
 	xmlns:th="https://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
+<script src="https://kit.fontawesome.com/bf6e8a4007.js"
+	crossorigin="anonymous"></script>
 <head>
 
 <meta name="description" content="Physician Internship Survey"
@@ -37,8 +39,9 @@ a {
 	<header>
 		<nav class="navbar navbar-dark bg-dark navbar-expand-lg"
 			style="min-height: 62px">
-			<a th:href="@{/}" class="navbar-brand d-inline-block mr-3" style="text-decoration: none;">
-				<span th:text="#{index.headline}" class="text-white"></span>
+			<a th:href="@{/}" class="navbar-brand d-inline-block mr-3"
+				style="text-decoration: none;"> <span
+				th:text="#{index.headline}" class="text-white"></span>
 			</a>
 
 			<button class="navbar-dark navbar-toggler" type="button"
@@ -66,30 +69,42 @@ a {
 					</li>
 					 -->
 				</ul>
-				
-			<!-- Sign in form -->
-			
-			<div sec:authorize="isAnonymous()">
-			<form class="form-inline" th:action="@{/authenticateTheUser}" method="POST">
-				<div class="form-group mr-2">
-					<label class="sr-only" for="LoginInputEmail" th:text="index.email"></label>
-					<input type="text" name="username" class="form-control" id="LoginInputEmail" placeholder="email"
-					th:attr="placeholder=#{index.email}">
+
+				<!-- Sign in form -->
+
+				<div sec:authorize="isAnonymous()">
+								
+								
+					<form class="form-inline" th:action="@{/authenticateTheUser}"
+						method="POST">
+						<div class="form-group mr-2">
+							<label class="sr-only" for="LoginInputEmail"
+								th:text="index.email"></label> <input type="text"
+								name="username" class="form-control" id="LoginInputEmail"
+								placeholder="email" th:attr="placeholder=#{index.email}">
+						</div>
+
+						<div class="form-group mr-2">
+							<label class="sr-only" for="LoginInputPassword"
+								th:text="index.password"></label> <input type="password"
+								name="password" class="form-control" id="LoginInputPassword"
+								placeholder="Password" th:attr="placeholder=#{index.password}">
+						</div>
+
+						<div class="form-group">
+							<button type="submit" class="btn btn-success"
+								th:text="#{index.signin}"></button>
+						</div>
+						
+						
+
+					</form>
 				</div>
-				
-				<div class="form-group mr-2">
-					<label class="sr-only" for="LoginInputPassword" th:text="index.password"></label>
-					<input type="password" name="password" class="form-control" id="LoginInputPassword" placeholder="Password"
-					th:attr="placeholder=#{index.password}">
+
+				<div sec:authorize="isAuthenticated()">
+					<i class="fas fa-user fa-lg" style="color: white"></i>
 				</div>
-				
-				<div class="form-group">
-					<button type="submit" class="btn btn-success" th:text="#{index.signin}"></button>
-				</div>
-				
-			</form>
-			</div>
-			
+
 			</div>
 
 		</nav>
@@ -100,8 +115,9 @@ a {
 	<main class="container-fluid bg-dark h-100 py-5">
 		<!-- Register form -->
 		<section class="row">
-			<div class="col-8 offset-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4 bg-light rounded px-4 pt-4 pb-2">
-			
+			<div
+				class="col-8 offset-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4 bg-light rounded px-4 pt-4 pb-2">
+
 				<div class="mb-3" th:text="#{index.register}"></div>
 
 				<div>
@@ -120,40 +136,51 @@ a {
 
 						<!-- Email -->
 						<div class="form-group">
-							<label class="sr-only" for="RegisterInputEmail" th:text="#{index.email}"></label>
-							<input type="text" th:field="*{email}" placeholder="email" 
-							id="RegisterInputEmail" th:attr="placeholder=#{index.email}" class="form-control" />
+							<label class="sr-only" for="RegisterInputEmail"
+								th:text="#{index.email}"></label> <input type="text"
+								th:field="*{email}" placeholder="email" id="RegisterInputEmail"
+								th:attr="placeholder=#{index.email}" class="form-control" />
 						</div>
 
 						<div th:if="${#fields.hasErrors('email')}" class="text-danger">
 							<ul>
-								<li th:each="err : ${#fields.errors('email')}" th:text="'Email ' + ${err}" />
+								<li th:each="err : ${#fields.errors('email')}"
+									th:text="'Email ' + ${err}" />
 							</ul>
 						</div>
 
 
 						<!-- Password -->
 						<div class="form-group">
-							<label class="sr-only" for="RegisterInputPassword" th:text="#{index.password}"></label>
-							<input type="password" th:field="*{password}" placeholder="password" 
-							id="RegisterInputPassword" th:attr="placeholder=#{index.password}" class="form-control" th:errorclass="fieldError" />
+							<label class="sr-only" for="RegisterInputPassword"
+								th:text="#{index.password}"></label> <input type="password"
+								th:field="*{password}" placeholder="password"
+								id="RegisterInputPassword"
+								th:attr="placeholder=#{index.password}" class="form-control"
+								th:errorclass="fieldError" />
 						</div>
 						<div th:if="${#fields.hasErrors('password')}" class="text-danger">
 							<ul>
-								<li th:each="err : ${#fields.errors('password')}" th:text="'Password ' + ${err}" />
+								<li th:each="err : ${#fields.errors('password')}"
+									th:text="'Password ' + ${err}" />
 							</ul>
 						</div>
-						
+
 
 						<!-- Confirm Password -->
 						<div class="form-group">
-							<label class="sr-only" for="InputConfirmPassword" th:text="#{index.confirmpassword}"></label>
-							<input type="password" th:field="*{matchingPassword}" placeholder="confirm password"
-							id="InputConfirmPassword" th:attr="placeholder=#{index.confirmpassword}" class="form-control" th:errorclass="fieldError" />
+							<label class="sr-only" for="InputConfirmPassword"
+								th:text="#{index.confirmpassword}"></label> <input
+								type="password" th:field="*{matchingPassword}"
+								placeholder="confirm password" id="InputConfirmPassword"
+								th:attr="placeholder=#{index.confirmpassword}"
+								class="form-control" th:errorclass="fieldError" />
 						</div>
-						<div th:if="${#fields.hasErrors('matchingPassword')}" class="text-danger">
+						<div th:if="${#fields.hasErrors('matchingPassword')}"
+							class="text-danger">
 							<ul>
-								<li th:each="err : ${#fields.errors('matchingPassword')}" th:text="'Password ' + ${err}" />
+								<li th:each="err : ${#fields.errors('matchingPassword')}"
+									th:text="'Password ' + ${err}" />
 							</ul>
 						</div>
 
