@@ -1,7 +1,5 @@
 To do:
 
-
-login on index page --> display errors
 create option for admin registration
 create fieldValidation package
 internationalization

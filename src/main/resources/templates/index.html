@@ -38,13 +38,14 @@ a {
 
 	<header>
 		<nav class="navbar navbar-dark bg-dark navbar-expand-lg"
-			style="min-height: 62px">
+			style="min-height: 64px">
 			<a th:href="@{/}" class="navbar-brand d-inline-block mr-3"
 				style="text-decoration: none;"> <span
 				th:text="#{index.headline}" class="text-white"></span>
 			</a>
 
-			<button class="navbar-dark navbar-toggler" type="button"
+
+			<button class="navbar-dark navbar-toggler mb-2" type="button"
 				data-toggle="collapse" data-target="#mainmenu"
 				aria-controls="mainmenu" aria-expanded="false"
 				aria-label="navigation switch"
@@ -52,12 +53,15 @@ a {
 				<span class="navbar-toggler-icon"></span>
 			</button>
 
+
 			<div class="collapse navbar-collapse" id="mainmenu">
-				<ul class="navbar-nav mr-auto">
+
+				<ul class="navbar-nav text-white mr-auto">
+					<!--
+					 
 					<li class="nav-item active"><a class="nav-link" th:href="@{/}">Start</a>
 					</li>
-
-					<!-- 			
+ 					 			
 					<li class="nav-item dropdown" >
 						<a class="nav-link dropdown-toggle" th:href="@{/}" data-toggle="dropdown" role="button" aria-expanded="false" id="submenu"
 						aria-haspopup="true">Dropdown menu</a>
@@ -67,43 +71,57 @@ a {
 							<a class="dropdown-item" th:href="@{/}">dropdown item 2</a>
 						</div>
 					</li>
-					 -->
+					-->
 				</ul>
+
 
 				<!-- Sign in form -->
 
 				<div sec:authorize="isAnonymous()">
-								
-								
-					<form class="form-inline" th:action="@{/authenticateTheUser}"
-						method="POST">
-						<div class="form-group mr-2">
-							<label class="sr-only" for="LoginInputEmail"
-								th:text="index.email"></label> <input type="text"
-								name="username" class="form-control" id="LoginInputEmail"
-								placeholder="email" th:attr="placeholder=#{index.email}">
-						</div>
 
-						<div class="form-group mr-2">
-							<label class="sr-only" for="LoginInputPassword"
-								th:text="index.password"></label> <input type="password"
-								name="password" class="form-control" id="LoginInputPassword"
-								placeholder="Password" th:attr="placeholder=#{index.password}">
-						</div>
 
-						<div class="form-group">
-							<button type="submit" class="btn btn-success"
-								th:text="#{index.signin}"></button>
+					<form class="form-inline mr-auto"
+						th:action="@{/authenticateTheUser}" method="POST">
+						<div class="d-flex ml-auto">
+							<div class="form-group mr-2">
+								<label class="sr-only" for="LoginInputEmail"
+									th:text="index.email"></label> <input type="text"
+									name="username" class="form-control" id="LoginInputEmail"
+									placeholder="email" th:attr="placeholder=#{index.email}">
+							</div>
+
+							<div class="form-group mr-2">
+								<label class="sr-only" for="LoginInputPassword"
+									th:text="index.password"></label> <input type="password"
+									name="password" class="form-control" id="LoginInputPassword"
+									placeholder="Password" th:attr="placeholder=#{index.password}">
+							</div>
+
+							<div class="form-group">
+								<button type="submit" class="btn btn-success btn-outline-light"
+									th:text="#{index.signin}"></button>
+							</div>
 						</div>
-						
-						
 
 					</form>
+
+
 				</div>
 
-				<div sec:authorize="isAuthenticated()">
-					<i class="fas fa-user fa-lg" style="color: white"></i>
+
+				<div sec:authorize="isAuthenticated()" class="d-flex">
+					<div class="ml-auto d-flex">
+					<i class="fas fa-user fa-2x mr-2 mt-2" style="color: white"></i>
+
+
+
+					<form class="form-inline" th:action="@{/logout}" method="POST">
+						<button type="submit" class="btn btn-outline-light"
+							th:text="#{index.signout}"></button>
+					</form>
+					</div>
 				</div>
+
 
 			</div>
 
@@ -113,10 +131,24 @@ a {
 
 
 	<main class="container-fluid bg-dark h-100 py-5">
+
+
+		<section>
+
+			<!-- Check for login error -->
+			<div th:if="${param.error}" class="alert alert-danger text-center m-auto col-6 col-md-4 "
+				th:text="#{index.invalid}"></div>
+
+			<!-- Check for logout -->
+			<div th:if="${param.logout}" class="alert alert-success text-center m-auto col-6 col-md-4 "
+				th:text="#{index.logoutsuccess}"></div>
+
+		</section>
 		<!-- Register form -->
-		<section class="row">
+		
+		<section sec:authorize="isAnonymous()" class="row mt-5">
 			<div
-				class="col-8 offset-2 col-md-6 offset-md-3 col-lg-4 offset-lg-4 bg-light rounded px-4 pt-4 pb-2">
+				class="m-auto col-6 col-md-4 bg-light rounded px-4 pt-4 pb-2">
 
 				<div class="mb-3" th:text="#{index.register}"></div>
 
@@ -184,8 +216,11 @@ a {
 							</ul>
 						</div>
 
+						<div class="form-group form-check">
+						    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+						    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+						</div>
 
-						<!-- Register Button -->
 						<div class="form-group mt-4">
 							<button type="submit" class="btn btn-success w-100">
 								<span th:text="#{index.register}"></span>
@@ -202,24 +237,7 @@ a {
 	</main>
 
 
-	<!-- 
-	<div class="container-fluid h-100 p-5 text-center bg-light">
-  		<div class="w-25 mx-auto border border-secondary rounded-lg shadow bg-light p-3">
-  		<div>
-  			<form th:action="@{/login/showLoginPage}" method="GET">
-				<input type="submit" th:value="#{index.login}" class="btn btn-outline-secondary m-3"/>
-			</form>	
-		</div>
-		<div th:text="#{index.or}">
-		</div>
-		<div>
-			<form th:action="@{/register/showRegistrationForm}" method="GET">
-				<input type="submit" th:value="#{index.register}" class="btn btn-outline-secondary m-3"/>
-			</form>
-  		</div>
-  		</div>
-	</div>
-	 -->
+	
 
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
