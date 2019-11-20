@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "admin_personal_data")
@@ -17,6 +18,7 @@ public class AdminPersonalData {
 	@Column(name = "id")
 	private Long id;
 	
+	@NotBlank(message = "is required")
 	@Column(name = "first_name")
 	private String firstName;
 
@@ -26,6 +28,9 @@ public class AdminPersonalData {
 	@Column(name = "phone_number")
 	private int phoneNumber;
 	
+	@Column(name = "medical_chamber")
+	private String medicalChamber;
+	
 	@OneToOne(mappedBy = "adminPersonalData")
 	private User user;
 
@@ -33,12 +38,16 @@ public class AdminPersonalData {
 	public AdminPersonalData() {
 	}
 
-	public AdminPersonalData(String firstName, String lastName, String email, int phoneNumber, User user) {
+	public AdminPersonalData(String firstName, String lastName, int phoneNumber, String medicalChamber, User user) {
+		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.phoneNumber = phoneNumber;
+		this.medicalChamber = medicalChamber;
 		this.user = user;
 	}
+
+
 
 	public Long getId() {
 		return id;
@@ -70,6 +79,14 @@ public class AdminPersonalData {
 
 	public void setPhoneNumber(int phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public String getMedicalChamber() {
+		return medicalChamber;
+	}
+
+	public void setMedicalChamber(String medicalChamber) {
+		this.medicalChamber = medicalChamber;
 	}
 
 	public User getUser() {

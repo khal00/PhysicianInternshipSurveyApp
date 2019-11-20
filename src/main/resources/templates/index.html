@@ -32,6 +32,22 @@ a {
 }
 </style>
 
+<!-- Show hide form for admin registration -->
+<script>
+	function showHideAdminForm(form) {
+
+		var checkbox = document.getElementById("checkboxForAdminForm")
+		if (checkbox.checked) {
+			document.getElementById(form).style.display = "block";
+		} else {
+			document.getElementById(form).style.display = "none";
+		}
+
+	}
+</script>
+
+
+
 </head>
 
 <body class="h-100">
@@ -111,14 +127,14 @@ a {
 
 				<div sec:authorize="isAuthenticated()" class="d-flex">
 					<div class="ml-auto d-flex">
-					<i class="fas fa-user fa-2x mr-2 mt-2" style="color: white"></i>
+						<i class="fas fa-user fa-2x mr-2 mt-2" style="color: white"></i>
 
 
 
-					<form class="form-inline" th:action="@{/logout}" method="POST">
-						<button type="submit" class="btn btn-outline-light"
-							th:text="#{index.signout}"></button>
-					</form>
+						<form class="form-inline" th:action="@{/logout}" method="POST">
+							<button type="submit" class="btn btn-outline-light"
+								th:text="#{index.signout}"></button>
+						</form>
 					</div>
 				</div>
 
@@ -136,19 +152,20 @@ a {
 		<section>
 
 			<!-- Check for login error -->
-			<div th:if="${param.error}" class="alert alert-danger text-center m-auto col-6 col-md-4 "
+			<div th:if="${param.error}"
+				class="alert alert-danger text-center m-auto col-6 col-md-4 "
 				th:text="#{index.invalid}"></div>
 
 			<!-- Check for logout -->
-			<div th:if="${param.logout}" class="alert alert-success text-center m-auto col-6 col-md-4 "
+			<div th:if="${param.logout}"
+				class="alert alert-success text-center m-auto col-6 col-md-4 "
 				th:text="#{index.logoutsuccess}"></div>
 
 		</section>
 		<!-- Register form -->
-		
+
 		<section sec:authorize="isAnonymous()" class="row mt-5">
-			<div
-				class="m-auto col-6 col-md-4 bg-light rounded px-4 pt-4 pb-2">
+			<div class="m-auto col-6 col-md-4 bg-light rounded px-4 pt-4 pb-2">
 
 				<div class="mb-3" th:text="#{index.register}"></div>
 
@@ -177,7 +194,7 @@ a {
 						<div th:if="${#fields.hasErrors('email')}" class="text-danger">
 							<ul>
 								<li th:each="err : ${#fields.errors('email')}"
-									th:text="'Email ' + ${err}" />
+									th:text="#{index.emailisrequired}" />
 							</ul>
 						</div>
 
@@ -194,7 +211,7 @@ a {
 						<div th:if="${#fields.hasErrors('password')}" class="text-danger">
 							<ul>
 								<li th:each="err : ${#fields.errors('password')}"
-									th:text="'Password ' + ${err}" />
+									th:text="#{index.passwordisrequired}" />
 							</ul>
 						</div>
 
@@ -212,14 +229,51 @@ a {
 							class="text-danger">
 							<ul>
 								<li th:each="err : ${#fields.errors('matchingPassword')}"
-									th:text="'Password ' + ${err}" />
+									th:text="#{index.passwordisrequired}" />
 							</ul>
 						</div>
 
 						<div class="form-group form-check">
-						    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-						    <label class="form-check-label" for="exampleCheck1">Check me out</label>
+							<input type="checkbox" class="form-check-input"
+								id="checkboxForAdminForm"
+								name="checkboxForAdminForm"
+								onclick="showHideAdminForm('adminForm')"> 
+								<label
+								class="form-check-label" for="checkboxForAdminForm"
+								th:text="#{index.registerasadmin}"></label>
 						</div>
+
+
+						<!-- Admin Personal Data Form -->
+						<div id="adminForm" style="display: none;" th:object="${adminData}">
+													
+						<!-- First Name -->
+						
+						<div class="form-group">
+							<label class="sr-only" for="InputFirstName"
+								th:text="#{index.firstname}"></label> <input
+								type="text" th:field="*{firstName}"
+								placeholder="First Name" id="InputFirstName"
+								th:attr="placeholder=#{index.firstname}"
+								class="form-control" 
+								
+								th:errorclass="fieldError" />
+						</div>
+						
+						<div th:if="${#fields.hasErrors('firstName')}"
+							class="text-danger">
+							<ul>
+								<li th:each="err : ${#fields.errors('firstName')}"
+									th:text="#{index.passwordisrequired}" />
+							</ul>
+						</div>
+						
+					
+					
+						
+						</div>
+						
+						
 
 						<div class="form-group mt-4">
 							<button type="submit" class="btn btn-success w-100">
@@ -237,7 +291,7 @@ a {
 	</main>
 
 
-	
+
 
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -254,5 +308,9 @@ a {
 
 
 
+
+
 </body>
+
+
 </html>

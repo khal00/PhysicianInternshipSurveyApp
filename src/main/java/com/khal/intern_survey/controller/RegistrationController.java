@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.khal.intern_survey.UserDTO.UserDTO;
+import com.khal.intern_survey.entity.AdminPersonalData;
 import com.khal.intern_survey.entity.User;
 import com.khal.intern_survey.service.UserService;
 
@@ -35,20 +37,26 @@ public class RegistrationController {
 	public String showIndex(Model theModel) {
 		
 		theModel.addAttribute("userDTO", new UserDTO());
+		theModel.addAttribute("adminData", new AdminPersonalData());
 		
 		return "index";
 		
 	}
 	
 	@PostMapping("/processRegistrationForm")
-	public String processRegistrationForm(@Valid @ModelAttribute("userDTO") UserDTO userDTO
-			, BindingResult theBindingResult
+	public String processRegistrationForm(@RequestParam(value = "checkboxForAdminForm", required = false) String checkboxValue
+			, @Valid @ModelAttribute("userDTO") UserDTO userDTO
+			, BindingResult userBindingResult
+			, @Valid @ModelAttribute("adminData") AdminPersonalData adminData
+			, BindingResult adminBindingResult
 			, Model theModel) {
+		
 		
 		String email = userDTO.getEmail();
 		
+		
 		// form validation
-		if (theBindingResult.hasErrors()){
+		if (userBindingResult.hasErrors()){
 			 return "index";
 	    }
 		
@@ -57,11 +65,24 @@ public class RegistrationController {
 		if (existing != null) {
 			theModel.addAttribute("userDTO", new UserDTO());
 			theModel.addAttribute("registrationError", "User already exists.");
+			theModel.addAttribute("adminDTO", new AdminPersonalData());
 			return "index";
+		}
+		
+		if(checkboxValue != null && adminBindingResult.hasErrors()) {
+
+			return "index";		
+		}
+		
+		if(checkboxValue != null) {
+			System.out.println("checkbox for admin is checked");
+			System.out.println(adminData.getFirstName());		
 		}
 		
 		// create user account
 		userService.saveUser(userDTO);
+		
+
 		
 		return "registration-confirmation";
 		 

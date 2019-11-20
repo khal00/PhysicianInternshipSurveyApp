@@ -19,6 +19,7 @@ CREATE TABLE `admin_personal_data` (
 `first_name` varchar(50) NOT NULL,
 `last_name` varchar(50) NOT NULL,
 `phone_number` int(15) NOT NULL,
+`medical_chamber` varchar(50),
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

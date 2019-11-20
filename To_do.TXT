@@ -1,6 +1,6 @@
 To do:
 
-create option for admin registration
+after errors in admin data generate index page with checkbox checked
 create fieldValidation package
 internationalization
 register after email confirmation
