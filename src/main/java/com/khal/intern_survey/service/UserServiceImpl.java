@@ -17,8 +17,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.khal.intern_survey.UserDTO.UserDTO;
+import com.khal.intern_survey.dao.AdminPersonalDataRepository;
 import com.khal.intern_survey.dao.RoleRepository;
 import com.khal.intern_survey.dao.UserRepository;
+import com.khal.intern_survey.entity.AdminPersonalData;
 import com.khal.intern_survey.entity.Role;
 import com.khal.intern_survey.entity.User;
 
@@ -34,12 +36,17 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private RoleRepository roleRepository;
 	
+	@Autowired
+	private AdminPersonalDataRepository AdminPersonalDataRepository;
+	
 	
 	@Override
 	public List<User> findAll() {
 		
 		return userRepository.findAll();
 	}
+	
+//	Save regular user
 	
 	@Override
 	public void saveUser(UserDTO userDTO) {
@@ -49,6 +56,19 @@ public class UserServiceImpl implements UserService {
 		theUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));
 		
 		theUser.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
+		userRepository.save(theUser);
+	}
+	
+//	Save Admin user and set role to OILADMIN
+	
+	@Override
+	public void saveUserAndAdminData(UserDTO userDTO, AdminPersonalData adminPersonalData) {
+		
+		User theUser = new User();
+		theUser.setEmail(userDTO.getEmail());
+		theUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));		
+		theUser.setRoles(Arrays.asList(roleRepository.findByName("ROLE_OILADMIN")));
+		theUser.setAdminPersonalData(adminPersonalData);
 		userRepository.save(theUser);
 	}
 
@@ -75,5 +95,6 @@ public class UserServiceImpl implements UserService {
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 	}
+
 
 }

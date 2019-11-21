@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.khal.intern_survey.UserDTO.UserDTO;
@@ -92,15 +91,14 @@ public class RegistrationController {
 			return "index";		
 		}
 		
+		// create admin account
+		if(checkboxAdminValue != null) {
+			userService.saveUserAndAdminData(userDTO, adminData);
+			return "registration-confirmation";
+		}
 		
 		// create user account
 		userService.saveUser(userDTO);
-		
-		// create adminPersonalData
-		
-		adminPersonalDataService.saveAdminData(adminData);
-		
-
 		
 		return "registration-confirmation";
 		 

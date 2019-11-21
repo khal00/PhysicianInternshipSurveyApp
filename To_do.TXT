@@ -1,8 +1,6 @@
 To do:
 
-
-
-connect user with adminPersonalData
+How to accept admin role request?
 
 create fieldValidation package
 

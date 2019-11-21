@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.khal.intern_survey.UserDTO.UserDTO;
+import com.khal.intern_survey.entity.AdminPersonalData;
 import com.khal.intern_survey.entity.User;
 
 public interface UserService extends UserDetailsService{
@@ -14,5 +15,7 @@ public interface UserService extends UserDetailsService{
 	public void saveUser(UserDTO userDTO);
 	
 	public User findByEmail(String username);
+	
+	public void saveUserAndAdminData(UserDTO userDTO, AdminPersonalData adminPersonalData);
 
 }
