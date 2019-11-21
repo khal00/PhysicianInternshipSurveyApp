@@ -21,13 +21,16 @@ public class AdminPersonalData {
 	@NotBlank(message = "is required")
 	@Column(name = "first_name")
 	private String firstName;
-
+	
+	@NotBlank(message = "is required")
 	@Column(name = "last_name")
 	private String lastName;
 	
+	@NotBlank(message = "is required")
 	@Column(name = "phone_number")
-	private int phoneNumber;
+	private String phoneNumber;
 	
+	@NotBlank(message = "is required")
 	@Column(name = "medical_chamber")
 	private String medicalChamber;
 	
@@ -38,7 +41,7 @@ public class AdminPersonalData {
 	public AdminPersonalData() {
 	}
 
-	public AdminPersonalData(String firstName, String lastName, int phoneNumber, String medicalChamber, User user) {
+	public AdminPersonalData(String firstName, String lastName, String phoneNumber, String medicalChamber, User user) {
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -73,11 +76,11 @@ public class AdminPersonalData {
 		this.lastName = lastName;
 	}
 
-	public int getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 

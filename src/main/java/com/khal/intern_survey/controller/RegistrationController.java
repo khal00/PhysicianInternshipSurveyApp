@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.khal.intern_survey.UserDTO.UserDTO;
 import com.khal.intern_survey.entity.AdminPersonalData;
 import com.khal.intern_survey.entity.User;
+import com.khal.intern_survey.service.AdminPersonalDataService;
 import com.khal.intern_survey.service.UserService;
 
 @Controller
@@ -26,6 +27,9 @@ public class RegistrationController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private AdminPersonalDataService adminPersonalDataService;
+	
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
 		
@@ -33,18 +37,23 @@ public class RegistrationController {
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}
 	
+	// Flag for admin registration form to expand in index page
+	private boolean expandAdminForm = false;
+	
+	
 	@GetMapping("/")
 	public String showIndex(Model theModel) {
 		
 		theModel.addAttribute("userDTO", new UserDTO());
 		theModel.addAttribute("adminData", new AdminPersonalData());
+		theModel.addAttribute("expandAdminForm", expandAdminForm);
 		
 		return "index";
 		
 	}
 	
 	@PostMapping("/processRegistrationForm")
-	public String processRegistrationForm(@RequestParam(value = "checkboxForAdminForm", required = false) String checkboxValue
+	public String processRegistrationForm(@RequestParam(value = "checkboxForAdminForm", required = false) String checkboxAdminValue
 			, @Valid @ModelAttribute("userDTO") UserDTO userDTO
 			, BindingResult userBindingResult
 			, @Valid @ModelAttribute("adminData") AdminPersonalData adminData
@@ -54,13 +63,20 @@ public class RegistrationController {
 		
 		String email = userDTO.getEmail();
 		
+		if(checkboxAdminValue != null) {
+			expandAdminForm = true;
+		} else {
+			expandAdminForm = false;
+		}
+		
 		
 		// form validation
 		if (userBindingResult.hasErrors()){
-			 return "index";
+			theModel.addAttribute("expandAdminForm", expandAdminForm);
+			return "index";
 	    }
 		
-		// check if username exists in db
+		// check if email exists in db
 		User existing = userService.findByEmail(email);
 		if (existing != null) {
 			theModel.addAttribute("userDTO", new UserDTO());
@@ -69,18 +85,20 @@ public class RegistrationController {
 			return "index";
 		}
 		
-		if(checkboxValue != null && adminBindingResult.hasErrors()) {
+		// user requested admin privileges but the form has errors
+		if(adminBindingResult.hasErrors()) {
 
+			theModel.addAttribute("expandAdminForm", expandAdminForm);
 			return "index";		
 		}
 		
-		if(checkboxValue != null) {
-			System.out.println("checkbox for admin is checked");
-			System.out.println(adminData.getFirstName());		
-		}
 		
 		// create user account
 		userService.saveUser(userDTO);
+		
+		// create adminPersonalData
+		
+		adminPersonalDataService.saveAdminData(adminData);
 		
 
 		

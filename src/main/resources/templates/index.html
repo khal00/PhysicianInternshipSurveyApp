@@ -32,25 +32,14 @@ a {
 }
 </style>
 
-<!-- Show hide form for admin registration -->
-<script>
-	function showHideAdminForm(form) {
 
-		var checkbox = document.getElementById("checkboxForAdminForm")
-		if (checkbox.checked) {
-			document.getElementById(form).style.display = "block";
-		} else {
-			document.getElementById(form).style.display = "none";
-		}
-
-	}
-</script>
 
 
 
 </head>
 
 <body class="h-100">
+
 
 	<header>
 		<nav class="navbar navbar-dark bg-dark navbar-expand-lg"
@@ -147,8 +136,7 @@ a {
 
 
 	<main class="container-fluid bg-dark h-100 py-5">
-
-
+		
 		<section>
 
 			<!-- Check for login error -->
@@ -194,7 +182,7 @@ a {
 						<div th:if="${#fields.hasErrors('email')}" class="text-danger">
 							<ul>
 								<li th:each="err : ${#fields.errors('email')}"
-									th:text="#{index.emailisrequired}" />
+									th:text="#{index.email} + ' ' + #{index.isrequired1}" />
 							</ul>
 						</div>
 
@@ -211,7 +199,7 @@ a {
 						<div th:if="${#fields.hasErrors('password')}" class="text-danger">
 							<ul>
 								<li th:each="err : ${#fields.errors('password')}"
-									th:text="#{index.passwordisrequired}" />
+									th:text="#{index.password} + ' ' + #{index.isrequired2}" />
 							</ul>
 						</div>
 
@@ -229,7 +217,7 @@ a {
 							class="text-danger">
 							<ul>
 								<li th:each="err : ${#fields.errors('matchingPassword')}"
-									th:text="#{index.passwordisrequired}" />
+									th:text="#{index.password} + ' ' + #{index.isrequired2}" />
 							</ul>
 						</div>
 
@@ -237,7 +225,8 @@ a {
 							<input type="checkbox" class="form-check-input"
 								id="checkboxForAdminForm"
 								name="checkboxForAdminForm"
-								onclick="showHideAdminForm('adminForm')"> 
+							
+								th:checked="${expandAdminForm}"> 
 								<label
 								class="form-check-label" for="checkboxForAdminForm"
 								th:text="#{index.registerasadmin}"></label>
@@ -245,33 +234,96 @@ a {
 
 
 						<!-- Admin Personal Data Form -->
+						
 						<div id="adminForm" style="display: none;" th:object="${adminData}">
 													
-						<!-- First Name -->
+							<!-- First Name -->
 						
-						<div class="form-group">
-							<label class="sr-only" for="InputFirstName"
-								th:text="#{index.firstname}"></label> <input
-								type="text" th:field="*{firstName}"
-								placeholder="First Name" id="InputFirstName"
-								th:attr="placeholder=#{index.firstname}"
-								class="form-control" 
-								
-								th:errorclass="fieldError" />
-						</div>
+							<div class="form-group">
+								<label class="sr-only" for="InputFirstName"
+									th:text="#{index.firstname}"></label>
+									<input type="text" th:field="*{firstName}"
+									placeholder="First Name" id="InputFirstName"
+									th:attr="placeholder=#{index.firstname}"
+									class="form-control"
+									th:errorclass="fieldError" />
+							</div>
+							
+							<div th:if="${#fields.hasErrors('firstName')}"
+								class="text-danger">
+								<ul>
+									<li th:each="err : ${#fields.errors('firstName')}"
+										th:text="#{index.firstname} + ' ' + #{index.isrequired2}" />
+								</ul>
+							</div>
+							
+							<!-- Last Name -->
 						
-						<div th:if="${#fields.hasErrors('firstName')}"
-							class="text-danger">
-							<ul>
-								<li th:each="err : ${#fields.errors('firstName')}"
-									th:text="#{index.passwordisrequired}" />
-							</ul>
-						</div>
+							<div class="form-group">
+								<label class="sr-only" for="InputLastName"
+									th:text="#{index.lastname}"></label>
+									<input type="text" th:field="*{lastName}"
+									placeholder="Last Name" id="InputLastName"
+									th:attr="placeholder=#{index.lastname}"
+									class="form-control"
+									th:errorclass="fieldError" />
+							</div>
+							
+							<div th:if="${#fields.hasErrors('lastName')}"
+								class="text-danger">
+								<ul>
+									<li th:each="err : ${#fields.errors('lastName')}"
+										th:text="#{index.lastname} + ' ' + #{index.isrequired2}" />
+								</ul>
+							</div>
+							
+							<!-- Phone Number -->
 						
-					
-					
+							<div class="form-group">
+								<label class="sr-only" for="InputPhoneNumber"
+									th:text="#{index.phonenumber}"></label>
+									<input type="text" th:field="*{phoneNumber}"
+									placeholder="Phone Number" id="InputPhoneNumber"
+									th:attr="placeholder=#{index.phonenumber}"
+									class="form-control"
+									th:errorclass="fieldError" />
+							</div>
+							
+							<div th:if="${#fields.hasErrors('phoneNumber')}"
+								class="text-danger">
+								<ul>
+									<li th:each="err : ${#fields.errors('phoneNumber')}"
+										th:text="#{index.phonenumber} + ' ' + #{index.isrequired1}" />
+								</ul>
+							</div>
+							
+							<!-- Medical Chamber -->
 						
-						</div>
+							<div class="form-group">
+								<label for="ChamberSelect"
+									th:text="#{index.medicalchamber}"></label>
+									<select type="text" th:field="*{medicalChamber}"
+									id="ChamberSelect"
+									class="form-control"
+									th:errorclass="fieldError">
+										<option value="OIL w Szczecinie">OIL w Szczecinie</option>
+										<option value="OIL w Warszawie">OIL w Warszawie</option>
+										<option value="OIL w Krakowie">OIL w Krakowie</option>
+									</select>
+							</div>
+							
+							<div th:if="${#fields.hasErrors('medicalChamber')}"
+								class="text-danger">
+								<ul>
+									<li th:each="err : ${#fields.errors('medicalChamber')}"
+										th:text="#{index.medicalchamber} + ' ' + #{index.isrequired3}" />
+								</ul>
+							</div>
+							
+							
+							
+							
+					</div>
 						
 						
 
@@ -306,8 +358,31 @@ a {
 		integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
 		crossorigin="anonymous"></script>
 
+	<!-- Show hide form for admin registration -->
+	
+	<script>
+		document.addEventListener("DOMContentLoaded", function(){
+			 var adminCheckbox = document.getElementById('checkboxForAdminForm');
+			 
+			adminCheckbox.addEventListener("click", function(){
+				
+				if (adminCheckbox.checked){
+					document.getElementById('adminForm').style.display = "block";
+				} else {
+					document.getElementById('adminForm').style.display = "none";
+				}	
+			});
+			
+			if (adminCheckbox.checked){
+				document.getElementById('adminForm').style.display = "block";
+			} else {
+				 document.getElementById('adminForm').style.display = "none";
+			}								 	
 
-
+		});
+		
+		
+	</script>
 
 
 </body>

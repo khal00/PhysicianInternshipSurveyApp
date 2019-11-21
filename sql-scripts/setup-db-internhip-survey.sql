@@ -18,7 +18,7 @@ CREATE TABLE `admin_personal_data` (
 `id` int NOT NULL AUTO_INCREMENT,
 `first_name` varchar(50) NOT NULL,
 `last_name` varchar(50) NOT NULL,
-`phone_number` int(15) NOT NULL,
+`phone_number` varchar(15) NOT NULL,
 `medical_chamber` varchar(50),
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -46,8 +46,8 @@ VALUES
 
 INSERT INTO `admin_personal_data`
 VALUES
-(1,'Xi','Ho',123456789),
-(2,'Jin','Po',987654321);
+(1,'Xi','Ho','123456789','OIL w Szczecinie'),
+(2,'Jin','Po','987654321','OIL w Szczecinie');
 
 INSERT INTO `user_admin_data`
 VALUES

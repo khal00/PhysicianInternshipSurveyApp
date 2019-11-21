@@ -1,24 +1,33 @@
 To do:
 
-after errors in admin data generate index page with checkbox checked
+
+
+connect user with adminPersonalData
+
 create fieldValidation package
+
 internationalization
+
 register after email confirmation
 
+password and email change
 
-User registration:
-Register controller
-register template
-FieldValidation
+form for adding new survey for user
 
-Register:
+survey form (at least part of it)
 
-username
-password
-password match
-medical_chamber
-role
+saving survey, sending survey for acceptance (generate token maybe?)
 
-if role user automatically register
-if role OILadmin additionally demand firstName, lastName, email, phoneNumber
+role admin privileges to accept the survey (change db field to accepted 0/1 value possibly)
+
+template to show results
+
+
+
+
+
+
+
+
+
 
