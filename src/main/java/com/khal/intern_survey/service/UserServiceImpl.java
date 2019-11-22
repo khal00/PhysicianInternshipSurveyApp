@@ -36,9 +36,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private RoleRepository roleRepository;
 	
-	@Autowired
-	private AdminPersonalDataRepository AdminPersonalDataRepository;
-	
 	
 	@Override
 	public List<User> findAll() {
@@ -59,7 +56,7 @@ public class UserServiceImpl implements UserService {
 		userRepository.save(theUser);
 	}
 	
-//	Save Admin user and set role to OILADMIN
+//	Save Admin user and send email sys admin to verify request for admin role
 	
 	@Override
 	public void saveUserAndAdminData(UserDTO userDTO, AdminPersonalData adminPersonalData) {
@@ -67,7 +64,7 @@ public class UserServiceImpl implements UserService {
 		User theUser = new User();
 		theUser.setEmail(userDTO.getEmail());
 		theUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));		
-		theUser.setRoles(Arrays.asList(roleRepository.findByName("ROLE_OILADMIN")));
+//		theUser.setRoles(Arrays.asList(roleRepository.findByName("ROLE_OILADMIN")));
 		theUser.setAdminPersonalData(adminPersonalData);
 		userRepository.save(theUser);
 	}

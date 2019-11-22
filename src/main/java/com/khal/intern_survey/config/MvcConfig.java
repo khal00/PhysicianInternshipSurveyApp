@@ -12,13 +12,12 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 @Configuration
-@ComponentScan(basePackages = "com.khal.intern_survey.config")
+//@ComponentScan(basePackages = "com.khal.intern_survey.config")
 public class MvcConfig implements WebMvcConfigurer {
 	
 	@Bean
 	public LocaleResolver localeResolver() {
 	    SessionLocaleResolver slr = new SessionLocaleResolver();
-	    slr.setDefaultLocale(Locale.US);
 	    return slr;
 	}
 	

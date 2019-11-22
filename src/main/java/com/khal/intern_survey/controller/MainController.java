@@ -27,5 +27,11 @@ public class MainController {
 		theModel.addAttribute("users", users);
 		return "list-users";
 	}
+	
+	@RequestMapping("/hello")
+	public String test() {
+		
+		return "hello";
+	}
 
 }

@@ -33,9 +33,6 @@ a {
 </style>
 
 
-
-
-
 </head>
 
 <body class="h-100">
@@ -62,6 +59,7 @@ a {
 			<div class="collapse navbar-collapse" id="mainmenu">
 
 				<ul class="navbar-nav text-white mr-auto">
+
 					<!--
 					 
 					<li class="nav-item active"><a class="nav-link" th:href="@{/}">Start</a>
@@ -77,7 +75,12 @@ a {
 						</div>
 					</li>
 					-->
+
+
+
 				</ul>
+
+				<form class="" action=""></form>
 
 
 				<!-- Sign in form -->
@@ -135,7 +138,7 @@ a {
 	</header>
 
 
-	<main class="container-fluid bg-dark h-100 py-5">
+	<main class="container-fluid bg-dark h-75 py-5 border border-danger">
 		
 		<section>
 
@@ -152,7 +155,7 @@ a {
 		</section>
 		<!-- Register form -->
 
-		<section sec:authorize="isAnonymous()" class="row mt-5">
+		<section sec:authorize="isAnonymous()" class="row mt-5 border border-danger">
 			<div class="m-auto col-6 col-md-4 bg-light rounded px-4 pt-4 pb-2">
 
 				<div class="mb-3" th:text="#{index.register}"></div>
@@ -162,6 +165,7 @@ a {
 					<!-- Registration Form -->
 					<form th:action="@{/processRegistrationForm}"
 						th:object="${userDTO}" method="POST" class="form-horizontal">
+						
 
 						<!-- Place for errors -->
 						<div class="form-group">
@@ -223,32 +227,28 @@ a {
 
 						<div class="form-group form-check">
 							<input type="checkbox" class="form-check-input"
-								id="checkboxForAdminForm"
-								name="checkboxForAdminForm"
-							
-								th:checked="${expandAdminForm}"> 
-								<label
+								id="checkboxForAdminForm" name="checkboxForAdminForm"
+								th:checked="${expandAdminForm}"> <label
 								class="form-check-label" for="checkboxForAdminForm"
 								th:text="#{index.registerasadmin}"></label>
 						</div>
 
 
 						<!-- Admin Personal Data Form -->
-						
-						<div id="adminForm" style="display: none;" th:object="${adminData}">
-													
+
+						<div id="adminForm" style="display: none;"
+							th:object="${adminData}">
+
 							<!-- First Name -->
-						
+
 							<div class="form-group">
 								<label class="sr-only" for="InputFirstName"
-									th:text="#{index.firstname}"></label>
-									<input type="text" th:field="*{firstName}"
-									placeholder="First Name" id="InputFirstName"
-									th:attr="placeholder=#{index.firstname}"
-									class="form-control"
-									th:errorclass="fieldError" />
+									th:text="#{index.firstname}"></label> <input type="text"
+									th:field="*{firstName}" placeholder="First Name"
+									id="InputFirstName" th:attr="placeholder=#{index.firstname}"
+									class="form-control" th:errorclass="fieldError" />
 							</div>
-							
+
 							<div th:if="${#fields.hasErrors('firstName')}"
 								class="text-danger">
 								<ul>
@@ -256,39 +256,35 @@ a {
 										th:text="#{index.firstname} + ' ' + #{index.isrequired2}" />
 								</ul>
 							</div>
-							
+
 							<!-- Last Name -->
-						
+
 							<div class="form-group">
 								<label class="sr-only" for="InputLastName"
-									th:text="#{index.lastname}"></label>
-									<input type="text" th:field="*{lastName}"
-									placeholder="Last Name" id="InputLastName"
-									th:attr="placeholder=#{index.lastname}"
-									class="form-control"
-									th:errorclass="fieldError" />
+									th:text="#{index.lastname}"></label> <input type="text"
+									th:field="*{lastName}" placeholder="Last Name"
+									id="InputLastName" th:attr="placeholder=#{index.lastname}"
+									class="form-control" th:errorclass="fieldError" />
 							</div>
-							
-							<div th:if="${#fields.hasErrors('lastName')}"
-								class="text-danger">
+
+							<div th:if="${#fields.hasErrors('lastName')}" class="text-danger">
 								<ul>
 									<li th:each="err : ${#fields.errors('lastName')}"
 										th:text="#{index.lastname} + ' ' + #{index.isrequired2}" />
 								</ul>
 							</div>
-							
+
 							<!-- Phone Number -->
-						
+
 							<div class="form-group">
 								<label class="sr-only" for="InputPhoneNumber"
-									th:text="#{index.phonenumber}"></label>
-									<input type="text" th:field="*{phoneNumber}"
-									placeholder="Phone Number" id="InputPhoneNumber"
-									th:attr="placeholder=#{index.phonenumber}"
-									class="form-control"
+									th:text="#{index.phonenumber}"></label> <input type="text"
+									th:field="*{phoneNumber}" placeholder="Phone Number"
+									id="InputPhoneNumber"
+									th:attr="placeholder=#{index.phonenumber}" class="form-control"
 									th:errorclass="fieldError" />
 							</div>
-							
+
 							<div th:if="${#fields.hasErrors('phoneNumber')}"
 								class="text-danger">
 								<ul>
@@ -296,22 +292,20 @@ a {
 										th:text="#{index.phonenumber} + ' ' + #{index.isrequired1}" />
 								</ul>
 							</div>
-							
+
 							<!-- Medical Chamber -->
-						
+
 							<div class="form-group">
-								<label for="ChamberSelect"
-									th:text="#{index.medicalchamber}"></label>
-									<select type="text" th:field="*{medicalChamber}"
-									id="ChamberSelect"
-									class="form-control"
+								<label for="ChamberSelect" th:text="#{index.medicalchamber}"></label>
+								<select type="text" th:field="*{medicalChamber}"
+									id="ChamberSelect" class="form-control"
 									th:errorclass="fieldError">
-										<option value="OIL w Szczecinie">OIL w Szczecinie</option>
-										<option value="OIL w Warszawie">OIL w Warszawie</option>
-										<option value="OIL w Krakowie">OIL w Krakowie</option>
-									</select>
+									<option value="OIL w Szczecinie">OIL w Szczecinie</option>
+									<option value="OIL w Warszawie">OIL w Warszawie</option>
+									<option value="OIL w Krakowie">OIL w Krakowie</option>
+								</select>
 							</div>
-							
+
 							<div th:if="${#fields.hasErrors('medicalChamber')}"
 								class="text-danger">
 								<ul>
@@ -319,13 +313,13 @@ a {
 										th:text="#{index.medicalchamber} + ' ' + #{index.isrequired3}" />
 								</ul>
 							</div>
-							
-							
-							
-							
-					</div>
-						
-						
+
+
+
+
+						</div>
+
+
 
 						<div class="form-group mt-4">
 							<button type="submit" class="btn btn-success w-100">
@@ -340,7 +334,27 @@ a {
 			</div>
 
 		</section>
+
+
 	</main>
+
+	<footer>
+	<div class="container-fluid h-25 bg-light">
+		<div class="float-right d-flex mt-5 mr-4">
+			<i class="fas fa-language fa-3x mr-1"></i>
+		  	<div class="sr-only">
+		  		<label class="input-group-text" for="locales" th:text="#{index.language}"></label>
+  			</div>		
+			<select id="locales" class="custom-select my-auto border-secondary" style="max-width: 110px;">
+				<option value="" th:text="#{index.language}"></option>
+				<option value="pl_PL" th:text="#{index.polish}"></option>
+				<option value="en" th:text="#{index.english}"></option>
+			</select>
+		
+		</div>
+	</div>
+
+	</footer>
 
 
 
@@ -359,7 +373,7 @@ a {
 		crossorigin="anonymous"></script>
 
 	<!-- Show hide form for admin registration -->
-	
+
 	<script>
 		document.addEventListener("DOMContentLoaded", function(){
 			 var adminCheckbox = document.getElementById('checkboxForAdminForm');
@@ -379,9 +393,20 @@ a {
 				 document.getElementById('adminForm').style.display = "none";
 			}								 	
 
-		});
+		});		
 		
-		
+	</script>
+
+
+	<script>
+	$(document).ready(function() {
+	    $("#locales").change(function () {
+	        var selectedOption = $('#locales').val();
+	        if (selectedOption != ''){
+	            window.location.replace('/?lang=' + selectedOption);
+	        }
+	    });
+	});
 	</script>
 
 
