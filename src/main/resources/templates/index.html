@@ -137,228 +137,242 @@ a {
 
 	</header>
 
+	<div class="container-fluid h-100 bg-light">
 
-	<main class="container-fluid bg-dark h-75 py-5 border border-danger">
-		
-		<section>
 
-			<!-- Check for login error -->
-			<div th:if="${param.error}"
-				class="alert alert-danger text-center m-auto col-6 col-md-4 "
-				th:text="#{index.invalid}"></div>
+		<main>
 
-			<!-- Check for logout -->
-			<div th:if="${param.logout}"
-				class="alert alert-success text-center m-auto col-6 col-md-4 "
-				th:text="#{index.logoutsuccess}"></div>
+			<div class="row bg-dark pb-5 pt-4" style="min-height: 600px">
 
-		</section>
-		<!-- Register form -->
+				<div class="container-fluid my-auto">
+					<section class="row">
 
-		<section sec:authorize="isAnonymous()" class="row mt-5 border border-danger">
-			<div class="m-auto col-6 col-md-4 bg-light rounded px-4 pt-4 pb-2">
+						<!-- Check for login error -->
+						<div th:if="${param.error}"
+							class="alert alert-danger text-center mx-auto col-8 col-md-6 col-lg-4 mb-4"
+							th:text="#{index.invalid}"></div>
 
-				<div class="mb-3" th:text="#{index.register}"></div>
+						<!-- Check for logout -->
+						<div th:if="${param.logout}"
+							class="alert alert-success text-center mx-auto col-8 col-md-6 col-lg-4 mb-4"
+							th:text="#{index.logoutsuccess}"></div>
 
-				<div>
+					</section>
+					<!-- Register form -->
 
-					<!-- Registration Form -->
-					<form th:action="@{/processRegistrationForm}"
-						th:object="${userDTO}" method="POST" class="form-horizontal">
-						
+					<section sec:authorize="isAnonymous()" class="row">
+						<div
+							class="m-auto col-8 col-md-6 col-lg-4 bg-light rounded px-4 pt-4 pb-2">
 
-						<!-- Place for errors -->
-						<div class="form-group">
+							<div class="mb-3" th:text="#{index.register}"></div>
 
-							<div th:if="${registrationError}" class="alert alert-danger">
-								<span th:text="#{index.userexists}"></span>
+							<div>
+
+								<!-- Registration Form -->
+								<form th:action="@{/processRegistrationForm}"
+									th:object="${userDTO}" method="POST" class="form-horizontal">
+
+
+									<!-- Place for errors -->
+									<div class="form-group">
+
+										<div th:if="${registrationError}" class="alert alert-danger">
+											<span th:text="#{index.userexists}"></span>
+										</div>
+									</div>
+
+									<!-- Email -->
+									<div class="form-group">
+										<label class="sr-only" for="RegisterInputEmail"
+											th:text="#{index.email}"></label> <input type="text"
+											th:field="*{email}" placeholder="email"
+											id="RegisterInputEmail" th:attr="placeholder=#{index.email}"
+											class="form-control" />
+									</div>
+
+									<div th:if="${#fields.hasErrors('email')}" class="text-danger">
+										<ul>
+											<li th:each="err : ${#fields.errors('email')}"
+												th:text="#{index.email} + ' ' + #{index.isrequired1}" />
+										</ul>
+									</div>
+
+
+									<!-- Password -->
+									<div class="form-group">
+										<label class="sr-only" for="RegisterInputPassword"
+											th:text="#{index.password}"></label> <input type="password"
+											th:field="*{password}" placeholder="password"
+											id="RegisterInputPassword"
+											th:attr="placeholder=#{index.password}" class="form-control"
+											th:errorclass="fieldError" />
+									</div>
+									<div th:if="${#fields.hasErrors('password')}"
+										class="text-danger">
+										<ul>
+											<li th:each="err : ${#fields.errors('password')}"
+												th:text="#{index.password} + ' ' + #{index.isrequired2}" />
+										</ul>
+									</div>
+
+
+									<!-- Confirm Password -->
+									<div class="form-group">
+										<label class="sr-only" for="InputConfirmPassword"
+											th:text="#{index.confirmpassword}"></label> <input
+											type="password" th:field="*{matchingPassword}"
+											placeholder="confirm password" id="InputConfirmPassword"
+											th:attr="placeholder=#{index.confirmpassword}"
+											class="form-control" th:errorclass="fieldError" />
+									</div>
+									<div th:if="${#fields.hasErrors('matchingPassword')}"
+										class="text-danger">
+										<ul>
+											<li th:each="err : ${#fields.errors('matchingPassword')}"
+												th:text="#{index.password} + ' ' + #{index.isrequired2}" />
+										</ul>
+									</div>
+
+									<div class="form-group form-check">
+										<input type="checkbox" class="form-check-input"
+											id="checkboxForAdminForm" name="checkboxForAdminForm"
+											th:checked="${expandAdminForm}"> <label
+											class="form-check-label" for="checkboxForAdminForm"
+											th:text="#{index.registerasadmin}"></label>
+									</div>
+
+
+									<!-- Admin Personal Data Form -->
+
+									<div id="adminForm" style="display: none;"
+										th:object="${adminData}">
+
+										<!-- First Name -->
+
+										<div class="form-group">
+											<label class="sr-only" for="InputFirstName"
+												th:text="#{index.firstname}"></label> <input type="text"
+												th:field="*{firstName}" placeholder="First Name"
+												id="InputFirstName" th:attr="placeholder=#{index.firstname}"
+												class="form-control" th:errorclass="fieldError" />
+										</div>
+
+										<div th:if="${#fields.hasErrors('firstName')}"
+											class="text-danger">
+											<ul>
+												<li th:each="err : ${#fields.errors('firstName')}"
+													th:text="#{index.firstname} + ' ' + #{index.isrequired2}" />
+											</ul>
+										</div>
+
+										<!-- Last Name -->
+
+										<div class="form-group">
+											<label class="sr-only" for="InputLastName"
+												th:text="#{index.lastname}"></label> <input type="text"
+												th:field="*{lastName}" placeholder="Last Name"
+												id="InputLastName" th:attr="placeholder=#{index.lastname}"
+												class="form-control" th:errorclass="fieldError" />
+										</div>
+
+										<div th:if="${#fields.hasErrors('lastName')}"
+											class="text-danger">
+											<ul>
+												<li th:each="err : ${#fields.errors('lastName')}"
+													th:text="#{index.lastname} + ' ' + #{index.isrequired2}" />
+											</ul>
+										</div>
+
+										<!-- Phone Number -->
+
+										<div class="form-group">
+											<label class="sr-only" for="InputPhoneNumber"
+												th:text="#{index.phonenumber}"></label> <input type="text"
+												th:field="*{phoneNumber}" placeholder="Phone Number"
+												id="InputPhoneNumber"
+												th:attr="placeholder=#{index.phonenumber}"
+												class="form-control" th:errorclass="fieldError" />
+										</div>
+
+										<div th:if="${#fields.hasErrors('phoneNumber')}"
+											class="text-danger">
+											<ul>
+												<li th:each="err : ${#fields.errors('phoneNumber')}"
+													th:text="#{index.phonenumber} + ' ' + #{index.isrequired1}" />
+											</ul>
+										</div>
+
+										<!-- Medical Chamber -->
+
+										<div class="form-group">
+											<label for="ChamberSelect" th:text="#{index.medicalchamber}"></label>
+											<select type="text" th:field="*{medicalChamber}"
+												id="ChamberSelect" class="form-control"
+												th:errorclass="fieldError">
+												<option value="OIL w Szczecinie">OIL w Szczecinie</option>
+												<option value="OIL w Warszawie">OIL w Warszawie</option>
+												<option value="OIL w Krakowie">OIL w Krakowie</option>
+											</select>
+										</div>
+
+										<div th:if="${#fields.hasErrors('medicalChamber')}"
+											class="text-danger">
+											<ul>
+												<li th:each="err : ${#fields.errors('medicalChamber')}"
+													th:text="#{index.medicalchamber} + ' ' + #{index.isrequired3}" />
+											</ul>
+										</div>
+
+
+
+
+									</div>
+
+
+
+									<div class="form-group mt-4">
+										<button type="submit" class="btn btn-success w-100">
+											<span th:text="#{index.register}"></span>
+										</button>
+									</div>
+
+								</form>
+
 							</div>
-						</div>
-
-						<!-- Email -->
-						<div class="form-group">
-							<label class="sr-only" for="RegisterInputEmail"
-								th:text="#{index.email}"></label> <input type="text"
-								th:field="*{email}" placeholder="email" id="RegisterInputEmail"
-								th:attr="placeholder=#{index.email}" class="form-control" />
-						</div>
-
-						<div th:if="${#fields.hasErrors('email')}" class="text-danger">
-							<ul>
-								<li th:each="err : ${#fields.errors('email')}"
-									th:text="#{index.email} + ' ' + #{index.isrequired1}" />
-							</ul>
-						</div>
-
-
-						<!-- Password -->
-						<div class="form-group">
-							<label class="sr-only" for="RegisterInputPassword"
-								th:text="#{index.password}"></label> <input type="password"
-								th:field="*{password}" placeholder="password"
-								id="RegisterInputPassword"
-								th:attr="placeholder=#{index.password}" class="form-control"
-								th:errorclass="fieldError" />
-						</div>
-						<div th:if="${#fields.hasErrors('password')}" class="text-danger">
-							<ul>
-								<li th:each="err : ${#fields.errors('password')}"
-									th:text="#{index.password} + ' ' + #{index.isrequired2}" />
-							</ul>
-						</div>
-
-
-						<!-- Confirm Password -->
-						<div class="form-group">
-							<label class="sr-only" for="InputConfirmPassword"
-								th:text="#{index.confirmpassword}"></label> <input
-								type="password" th:field="*{matchingPassword}"
-								placeholder="confirm password" id="InputConfirmPassword"
-								th:attr="placeholder=#{index.confirmpassword}"
-								class="form-control" th:errorclass="fieldError" />
-						</div>
-						<div th:if="${#fields.hasErrors('matchingPassword')}"
-							class="text-danger">
-							<ul>
-								<li th:each="err : ${#fields.errors('matchingPassword')}"
-									th:text="#{index.password} + ' ' + #{index.isrequired2}" />
-							</ul>
-						</div>
-
-						<div class="form-group form-check">
-							<input type="checkbox" class="form-check-input"
-								id="checkboxForAdminForm" name="checkboxForAdminForm"
-								th:checked="${expandAdminForm}"> <label
-								class="form-check-label" for="checkboxForAdminForm"
-								th:text="#{index.registerasadmin}"></label>
-						</div>
-
-
-						<!-- Admin Personal Data Form -->
-
-						<div id="adminForm" style="display: none;"
-							th:object="${adminData}">
-
-							<!-- First Name -->
-
-							<div class="form-group">
-								<label class="sr-only" for="InputFirstName"
-									th:text="#{index.firstname}"></label> <input type="text"
-									th:field="*{firstName}" placeholder="First Name"
-									id="InputFirstName" th:attr="placeholder=#{index.firstname}"
-									class="form-control" th:errorclass="fieldError" />
-							</div>
-
-							<div th:if="${#fields.hasErrors('firstName')}"
-								class="text-danger">
-								<ul>
-									<li th:each="err : ${#fields.errors('firstName')}"
-										th:text="#{index.firstname} + ' ' + #{index.isrequired2}" />
-								</ul>
-							</div>
-
-							<!-- Last Name -->
-
-							<div class="form-group">
-								<label class="sr-only" for="InputLastName"
-									th:text="#{index.lastname}"></label> <input type="text"
-									th:field="*{lastName}" placeholder="Last Name"
-									id="InputLastName" th:attr="placeholder=#{index.lastname}"
-									class="form-control" th:errorclass="fieldError" />
-							</div>
-
-							<div th:if="${#fields.hasErrors('lastName')}" class="text-danger">
-								<ul>
-									<li th:each="err : ${#fields.errors('lastName')}"
-										th:text="#{index.lastname} + ' ' + #{index.isrequired2}" />
-								</ul>
-							</div>
-
-							<!-- Phone Number -->
-
-							<div class="form-group">
-								<label class="sr-only" for="InputPhoneNumber"
-									th:text="#{index.phonenumber}"></label> <input type="text"
-									th:field="*{phoneNumber}" placeholder="Phone Number"
-									id="InputPhoneNumber"
-									th:attr="placeholder=#{index.phonenumber}" class="form-control"
-									th:errorclass="fieldError" />
-							</div>
-
-							<div th:if="${#fields.hasErrors('phoneNumber')}"
-								class="text-danger">
-								<ul>
-									<li th:each="err : ${#fields.errors('phoneNumber')}"
-										th:text="#{index.phonenumber} + ' ' + #{index.isrequired1}" />
-								</ul>
-							</div>
-
-							<!-- Medical Chamber -->
-
-							<div class="form-group">
-								<label for="ChamberSelect" th:text="#{index.medicalchamber}"></label>
-								<select type="text" th:field="*{medicalChamber}"
-									id="ChamberSelect" class="form-control"
-									th:errorclass="fieldError">
-									<option value="OIL w Szczecinie">OIL w Szczecinie</option>
-									<option value="OIL w Warszawie">OIL w Warszawie</option>
-									<option value="OIL w Krakowie">OIL w Krakowie</option>
-								</select>
-							</div>
-
-							<div th:if="${#fields.hasErrors('medicalChamber')}"
-								class="text-danger">
-								<ul>
-									<li th:each="err : ${#fields.errors('medicalChamber')}"
-										th:text="#{index.medicalchamber} + ' ' + #{index.isrequired3}" />
-								</ul>
-							</div>
-
-
-
 
 						</div>
 
-
-
-						<div class="form-group mt-4">
-							<button type="submit" class="btn btn-success w-100">
-								<span th:text="#{index.register}"></span>
-							</button>
-						</div>
-
-					</form>
+					</section>
 
 				</div>
-
 			</div>
+		</main>
+		<div class="row bg-light" style="min-height: 200px">
 
-		</section>
+			<footer class="container-fluid my-auto">
+				<div class="row">
+					<div class="d-flex ml-auto mr-5">
+						<i class="fas fa-language fa-3x mr-1 my-auto"></i>
+						<div class="sr-only">
+							<label class="input-group-text" for="locales"
+								th:text="#{index.language}"></label>
+						</div>
+						<select id="locales"
+							class="custom-select border-secondary my-auto"
+							style="max-width: 110px;">
+							<option value="" th:text="#{index.language}"></option>
+							<option value="pl_PL" th:text="#{index.polish}"></option>
+							<option value="en" th:text="#{index.english}"></option>
+						</select>
 
+					</div>
+				</div>
 
-	</main>
-
-	<footer>
-	<div class="container-fluid h-25 bg-light">
-		<div class="float-right d-flex mt-5 mr-4">
-			<i class="fas fa-language fa-3x mr-1"></i>
-		  	<div class="sr-only">
-		  		<label class="input-group-text" for="locales" th:text="#{index.language}"></label>
-  			</div>		
-			<select id="locales" class="custom-select my-auto border-secondary" style="max-width: 110px;">
-				<option value="" th:text="#{index.language}"></option>
-				<option value="pl_PL" th:text="#{index.polish}"></option>
-				<option value="en" th:text="#{index.english}"></option>
-			</select>
-		
+			</footer>
 		</div>
+
+
 	</div>
-
-	</footer>
-
-
-
-
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -375,38 +389,46 @@ a {
 	<!-- Show hide form for admin registration -->
 
 	<script>
-		document.addEventListener("DOMContentLoaded", function(){
-			 var adminCheckbox = document.getElementById('checkboxForAdminForm');
-			 
-			adminCheckbox.addEventListener("click", function(){
-				
-				if (adminCheckbox.checked){
-					document.getElementById('adminForm').style.display = "block";
-				} else {
-					document.getElementById('adminForm').style.display = "none";
-				}	
-			});
-			
-			if (adminCheckbox.checked){
-				document.getElementById('adminForm').style.display = "block";
-			} else {
-				 document.getElementById('adminForm').style.display = "none";
-			}								 	
+		document
+				.addEventListener(
+						"DOMContentLoaded",
+						function() {
+							var adminCheckbox = document
+									.getElementById('checkboxForAdminForm');
 
-		});		
-		
+							adminCheckbox
+									.addEventListener(
+											"click",
+											function() {
+
+												if (adminCheckbox.checked) {
+													document
+															.getElementById('adminForm').style.display = "block";
+												} else {
+													document
+															.getElementById('adminForm').style.display = "none";
+												}
+											});
+
+							if (adminCheckbox.checked) {
+								document.getElementById('adminForm').style.display = "block";
+							} else {
+								document.getElementById('adminForm').style.display = "none";
+							}
+
+						});
 	</script>
 
 
 	<script>
-	$(document).ready(function() {
-	    $("#locales").change(function () {
-	        var selectedOption = $('#locales').val();
-	        if (selectedOption != ''){
-	            window.location.replace('/?lang=' + selectedOption);
-	        }
-	    });
-	});
+		$(document).ready(function() {
+			$("#locales").change(function() {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != '') {
+					window.location.replace('/?lang=' + selectedOption);
+				}
+			});
+		});
 	</script>
 
 

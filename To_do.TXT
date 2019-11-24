@@ -1,8 +1,6 @@
 To do:
 
-How to accept admin role request? make email sys admin to manually add oiladmin role
-
-internationalization
+lang change button
 
 create fieldValidation package
 
