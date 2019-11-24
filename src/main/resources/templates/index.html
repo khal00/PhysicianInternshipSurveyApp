@@ -159,12 +159,12 @@ a {
 
 					</section>
 					<!-- Register form -->
-
-					<section sec:authorize="isAnonymous()" class="row">
-						<div
-							class="m-auto col-8 col-md-6 col-lg-4 bg-light rounded px-4 pt-4 pb-2">
-
-							<div class="mb-3" th:text="#{index.register}"></div>
+					<div class="row">
+					<div class="d-flex col-12 col-md-6 mb-3 mb-md-0">
+						<h1 class="h1 text-white m-auto mr-md-2" th:text="#{index.register}"></h1>
+					</div>
+					<section class="col-12 col-md-6" sec:authorize="isAnonymous()">
+						<div class="col-8 col-md-8 col-lg-6 bg-light rounded px-4 pt-4 pb-2 m-auto ml-md-2">
 
 							<div>
 
@@ -343,6 +343,7 @@ a {
 						</div>
 
 					</section>
+					</div>
 
 				</div>
 			</div>
