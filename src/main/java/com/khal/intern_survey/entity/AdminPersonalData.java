@@ -9,6 +9,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
+import com.khal.intern_survey.validation.ContactNumberConstraint;
+
 @Entity
 @Table(name = "admin_personal_data")
 public class AdminPersonalData {
@@ -26,7 +28,8 @@ public class AdminPersonalData {
 	@Column(name = "last_name")
 	private String lastName;
 	
-	@NotBlank(message = "is required")
+	@NotBlank(message = "index.phoneisrequired")
+	@ContactNumberConstraint
 	@Column(name = "phone_number")
 	private String phoneNumber;
 	

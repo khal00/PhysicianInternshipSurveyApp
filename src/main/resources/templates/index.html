@@ -160,189 +160,196 @@ a {
 					</section>
 					<!-- Register form -->
 					<div class="row">
-					<div class="d-flex col-12 col-md-6 mb-3 mb-md-0">
-						<h1 class="h1 text-white m-auto mr-md-2" th:text="#{index.register}"></h1>
-					</div>
-					<section class="col-12 col-md-6" sec:authorize="isAnonymous()">
-						<div class="col-8 col-md-8 col-lg-6 bg-light rounded px-4 pt-4 pb-2 m-auto ml-md-2">
+						<div
+							class="d-flex flex-column col-12 col-md-6 mb-3 mb-md-0 text-white">
+							<h1 class="h1 mt-auto mx-auto mr-md-2 text-right"
+								th:text="#{index.h1}"></h1>
+							<p class="mr-md-2 mt-1 mb-auto mx-auto text-right"
+								th:text="#{index.instructions}"></p>
+						</div>
+						<section class="col-12 col-md-6" sec:authorize="isAnonymous()">
+							<div
+								class="col-8 col-md-10 col-lg-8 bg-light rounded px-4 pt-4 pb-2 m-auto ml-md-2">
 
-							<div>
+								<div>
 
-								<!-- Registration Form -->
-								<form th:action="@{/processRegistrationForm}"
-									th:object="${userDTO}" method="POST" class="form-horizontal">
-
-
-									<!-- Place for errors -->
-									<div class="form-group">
-
-										<div th:if="${registrationError}" class="alert alert-danger">
-											<span th:text="#{index.userexists}"></span>
-										</div>
-									</div>
-
-									<!-- Email -->
-									<div class="form-group">
-										<label class="sr-only" for="RegisterInputEmail"
-											th:text="#{index.email}"></label> <input type="text"
-											th:field="*{email}" placeholder="email"
-											id="RegisterInputEmail" th:attr="placeholder=#{index.email}"
-											class="form-control" />
-									</div>
-
-									<div th:if="${#fields.hasErrors('email')}" class="text-danger">
-										<ul>
-											<li th:each="err : ${#fields.errors('email')}"
-												th:text="#{index.email} + ' ' + #{index.isrequired1}" />
-										</ul>
-									</div>
+									<!-- Registration Form -->
+									<form th:action="@{/processRegistrationForm}"
+										th:object="${userDTO}" method="POST" class="form-horizontal">
 
 
-									<!-- Password -->
-									<div class="form-group">
-										<label class="sr-only" for="RegisterInputPassword"
-											th:text="#{index.password}"></label> <input type="password"
-											th:field="*{password}" placeholder="password"
-											id="RegisterInputPassword"
-											th:attr="placeholder=#{index.password}" class="form-control"
-											th:errorclass="fieldError" />
-									</div>
-									<div th:if="${#fields.hasErrors('password')}"
-										class="text-danger">
-										<ul>
-											<li th:each="err : ${#fields.errors('password')}"
-												th:text="#{index.password} + ' ' + #{index.isrequired2}" />
-										</ul>
-									</div>
-
-
-									<!-- Confirm Password -->
-									<div class="form-group">
-										<label class="sr-only" for="InputConfirmPassword"
-											th:text="#{index.confirmpassword}"></label> <input
-											type="password" th:field="*{matchingPassword}"
-											placeholder="confirm password" id="InputConfirmPassword"
-											th:attr="placeholder=#{index.confirmpassword}"
-											class="form-control" th:errorclass="fieldError" />
-									</div>
-									<div th:if="${#fields.hasErrors('matchingPassword')}"
-										class="text-danger">
-										<ul>
-											<li th:each="err : ${#fields.errors('matchingPassword')}"
-												th:text="#{index.password} + ' ' + #{index.isrequired2}" />
-										</ul>
-									</div>
-
-									<div class="form-group form-check">
-										<input type="checkbox" class="form-check-input"
-											id="checkboxForAdminForm" name="checkboxForAdminForm"
-											th:checked="${expandAdminForm}"> <label
-											class="form-check-label" for="checkboxForAdminForm"
-											th:text="#{index.registerasadmin}"></label>
-									</div>
-
-
-									<!-- Admin Personal Data Form -->
-
-									<div id="adminForm" style="display: none;"
-										th:object="${adminData}">
-
-										<!-- First Name -->
-
+										<!-- Place for errors -->
 										<div class="form-group">
-											<label class="sr-only" for="InputFirstName"
-												th:text="#{index.firstname}"></label> <input type="text"
-												th:field="*{firstName}" placeholder="First Name"
-												id="InputFirstName" th:attr="placeholder=#{index.firstname}"
-												class="form-control" th:errorclass="fieldError" />
+
+											<div th:if="${registrationError}" class="alert alert-danger">
+												<span th:text="#{index.userexists}"></span>
+											</div>
 										</div>
 
-										<div th:if="${#fields.hasErrors('firstName')}"
-											class="text-danger">
-											<ul>
-												<li th:each="err : ${#fields.errors('firstName')}"
-													th:text="#{index.firstname} + ' ' + #{index.isrequired2}" />
-											</ul>
-										</div>
-
-										<!-- Last Name -->
-
+										<!-- Email -->
 										<div class="form-group">
-											<label class="sr-only" for="InputLastName"
-												th:text="#{index.lastname}"></label> <input type="text"
-												th:field="*{lastName}" placeholder="Last Name"
-												id="InputLastName" th:attr="placeholder=#{index.lastname}"
-												class="form-control" th:errorclass="fieldError" />
+											<label class="sr-only" for="RegisterInputEmail"
+												th:text="#{index.email}"></label> <input type="text"
+												th:field="*{email}" placeholder="email"
+												id="RegisterInputEmail" th:attr="placeholder=#{index.email}"
+												class="form-control" th:errorclass="is-invalid" />
 										</div>
 
-										<div th:if="${#fields.hasErrors('lastName')}"
-											class="text-danger">
-											<ul>
-												<li th:each="err : ${#fields.errors('lastName')}"
-													th:text="#{index.lastname} + ' ' + #{index.isrequired2}" />
-											</ul>
-										</div>
+											<div th:if="${#fields.hasErrors('email')}">
 
-										<!-- Phone Number -->
+												<div th:each="err : ${#fields.errors('email')}"
+													th:text="#{index.email} + ' ' + #{index.isrequired1}"
+													class="alert alert-danger"></div>
 
+											</div>
+
+
+										<!-- Password -->
 										<div class="form-group">
-											<label class="sr-only" for="InputPhoneNumber"
-												th:text="#{index.phonenumber}"></label> <input type="text"
-												th:field="*{phoneNumber}" placeholder="Phone Number"
-												id="InputPhoneNumber"
-												th:attr="placeholder=#{index.phonenumber}"
-												class="form-control" th:errorclass="fieldError" />
+											<label class="sr-only" for="RegisterInputPassword"
+												th:text="#{index.password}"></label> <input type="password"
+												th:field="*{password}" placeholder="password"
+												id="RegisterInputPassword"
+												th:attr="placeholder=#{index.password}" class="form-control"
+												th:errorclass="is-invalid" />
 										</div>
+											<div th:if="${#fields.hasErrors('password')}">
 
-										<div th:if="${#fields.hasErrors('phoneNumber')}"
-											class="text-danger">
-											<ul>
-												<li th:each="err : ${#fields.errors('phoneNumber')}"
-													th:text="#{index.phonenumber} + ' ' + #{index.isrequired1}" />
-											</ul>
-										</div>
+												<div th:each="err : ${#fields.errors('password')}"
+													th:text="#{index.password} + ' ' + #{index.isrequired2}"
+													class="alert alert-danger"></div>
 
-										<!-- Medical Chamber -->
+											</div>
 
+
+										<!-- Confirm Password -->
 										<div class="form-group">
-											<label for="ChamberSelect" th:text="#{index.medicalchamber}"></label>
-											<select type="text" th:field="*{medicalChamber}"
-												id="ChamberSelect" class="form-control"
-												th:errorclass="fieldError">
-												<option value="OIL w Szczecinie">OIL w Szczecinie</option>
-												<option value="OIL w Warszawie">OIL w Warszawie</option>
-												<option value="OIL w Krakowie">OIL w Krakowie</option>
-											</select>
+											<label class="sr-only" for="InputConfirmPassword"
+												th:text="#{index.confirmpassword}"></label> <input
+												type="password" th:field="*{matchingPassword}"
+												placeholder="confirm password" id="InputConfirmPassword"
+												th:attr="placeholder=#{index.confirmpassword}"
+												class="form-control" th:errorclass="is-invalid" />
+										</div>
+											<div th:if="${#fields.hasErrors('matchingPassword')}">
+
+												<div th:each="err : ${#fields.errors('matchingPassword')}"
+													th:text="#{index.password} + ' ' + #{index.isrequired2}"
+													class="alert alert-danger"></div>
+
+											</div>
+
+										<div class="form-group form-check">
+											<input type="checkbox" class="form-check-input"
+												id="checkboxForAdminForm" name="checkboxForAdminForm"
+												th:checked="${expandAdminForm}"> <label
+												class="form-check-label" for="checkboxForAdminForm"
+												th:text="#{index.registerasadmin}"></label>
 										</div>
 
-										<div th:if="${#fields.hasErrors('medicalChamber')}"
-											class="text-danger">
-											<ul>
-												<li th:each="err : ${#fields.errors('medicalChamber')}"
-													th:text="#{index.medicalchamber} + ' ' + #{index.isrequired3}" />
-											</ul>
+
+										<!-- Admin Personal Data Form -->
+
+										<div id="adminForm" style="display: none;"
+											th:object="${adminData}">
+
+											<!-- First Name -->
+
+											<div class="form-group">
+												<label class="sr-only" for="InputFirstName"
+													th:text="#{index.firstname}"></label> <input type="text"
+													th:field="*{firstName}" placeholder="First Name"
+													id="InputFirstName"
+													th:attr="placeholder=#{index.firstname}"
+													class="form-control" th:errorclass="is-invalid" />
+											</div>
+
+											<div th:if="${#fields.hasErrors('firstName')}">
+
+												<div th:each="err : ${#fields.errors('firstName')}"
+													th:text="#{index.firstname} + ' ' + #{index.isrequired2}"
+													class="alert alert-danger"></div>
+
+											</div>
+
+											<!-- Last Name -->
+
+											<div class="form-group">
+												<label class="sr-only" for="InputLastName"
+													th:text="#{index.lastname}"></label> <input type="text"
+													th:field="*{lastName}" placeholder="Last Name"
+													id="InputLastName" th:attr="placeholder=#{index.lastname}"
+													class="form-control" th:errorclass="is-invalid" />
+											</div>
+
+											<div th:if="${#fields.hasErrors('lastName')}">
+
+												<div th:each="err : ${#fields.errors('lastName')}"
+													th:text="#{index.lastname} + ' ' + #{index.isrequired2}"
+													class="alert alert-danger"></div>
+
+											</div>
+
+											<!-- Phone Number -->
+
+											<div class="form-group">
+												<label class="sr-only" for="InputPhoneNumber"
+													th:text="#{index.phonenumber}"></label> <input type="text"
+													th:field="*{phoneNumber}" placeholder="Phone Number"
+													id="InputPhoneNumber"
+													th:attr="placeholder=#{index.phonenumber}"
+													class="form-control" th:errorclass="is-invalid" />
+											</div>
+
+											<div th:if="${#fields.hasErrors('phoneNumber')}">
+												
+													<div th:each="err : ${#fields.errors('phoneNumber')}"
+														th:text="#{${err}}"
+														class="alert alert-danger"></div>
+						
+											</div>
+
+											<!-- Medical Chamber -->
+
+											<div class="form-group">
+												<label for="ChamberSelect" th:text="#{index.medicalchamber}"></label>
+												<select type="text" th:field="*{medicalChamber}"
+													id="ChamberSelect" class="form-control"
+													th:errorclass="is-invalid">
+													<option value="OIL w Szczecinie">OIL w Szczecinie</option>
+													<option value="OIL w Warszawie">OIL w Warszawie</option>
+													<option value="OIL w Krakowie">OIL w Krakowie</option>
+												</select>
+											</div>
+
+											<div th:if="${#fields.hasErrors('medicalChamber')}"
+												class="text-danger">
+												<ul>
+													<li th:each="err : ${#fields.errors('medicalChamber')}"
+														th:text="#{index.medicalchamber} + ' ' + #{index.isrequired3}" />
+												</ul>
+											</div>
+
+
+
+
 										</div>
 
 
 
+										<div class="form-group mt-4">
+											<button type="submit" class="btn btn-success w-100">
+												<span th:text="#{index.register}"></span>
+											</button>
+										</div>
 
-									</div>
+									</form>
 
-
-
-									<div class="form-group mt-4">
-										<button type="submit" class="btn btn-success w-100">
-											<span th:text="#{index.register}"></span>
-										</button>
-									</div>
-
-								</form>
+								</div>
 
 							</div>
 
-						</div>
-
-					</section>
+						</section>
 					</div>
 
 				</div>
