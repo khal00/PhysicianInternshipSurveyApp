@@ -13,6 +13,10 @@ ConstraintValidator<ContactNumberConstraint, String> {
   @Override
   public boolean isValid(String contactField,
     ConstraintValidatorContext cxt) {
+	  if(contactField == null) {
+		  return true;
+	  }
+	  
       return contactField != null && contactField.matches("[0-9]+")
         && (contactField.length() > 9) && (contactField.length() < 14);
   }

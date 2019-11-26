@@ -85,13 +85,13 @@ public class RegistrationController {
 		}
 		
 		// user requested admin privileges but the form has errors
-		if(adminBindingResult.hasErrors()) {
+		if(adminBindingResult.hasErrors() && expandAdminForm == true) {
 
 			theModel.addAttribute("expandAdminForm", expandAdminForm);
 			return "index";		
 		}
 		
-		// create admin account
+		// create admin account if user selected to request for admin role and there is no errors
 		if(checkboxAdminValue != null) {
 			userService.saveUserAndAdminData(userDTO, adminData);
 			return "registration-confirmation";

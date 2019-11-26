@@ -21,20 +21,45 @@
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
 	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
 	crossorigin="anonymous">
-	
-<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 
-    <style>
-      body {
-        font-family: 'Roboto', sans-serif;
-        
-      }
-    </style>
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+	rel="stylesheet">
 
+<style>
+body {
+	font-family: 'Roboto', sans-serif;
+}
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <script>
+            var myApp = angular.module("myapp", []);
+            myApp.controller("PasswordController", function($scope) {
+
+                var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+                var mediumRegex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
+
+				
+                $scope.passwordStrength = {
+
+                    };
+                
+                $scope.analyze = function(value) {
+                    if(strongRegex.test(value)) {
+                        $scope.passwordStrength["background-color"] = "#ccff90";
+                    } else if(mediumRegex.test(value)) {
+                        $scope.passwordStrength["background-color"] = "#fff59d";
+                    } else {
+                        $scope.passwordStrength["background-color"] = "#ffebee";
+                    }
+                };
+
+            });
+        </script>
 
 </head>
 
-<body class="h-100">
+<body class="h-100" data-ng-app="myapp">
 
 
 	<header>
@@ -141,7 +166,8 @@
 
 		<main>
 
-			<div class="row pb-5 pt-4" style="min-height: 700px; background-color: black;">
+			<div class="row pb-5 pt-4"
+				style="min-height: 700px; background-color: black;">
 
 				<div class="container-fluid my-auto">
 					<section class="row">
@@ -194,31 +220,35 @@
 												class="form-control" th:errorclass="is-invalid" />
 										</div>
 
-											<div th:if="${#fields.hasErrors('email')}">
+										<div th:if="${#fields.hasErrors('email')}">
 
-												<div th:each="err : ${#fields.errors('email')}"
-													th:text="#{index.email} + ' ' + #{index.isrequired1}"
-													class="alert alert-danger"></div>
+											<div th:each="err : ${#fields.errors('email')}"
+												th:text="#{${err}}"
+												class="alert alert-danger"></div>
 
-											</div>
+										</div>
 
 
 										<!-- Password -->
-										<div class="form-group">
+										<div class="form-group" data-ng-controller="PasswordController">
 											<label class="sr-only" for="RegisterInputPassword"
-												th:text="#{index.password}"></label> <input type="password"
+												th:text="#{index.password}"></label> 
+												<input type="password"
 												th:field="*{password}" placeholder="password"
 												id="RegisterInputPassword"
 												th:attr="placeholder=#{index.password}" class="form-control"
-												th:errorclass="is-invalid" />
+												th:errorclass="is-invalid" 
+												data-ng-model="password"
+												data-ng-change="analyze(password)"
+												data-ng-style="passwordStrength"/>
 										</div>
-											<div th:if="${#fields.hasErrors('password')}">
+										<div th:if="${#fields.hasErrors('password')}">
 
-												<div th:each="err : ${#fields.errors('password')}"
-													th:text="#{index.password} + ' ' + #{index.isrequired2}"
-													class="alert alert-danger"></div>
+											<div th:each="err : ${#fields.errors('password')}"
+												th:text="#{${err}}"
+												class="alert alert-danger"></div>
 
-											</div>
+										</div>
 
 
 										<!-- Confirm Password -->
@@ -230,20 +260,16 @@
 												th:attr="placeholder=#{index.confirmpassword}"
 												class="form-control" th:errorclass="is-invalid" />
 										</div>
-											<div th:if="${#fields.hasErrors('matchingPassword')}">
+										<div th:if="${#fields.hasErrors('matchingPassword')}">
 
-												<div th:each="err : ${#fields.errors('matchingPassword')}"
-													th:text="#{index.password} + ' ' + #{index.isrequired2}"
-													class="alert alert-danger"></div>
+											<div th:each="err : ${#fields.errors('matchingPassword')}"
+												th:text="#{index.password} + ' ' + #{index.isrequired2}"
+												class="alert alert-danger"></div>
 
-											</div>
-
-										<div class="form-group form-check">
-											<input type="checkbox" class="form-check-input"
-												id="checkboxForAdminForm" name="checkboxForAdminForm"
-												th:checked="${expandAdminForm}"> <label
-												class="form-check-label" for="checkboxForAdminForm"
-												th:text="#{index.registerasadmin}"></label>
+										</div>
+										
+										<div th:if="${#fields.hasErrors('global')}">
+											<div th:each="err : ${#fields.errors('global')}" th:text="#{${err}}" class="alert alert-danger"></div>
 										</div>
 
 
@@ -301,18 +327,17 @@
 											</div>
 
 											<div th:if="${#fields.hasErrors('phoneNumber')}">
-												
-													<div th:each="err : ${#fields.errors('phoneNumber')}"
-														th:text="#{${err}}"
-														class="alert alert-danger"></div>
-						
+
+												<div th:each="err : ${#fields.errors('phoneNumber')}"
+													th:text="#{${err}}" class="alert alert-danger"></div>
+
 											</div>
 
 											<!-- Medical Chamber -->
 
 											<div class="form-group">
 												<label for="ChamberSelect" th:text="#{index.medicalchamber}"></label>
-												<select type="text" th:field="*{medicalChamber}"
+												<select th:field="*{medicalChamber}"
 													id="ChamberSelect" class="form-control"
 													th:errorclass="is-invalid">
 													<option value="OIL w Szczecinie">OIL w Szczecinie</option>
@@ -329,9 +354,6 @@
 												</ul>
 											</div>
 
-
-
-
 										</div>
 
 
@@ -340,6 +362,14 @@
 											<button type="submit" class="btn btn-success w-100">
 												<span th:text="#{index.register}"></span>
 											</button>
+										</div>
+										
+										<div class="form-group form-check">
+											<input type="checkbox" class="form-check-input"
+												id="checkboxForAdminForm" name="checkboxForAdminForm"
+												th:checked="${expandAdminForm}"> <label
+												class="form-check-label" for="checkboxForAdminForm"
+												th:text="#{index.registerasadmin}"></label>
 										</div>
 
 									</form>
@@ -376,7 +406,7 @@
 				</div>
 
 			</footer>
-		</div>
+
 
 
 	</div>
