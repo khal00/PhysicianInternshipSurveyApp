@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-@Constraint(validatedBy = PasswordValidator.class)
+@Constraint(validatedBy = PasswordConstraintValidator.class)
 @Retention(RUNTIME)
 @Target({ FIELD })
 @Documented

@@ -1,9 +1,5 @@
 To do:
 
-lang change button
-
-create fieldValidation package
-
 register after email confirmation
 
 create new login form

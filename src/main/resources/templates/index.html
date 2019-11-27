@@ -31,13 +31,14 @@ body {
 }
 </style>
 
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-        <script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script>
             var myApp = angular.module("myapp", []);
             myApp.controller("PasswordController", function($scope) {
 
                 var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
-                var mediumRegex = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
+                var mediumRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
 
 				
                 $scope.passwordStrength = {
@@ -48,7 +49,7 @@ body {
                     if(strongRegex.test(value)) {
                         $scope.passwordStrength["background-color"] = "#ccff90";
                     } else if(mediumRegex.test(value)) {
-                        $scope.passwordStrength["background-color"] = "#fff59d";
+                        $scope.passwordStrength["background-color"] = "#f1f8e9";
                     } else {
                         $scope.passwordStrength["background-color"] = "#ffebee";
                     }
@@ -223,30 +224,27 @@ body {
 										<div th:if="${#fields.hasErrors('email')}">
 
 											<div th:each="err : ${#fields.errors('email')}"
-												th:text="#{${err}}"
-												class="alert alert-danger"></div>
+												th:text="#{${err}}" class="alert alert-danger"></div>
 
 										</div>
 
 
 										<!-- Password -->
-										<div class="form-group" data-ng-controller="PasswordController">
+										<div class="form-group"
+											data-ng-controller="PasswordController">
 											<label class="sr-only" for="RegisterInputPassword"
-												th:text="#{index.password}"></label> 
-												<input type="password"
+												th:text="#{index.password}"></label> <input type="password"
 												th:field="*{password}" placeholder="password"
 												id="RegisterInputPassword"
 												th:attr="placeholder=#{index.password}" class="form-control"
-												th:errorclass="is-invalid" 
-												data-ng-model="password"
+												th:errorclass="is-invalid" data-ng-model="password"
 												data-ng-change="analyze(password)"
-												data-ng-style="passwordStrength"/>
+												data-ng-style="passwordStrength" />
 										</div>
 										<div th:if="${#fields.hasErrors('password')}">
 
 											<div th:each="err : ${#fields.errors('password')}"
-												th:text="#{${err}}"
-												class="alert alert-danger"></div>
+												th:text="#{${err}}" class="alert alert-danger"></div>
 
 										</div>
 
@@ -267,19 +265,20 @@ body {
 												class="alert alert-danger"></div>
 
 										</div>
-										
+
 										<div th:if="${#fields.hasErrors('global')}">
-											<div th:each="err : ${#fields.errors('global')}" th:text="#{${err}}" class="alert alert-danger"></div>
+											<div th:each="err : ${#fields.errors('global')}"
+												th:text="#{${err}}" class="alert alert-danger"></div>
 										</div>
 
 
 										<!-- Admin Personal Data Form -->
-
+										
 										<div id="adminForm" style="display: none;"
 											th:object="${adminData}">
-
+											
 											<!-- First Name -->
-
+						
 											<div class="form-group">
 												<label class="sr-only" for="InputFirstName"
 													th:text="#{index.firstname}"></label> <input type="text"
@@ -337,9 +336,8 @@ body {
 
 											<div class="form-group">
 												<label for="ChamberSelect" th:text="#{index.medicalchamber}"></label>
-												<select th:field="*{medicalChamber}"
-													id="ChamberSelect" class="form-control"
-													th:errorclass="is-invalid">
+												<select th:field="*{medicalChamber}" id="ChamberSelect"
+													class="form-control" th:errorclass="is-invalid">
 													<option value="OIL w Szczecinie">OIL w Szczecinie</option>
 													<option value="OIL w Warszawie">OIL w Warszawie</option>
 													<option value="OIL w Krakowie">OIL w Krakowie</option>
@@ -363,7 +361,7 @@ body {
 												<span th:text="#{index.register}"></span>
 											</button>
 										</div>
-										
+
 										<div class="form-group form-check">
 											<input type="checkbox" class="form-check-input"
 												id="checkboxForAdminForm" name="checkboxForAdminForm"
@@ -389,26 +387,28 @@ body {
 			<footer class="container-fluid my-auto">
 				<div class="row">
 					<div class="d-flex ml-auto mr-5">
-						<i class="fas fa-language fa-3x mr-1 my-auto"></i>
+					<!-- <i class="fas fa-language fa-3x mr-1 my-auto"></i>  -->
+						<div class="my-auto">
+							<img src="images/lang_icon.svg" width="32" height="32" class="mr-2"/>
+						</div>
 						<div class="sr-only">
 							<label class="input-group-text" for="locales"
 								th:text="#{index.language}"></label>
 						</div>
 						<select id="locales"
 							class="custom-select border-secondary my-auto"
-							style="max-width: 110px;">
-							<option value="" th:text="#{index.language}"></option>
+							style="max-width: 115px;">
+							<option value="" selected disabled th:text="#{index.language}"></option>
 							<option value="pl_PL" th:text="#{index.polish}"></option>
 							<option value="en" th:text="#{index.english}"></option>
 						</select>
+
 
 					</div>
 				</div>
 
 			</footer>
-
-
-
+		</div>
 	</div>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
