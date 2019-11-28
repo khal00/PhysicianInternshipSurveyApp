@@ -84,12 +84,22 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
+	    boolean accountNonExpired = true;
+	    boolean credentialsNonExpired = true;
+	    boolean accountNonLocked = true;
+
 		//use email as username
 		User user = userRepository.findByEmail(username);
 		if (user == null) {
 			throw new UsernameNotFoundException("Invalid email or password.");
 		}
-		return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(),
+		return new org.springframework.security.core.userdetails.User(
+				user.getEmail(), 
+				user.getPassword(),
+		        user.isEnabled(), 
+		        accountNonExpired, 
+		        credentialsNonExpired, 
+		        accountNonLocked, 
 				mapRolesToAuthorities(user.getRoles()));
 	}
 	

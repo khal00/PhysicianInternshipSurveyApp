@@ -8,6 +8,7 @@ CREATE TABLE `users` (
 `id` int NOT NULL AUTO_INCREMENT,
 `email` varchar(50) NOT NULL,
 `password` char(68) NOT NULL,
+`enabled` boolean NOT NULL DEFAULT FALSE,
 PRIMARY KEY (`id`),
 UNIQUE KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -40,9 +41,9 @@ ON DELETE CASCADE ON UPDATE CASCADE
 
 INSERT INTO `users` 
 VALUES 
-(1,'xi@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S'),
-(2,'jin@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S'),
-(3,'ping@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S');
+(1,'xi@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',false),
+(2,'jin@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',false),
+(3,'ping@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',false);
 
 INSERT INTO `admin_personal_data`
 VALUES

@@ -41,6 +41,9 @@ public class User {
 		joinColumns = @JoinColumn(name = "user_id"), 
 		inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Collection<Role> roles;
+	
+	@Column(name = "enabled")
+	private boolean enabled;
 
 	public User() {
 	}
@@ -50,6 +53,7 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.roles = roles;
+		this.enabled = false;
 	}
 
 	public User(String email, String username, String password, AdminPersonalData adminPersonalData,
@@ -59,6 +63,7 @@ public class User {
 		this.password = password;
 		this.adminPersonalData = adminPersonalData;
 		this.roles = roles;
+		this.enabled = false;
 	}
 
 	public Long getId() {
@@ -100,6 +105,13 @@ public class User {
 	public void setRoles(Collection<Role> roles) {
 		this.roles = roles;
 	}
-	
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
 
 }

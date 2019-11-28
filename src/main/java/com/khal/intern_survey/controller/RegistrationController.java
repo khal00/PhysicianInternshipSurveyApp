@@ -1,9 +1,14 @@
 package com.khal.intern_survey.controller;
 
+import java.util.Calendar;
+import java.util.Locale;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,11 +18,12 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
+import org.springframework.web.context.request.WebRequest;
 import com.khal.intern_survey.UserDTO.UserDTO;
 import com.khal.intern_survey.entity.AdminPersonalData;
 import com.khal.intern_survey.entity.User;
-import com.khal.intern_survey.service.AdminPersonalDataService;
+import com.khal.intern_survey.entity.VerificationToken;
+import com.khal.intern_survey.registration.OnRegistrationCompleteEvent;
 import com.khal.intern_survey.service.UserService;
 
 @Controller
@@ -26,9 +32,6 @@ public class RegistrationController {
 	@Autowired
 	private UserService userService;
 	
-	@Autowired
-	private AdminPersonalDataService adminPersonalDataService;
-	
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {
 		
@@ -36,9 +39,14 @@ public class RegistrationController {
 		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
 	}
 	
+	@Autowired
+	ApplicationEventPublisher eventPublisher;
+	
+	@Autowired
+	MessageSource messages;
+	
 	// Flag for admin registration form to expand in index page
 	private boolean expandAdminForm = false;
-	
 	
 	@GetMapping("/")
 	public String showIndex(Model theModel) {
@@ -57,7 +65,8 @@ public class RegistrationController {
 			, BindingResult userBindingResult
 			, @Valid @ModelAttribute("adminData") AdminPersonalData adminData
 			, BindingResult adminBindingResult
-			, Model theModel) {
+			, Model theModel
+			, WebRequest request) {
 		
 		
 		String email = userDTO.getEmail();
@@ -100,8 +109,44 @@ public class RegistrationController {
 		// create user account
 		userService.saveUser(userDTO);
 		
+		User registered = userService.findByEmail(email);
+		
+		try {
+	        String appUrl = request.getContextPath();
+	        eventPublisher.publishEvent(new OnRegistrationCompleteEvent
+	          (registered, request.getLocale(), appUrl));
+	    } catch (Exception me) {
+	        return "email_error";
+	    }
+		
 		return "registration-confirmation";
 		 
+	}
+	
+	@GetMapping(value = "/regitrationConfirm")
+	public String confirmRegistration
+	  (WebRequest request, Model model, @RequestParam("token") String token) {
+	  
+	    Locale locale = request.getLocale();
+	     
+	    VerificationToken verificationToken = userService.getVerificationToken(token);
+	    if (verificationToken == null) {
+	        String message = messages.getMessage("auth.message.invalidToken", null, locale);
+	        model.addAttribute("message", message);
+	        return "redirect:/badUser.html?lang=" + locale.getLanguage();
+	    }
+	     
+	    User user = verificationToken.getUser();
+	    Calendar cal = Calendar.getInstance();
+	    if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+	        String messageValue = messages.getMessage("auth.message.expired", null, locale);
+	        model.addAttribute("message", messageValue);
+	        return "redirect:/badUser.html?lang=" + locale.getLanguage();
+	    } 
+	     
+	    user.setEnabled(true); 
+	    userService.saveRegisteredUser(user); 
+	    return "redirect:/index.html?lang=" + request.getLocale().getLanguage(); 
 	}
 
 }
