@@ -7,11 +7,13 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Component;
 
 import com.khal.intern_survey.entity.User;
 import com.khal.intern_survey.registration.OnRegistrationCompleteEvent;
 import com.khal.intern_survey.service.UserService;
 
+@Component
 public class RegistrationListener implements ApplicationListener<OnRegistrationCompleteEvent> {
 	
 	@Autowired
@@ -29,6 +31,8 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
     }
  
     private void confirmRegistration(OnRegistrationCompleteEvent event) {
+    	
+    	System.out.println("inside confirmReg");
         User user = event.getUser();
         String token = UUID.randomUUID().toString();
         userService.createVerificationToken(user, token);
@@ -36,13 +40,13 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
         String recipientAddress = user.getEmail();
         String subject = "Registration Confirmation";
         String confirmationUrl 
-          = event.getAppUrl() + "/regitrationConfirm.html?token=" + token;
+          = event.getAppUrl() + "/registrationConfirm?token=" + token;
         String message = messages.getMessage("message.regSucc", null, event.getLocale());
          
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);
         email.setSubject(subject);
-        email.setText(message + " rn" + "http://localhost:8080" + confirmationUrl);
+        email.setText(message + " " + "http://localhost:8080" + confirmationUrl);
         mailSender.send(email);
     }
 	

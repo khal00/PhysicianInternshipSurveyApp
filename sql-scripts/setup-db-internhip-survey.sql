@@ -13,6 +13,17 @@ PRIMARY KEY (`id`),
 UNIQUE KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+DROP TABLE IF EXISTS `verification_token`;
+CREATE TABLE `verification_token` (
+`id` int NOT NULL AUTO_INCREMENT,
+`user_id` int NOT NULL,
+`expiry_date` date NOT NULL,
+`token` varchar (50) NOT NULL,
+PRIMARY KEY (`id`),
+CONSTRAINT `token_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 DROP TABLE IF EXISTS `admin_personal_data`;
 CREATE TABLE `admin_personal_data` (

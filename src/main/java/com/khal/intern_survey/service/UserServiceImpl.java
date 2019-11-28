@@ -20,9 +20,11 @@ import com.khal.intern_survey.UserDTO.UserDTO;
 import com.khal.intern_survey.dao.AdminPersonalDataRepository;
 import com.khal.intern_survey.dao.RoleRepository;
 import com.khal.intern_survey.dao.UserRepository;
+import com.khal.intern_survey.dao.VerificationTokenRepository;
 import com.khal.intern_survey.entity.AdminPersonalData;
 import com.khal.intern_survey.entity.Role;
 import com.khal.intern_survey.entity.User;
+import com.khal.intern_survey.entity.VerificationToken;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -38,6 +40,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private EmailServiceImpl emailServiceImpl;
+	
+    @Autowired
+    private VerificationTokenRepository tokenRepository;
 	
 	
 	@Override
@@ -106,6 +111,30 @@ public class UserServiceImpl implements UserService {
 	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 	}
+
+	@Override
+	public User getUser(String verificationToken) {
+        User user = tokenRepository.findByToken(verificationToken).getUser();
+        return user;
+	}
+
+	@Override
+	public void saveRegisteredUser(User user) {
+		userRepository.save(user);
+	}
+
+	@Override
+	public void createVerificationToken(User user, String token) {
+		VerificationToken myToken = new VerificationToken(token, user);
+        tokenRepository.save(myToken);
+	}
+
+	@Override
+	public VerificationToken getVerificationToken(String token) {
+		return tokenRepository.findByToken(token);
+	}
+	
+	
 
 
 }

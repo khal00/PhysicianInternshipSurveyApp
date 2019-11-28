@@ -109,13 +109,13 @@ public class RegistrationController {
 		// create user account
 		userService.saveUser(userDTO);
 		
-		User registered = userService.findByEmail(email);
+		User registeredUser = userService.findByEmail(email);
 		
 		try {
 	        String appUrl = request.getContextPath();
 	        eventPublisher.publishEvent(new OnRegistrationCompleteEvent
-	          (registered, request.getLocale(), appUrl));
-	    } catch (Exception me) {
+	          (registeredUser, request.getLocale(), appUrl));
+	    } catch (Exception e) {
 	        return "email_error";
 	    }
 		
@@ -123,7 +123,8 @@ public class RegistrationController {
 		 
 	}
 	
-	@GetMapping(value = "/regitrationConfirm")
+	// confirm registration
+	@GetMapping("/registrationConfirm")
 	public String confirmRegistration
 	  (WebRequest request, Model model, @RequestParam("token") String token) {
 	  
@@ -137,6 +138,7 @@ public class RegistrationController {
 	    }
 	     
 	    User user = verificationToken.getUser();
+	    
 	    Calendar cal = Calendar.getInstance();
 	    if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
 	        String messageValue = messages.getMessage("auth.message.expired", null, locale);
@@ -146,7 +148,7 @@ public class RegistrationController {
 	     
 	    user.setEnabled(true); 
 	    userService.saveRegisteredUser(user); 
-	    return "redirect:/index.html?lang=" + request.getLocale().getLanguage(); 
+	    return "redirect:/?lang=" + request.getLocale().getLanguage(); 
 	}
 
 }
