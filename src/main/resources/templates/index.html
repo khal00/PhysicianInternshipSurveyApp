@@ -167,7 +167,7 @@ body {
 
 		<main>
 
-			<div class="row pb-5 pt-4"
+			<div class="row pb-5"
 				style="min-height: 700px; background-color: black;">
 
 				<div class="container-fluid my-auto">
@@ -175,13 +175,25 @@ body {
 
 						<!-- Check for login error -->
 						<div th:if="${param.error}"
-							class="alert alert-danger text-center mx-auto col-8 col-md-6 col-lg-4 mb-5"
+							class="alert alert-danger text-center mx-auto mb-5"
 							th:text="#{index.invalid}"></div>
 
 						<!-- Check for logout -->
 						<div th:if="${param.logout}"
-							class="alert alert-success text-center mx-auto col-8 col-md-6 col-lg-4 mb-5"
+							class="alert alert-success text-center mx-auto mb-5"
 							th:text="#{index.logoutsuccess}"></div>
+							
+						<!-- Check for register success or confirmation success -->
+						<div th:if="${successMessage}"
+							class="alert alert-success text-center mx-auto mb-5"
+							th:text="${successMessage}"></div>
+							
+						<!-- Check for account activation result -->
+						<div th:if="${message}"
+							class="alert alert-warning text-center mx-auto mb-5"
+							th:text="${message}"></div>
+							
+							
 
 					</section>
 					<!-- Register form -->

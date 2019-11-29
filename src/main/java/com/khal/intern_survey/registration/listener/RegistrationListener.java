@@ -30,18 +30,18 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
         this.confirmRegistration(event);
     }
  
+    
     private void confirmRegistration(OnRegistrationCompleteEvent event) {
     	
-    	System.out.println("inside confirmReg");
         User user = event.getUser();
         String token = UUID.randomUUID().toString();
         userService.createVerificationToken(user, token);
          
         String recipientAddress = user.getEmail();
-        String subject = "Registration Confirmation";
+        String subject = messages.getMessage("accountactivationemail.subject", null, event.getLocale());
         String confirmationUrl 
           = event.getAppUrl() + "/registrationConfirm?token=" + token;
-        String message = messages.getMessage("message.regSucc", null, event.getLocale());
+        String message = messages.getMessage("accountactivationemail.text", null, event.getLocale());
          
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);

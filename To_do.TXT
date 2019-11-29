@@ -1,7 +1,5 @@
 To do:
 
-register after email confirmation
-
 create new login form
 
 password and email change

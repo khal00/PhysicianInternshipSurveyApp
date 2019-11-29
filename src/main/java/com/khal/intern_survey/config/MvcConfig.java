@@ -3,6 +3,7 @@ package com.khal.intern_survey.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -25,6 +26,7 @@ public class MvcConfig implements WebMvcConfigurer {
 	    lci.setParamName("lang");
 	    return lci;
 	}
+	
 	
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {

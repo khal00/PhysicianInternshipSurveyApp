@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.khal.intern_survey.UserDTO.UserDTO;
 import com.khal.intern_survey.entity.AdminPersonalData;
 import com.khal.intern_survey.entity.User;
@@ -66,11 +70,15 @@ public class RegistrationController {
 			, @Valid @ModelAttribute("adminData") AdminPersonalData adminData
 			, BindingResult adminBindingResult
 			, Model theModel
-			, WebRequest request) {
-		
-		
+			, WebRequest request
+			, RedirectAttributes redirectedAttributes) {
+			
 		String email = userDTO.getEmail();
+		String appUrl = request.getContextPath();
+		Locale locale = LocaleContextHolder.getLocale();
+
 		
+		// check if user selected admin form
 		if(checkboxAdminValue != null) {
 			expandAdminForm = true;
 		} else {
@@ -100,10 +108,26 @@ public class RegistrationController {
 			return "index";		
 		}
 		
-		// create admin account if user selected to request for admin role and there is no errors
+		// there is no errors in the form
+		String registrationSuccessMessage = messages.getMessage("index.registersuccess", null, locale);
+		
+		// create admin account if user selected request for admin role option
+		// publish registration event for sending an email confirmation
 		if(checkboxAdminValue != null) {
 			userService.saveUserAndAdminData(userDTO, adminData);
-			return "registration-confirmation";
+			
+			User registeredUser = userService.findByEmail(email);
+			
+			try {
+		        eventPublisher.publishEvent(new OnRegistrationCompleteEvent (registeredUser, locale, appUrl));
+		    } catch (Exception e) {
+		    	String errorMessage = messages.getMessage("index.emailerror", null, locale);
+		        redirectedAttributes.addFlashAttribute("message", errorMessage);
+		    	return "redirect:/";
+		    }
+			
+			redirectedAttributes.addFlashAttribute("successMessage", registrationSuccessMessage);
+			return "redirect:/";
 		}
 		
 		// create user account
@@ -111,44 +135,51 @@ public class RegistrationController {
 		
 		User registeredUser = userService.findByEmail(email);
 		
-		try {
-	        String appUrl = request.getContextPath();
-	        eventPublisher.publishEvent(new OnRegistrationCompleteEvent
-	          (registeredUser, request.getLocale(), appUrl));
+		try {	   
+	        eventPublisher.publishEvent(new OnRegistrationCompleteEvent (registeredUser, locale, appUrl));
 	    } catch (Exception e) {
-	        return "email_error";
+	    	String errorMessage = messages.getMessage("index.emailerror", null, locale);
+	        redirectedAttributes.addFlashAttribute("message", errorMessage);
+	    	return "redirect:/";
 	    }
 		
-		return "registration-confirmation";
+		redirectedAttributes.addFlashAttribute("successMessage", registrationSuccessMessage);
+		return "redirect:/";
 		 
 	}
 	
-	// confirm registration
+	// registration confirmed by email
 	@GetMapping("/registrationConfirm")
-	public String confirmRegistration
-	  (WebRequest request, Model model, @RequestParam("token") String token) {
+	public String confirmRegistration (WebRequest request, Model model, @RequestParam("token") String token
+			, RedirectAttributes redirectedAttributes) {
 	  
 	    Locale locale = request.getLocale();
 	     
 	    VerificationToken verificationToken = userService.getVerificationToken(token);
 	    if (verificationToken == null) {
-	        String message = messages.getMessage("auth.message.invalidToken", null, locale);
-	        model.addAttribute("message", message);
-	        return "redirect:/badUser.html?lang=" + locale.getLanguage();
+	        String message = messages.getMessage("accountactivationmessage.invalidToken", null, locale);
+	        redirectedAttributes.addFlashAttribute("message", message);
+	        return "redirect:/?lang=" + locale.getLanguage();
 	    }
 	     
 	    User user = verificationToken.getUser();
 	    
 	    Calendar cal = Calendar.getInstance();
 	    if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
-	        String messageValue = messages.getMessage("auth.message.expired", null, locale);
-	        model.addAttribute("message", messageValue);
-	        return "redirect:/badUser.html?lang=" + locale.getLanguage();
+	        String message = messages.getMessage("accountactivationmessage.expired", null, locale);
+	        redirectedAttributes.addFlashAttribute("message", message);
+	        return "redirect:/?lang=" + locale.getLanguage();
 	    } 
-	     
+	    
+	    // activate user account
 	    user.setEnabled(true); 
-	    userService.saveRegisteredUser(user); 
+	    userService.saveRegisteredUser(user);
+	    String message = messages.getMessage("accountactivationmessage.success", null, locale);
+	    redirectedAttributes.addFlashAttribute("successMessage", message);
 	    return "redirect:/?lang=" + request.getLocale().getLanguage(); 
+	
 	}
+	
+	
 
 }
