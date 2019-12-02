@@ -49,7 +49,7 @@ body {
                     if(strongRegex.test(value)) {
                         $scope.passwordStrength["background-color"] = "#ccff90";
                     } else if(mediumRegex.test(value)) {
-                        $scope.passwordStrength["background-color"] = "#f1f8e9";
+                        $scope.passwordStrength["background-color"] = "#ffff8d";
                     } else {
                         $scope.passwordStrength["background-color"] = "#ffebee";
                     }
@@ -144,14 +144,33 @@ body {
 
 				<div sec:authorize="isAuthenticated()" class="d-flex">
 					<div class="ml-auto d-flex">
-						<i class="fas fa-user fa-2x mr-2 mt-2" style="color: white"></i>
+						<i class="fas fa-user fa-lg mr-2 my-auto" style="color: white"></i>
+						<div class="dropdown text-white d-flex">
+						<a class="text-white mr-2 dropdown-toggle my-auto" data-toggle="dropdown" 
+						th:text="${#authentication.getPrincipal().getUsername()}" aria-expanded="false" id="submenu"
+						aria-haspopup="true" th:href="@{/}"></a>
+						<div class="dropdown-menu" aria-labelledby="submenu">
+							<a class="dropdown-item" th:href="@{/logout}" th:text="#{index.signout}"></a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" th:href="@{/}">dropdown item 2</a>
+						</div>
+						</div>
 
-
-
-						<form class="form-inline" th:action="@{/logout}" method="POST">
-							<button type="submit" class="btn btn-outline-light"
-								th:text="#{index.signout}"></button>
-						</form>
+						
+						
+			
+					
+ 					 <!-- 			
+					<div class="nav-item dropdown text-white" >
+						<a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="submenu"
+						aria-haspopup="true">Dropdown menu</a>
+						<div class="dropdown-menu" aria-labelledby="submenu">
+							<a class="dropdown-item" th:href="@{/}">dropdown item 1</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" th:href="@{/}">dropdown item 2</a>
+						</div>
+					</div>
+					 -->
 					</div>
 				</div>
 
