@@ -112,20 +112,23 @@ body {
 
 				<div sec:authorize="isAnonymous()">
 
-
+					<a th:href="@{/showLoginForm}" th:text="#{index.signin}"></a>
+					<!-- 
 					<form class="form-inline mr-auto"
 						th:action="@{/authenticateTheUser}" method="POST">
 						<div class="d-flex ml-auto">
 							<div class="form-group mr-2">
 								<label class="sr-only" for="LoginInputEmail"
-									th:text="index.email"></label> <input type="text"
+									th:text="index.email"></label> 
+									<input type="text"  style="max-width: 170px"
 									name="username" class="form-control" id="LoginInputEmail"
 									placeholder="email" th:attr="placeholder=#{index.email}">
 							</div>
 
 							<div class="form-group mr-2">
 								<label class="sr-only" for="LoginInputPassword"
-									th:text="index.password"></label> <input type="password"
+									th:text="index.password"></label> 
+								<input type="password" style="max-width: 170px"
 									name="password" class="form-control" id="LoginInputPassword"
 									placeholder="Password" th:attr="placeholder=#{index.password}">
 							</div>
@@ -137,30 +140,39 @@ body {
 						</div>
 
 					</form>
-
+					
+					 -->
 
 				</div>
 
 
 				<div sec:authorize="isAuthenticated()" class="d-flex">
 					<div class="ml-auto d-flex">
+						<!-- 
 						<i class="fas fa-user fa-lg mr-2 my-auto" style="color: white"></i>
+					 	-->
 						<div class="dropdown text-white d-flex">
-						<a class="text-white mr-2 dropdown-toggle my-auto" data-toggle="dropdown" 
-						th:text="${#authentication.getPrincipal().getUsername()}" aria-expanded="false" id="submenu"
-						aria-haspopup="true" th:href="@{/}"></a>
-						<div class="dropdown-menu" aria-labelledby="submenu">
-							<a class="dropdown-item" th:href="@{/logout}" th:text="#{index.signout}"></a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" th:href="@{/}">dropdown item 2</a>
-						</div>
+							<a class="text-white mr-2 dropdown-toggle my-auto"
+								data-toggle="dropdown"
+								th:text="${#authentication.getPrincipal().getUsername()}"
+								aria-expanded="false" id="UserDropdownMenu" aria-haspopup="true"
+								th:href="@{/}"></a>
+							<div class="dropdown-menu dropdown-menu-right" aria-labelledby="UserDropdownMenu">
+
+								<form th:action="@{/logout}" method="POST">
+									<button type="submit" class="dropdown-item" 
+										th:text="#{index.signout}"></button>
+								</form>
+								<div class="dropdown-divider"></div>
+								
+							</div>
 						</div>
 
-						
-						
-			
-					
- 					 <!-- 			
+
+
+
+
+						<!-- 			
 					<div class="nav-item dropdown text-white" >
 						<a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" id="submenu"
 						aria-haspopup="true">Dropdown menu</a>
@@ -201,18 +213,18 @@ body {
 						<div th:if="${param.logout}"
 							class="alert alert-success text-center mx-auto mb-5"
 							th:text="#{index.logoutsuccess}"></div>
-							
+
 						<!-- Check for register success or confirmation success -->
 						<div th:if="${successMessage}"
 							class="alert alert-success text-center mx-auto mb-5"
 							th:text="${successMessage}"></div>
-							
+
 						<!-- Check for account activation result -->
 						<div th:if="${message}"
 							class="alert alert-warning text-center mx-auto mb-5"
 							th:text="${message}"></div>
-							
-							
+
+
 
 					</section>
 					<!-- Register form -->
@@ -304,12 +316,12 @@ body {
 
 
 										<!-- Admin Personal Data Form -->
-										
+
 										<div id="adminForm" style="display: none;"
 											th:object="${adminData}">
-											
+
 											<!-- First Name -->
-						
+
 											<div class="form-group">
 												<label class="sr-only" for="InputFirstName"
 													th:text="#{index.firstname}"></label> <input type="text"
@@ -418,9 +430,10 @@ body {
 			<footer class="container-fluid my-auto">
 				<div class="row">
 					<div class="d-flex ml-auto mr-5">
-					<!-- <i class="fas fa-language fa-3x mr-1 my-auto"></i>  -->
+						<!-- <i class="fas fa-language fa-3x mr-1 my-auto"></i>  -->
 						<div class="my-auto">
-							<img src="images/lang_icon.svg" width="32" height="32" class="mr-2"/>
+							<img src="images/lang_icon.svg" width="32" height="32"
+								class="mr-2" />
 						</div>
 						<div class="sr-only">
 							<label class="input-group-text" for="locales"

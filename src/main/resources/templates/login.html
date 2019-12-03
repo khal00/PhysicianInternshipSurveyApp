@@ -1,86 +1,210 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" class="h-100">
+<html class="h-100" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
 
 <head>
-<title th:text="#{login.signin}"></title>
-<meta charset="utf-8">
+
+<meta name="description" content="Physician Internship Survey"
+	th:attr="content=#{index.description}">
+<meta name="keywords" content="Physician Internship Survey"
+	th:attr="content=#{index.description}">
+<meta name="author" content="Krzysztof Halewski">
+<meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title th:text="#{index.headline}"></title>
 
-<!-- Reference Bootstrap files -->
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
 
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
+	rel="stylesheet">
 
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+body {
+	font-family: 'Roboto', sans-serif;
+}
+</style>
+
 </head>
 
-<body class="h-100 bg-light">
-
-	<div class="h-100 p-5 text-center bg-light">
-		<div
-			class="w-25 mx-auto border border-secondary p-5 rounded-lg shadow bg-light">
-			<h4 class="display-4" th:text="#{login.signin}"></h4>
+<body class="h-100">
 
 
-			<div>
-				<!-- Login Form -->
-				<form th:action="@{/authenticateTheUser}" method="POST">
+	<header>
+		<nav class="navbar navbar-dark navbar-expand-lg"
+			style="min-height: 64px; background-color: black">
+			<a th:href="@{/}" class="navbar-brand d-inline-block mr-3"
+				style="text-decoration: none;"> <span
+				th:text="#{index.headline}" class="text-white"></span>
+			</a>
+		</nav>
 
-					<!-- Place for messages: error, alert etc ... -->
-					<div class="form-group">
+	</header>
 
-						<div>
+	<div class="container-fluid h-100 bg-light">
 
-							<!-- Check for login error -->
-							<div th:if="${param.error}"
-								class="alert alert-danger col-xs-offset-1 col-xs-10">
-								Invalid email and password.</div>
 
-							<!-- Check for logout -->
-							<div th:if="${param.logout}"
-								class="alert alert-success col-xs-offset-1 col-xs-10">You
-								have been logged out.</div>
+		<main>
 
+			<div class="row pb-5"
+				style="min-height: 700px; background-color: black;">
+
+				<div class="container-fluid my-auto">
+					<section class="row">
+
+						<!-- Check for login error -->
+						<div th:if="${param.error}"
+							class="alert alert-danger text-center mx-auto mb-5"
+							th:text="#{index.invalid}"></div>
+
+						<!-- Check for logout -->
+						<div th:if="${param.logout}"
+							class="alert alert-success text-center mx-auto mb-5"
+							th:text="#{index.logoutsuccess}"></div>
+
+						<!-- Check for register success or confirmation success -->
+						<div th:if="${successMessage}"
+							class="alert alert-success text-center mx-auto mb-5"
+							th:text="${successMessage}"></div>
+
+						<!-- Check for account activation result -->
+						<div th:if="${message}"
+							class="alert alert-warning text-center mx-auto mb-5"
+							th:text="${message}"></div>
+
+
+
+					</section>
+					<!-- Login form -->
+					<section class="row my-auto">
+						<div class="bg-light rounded mx-auto">
+							<form class="mx-auto" th:action="@{/authenticateTheUser}"
+								method="POST">
+								<div>
+									<div class="form-group">
+										<label class="sr-only" for="LoginInputEmail"
+											th:text="index.email"></label> <input type="text"
+											style="max-width: 170px" name="username" class="form-control"
+											id="LoginInputEmail" placeholder="email"
+											th:attr="placeholder=#{index.email}">
+									</div>
+
+									<div class="form-group">
+										<label class="sr-only" for="LoginInputPassword"
+											th:text="index.password"></label> <input type="password"
+											style="max-width: 170px" name="password" class="form-control"
+											id="LoginInputPassword" placeholder="Password"
+											th:attr="placeholder=#{index.password}">
+									</div>
+
+									<div class="form-group">
+										<button type="submit"
+											class="btn btn-primary"
+											th:text="#{index.signin}"></button>
+									</div>
+								</div>
+
+							</form>
 						</div>
 
-					</div>
 
-					<!-- Email -->
-					<div class="form-group">
-						<input type="text" name="username" placeholder="email"
-							class="form-control">
-					</div>
+					</section>
 
-					<!-- Password -->
-					<div class="form-group">
-						<input type="password" name="password" placeholder="password"
-							class="form-control">
-					</div>
-
-					<!-- Login/Submit button -->
-					<div class="form-group">
-						<button type="submit" class="btn btn-outline-secondary">Login</button>
-					</div>
-
-				</form>
+				</div>
 			</div>
+		</main>
+		<div class="row bg-light" style="min-height: 200px">
 
-			<!-- Register button -->
-			<div class="m-3">
-				<a th:href="@{/showRegistrationForm}"
-					class="btn btn-outline-secondary" role="button">Register New
-					User</a>
-			</div>
+			<footer class="container-fluid my-auto">
+				<div class="row">
+					<div class="d-flex ml-auto mr-5">
+						<!-- <i class="fas fa-language fa-3x mr-1 my-auto"></i>  -->
+						<div class="my-auto">
+							<img src="images/lang_icon.svg" width="32" height="32"
+								class="mr-2" />
+						</div>
+						<div class="sr-only">
+							<label class="input-group-text" for="locales"
+								th:text="#{index.language}"></label>
+						</div>
+						<select id="locales"
+							class="custom-select border-secondary my-auto"
+							style="max-width: 115px;">
+							<option value="" selected disabled th:text="#{index.language}"></option>
+							<option value="pl_PL" th:text="#{index.polish}"></option>
+							<option value="en" th:text="#{index.english}"></option>
+						</select>
+					</div>
+				</div>
 
+			</footer>
 		</div>
-
-
-
 	</div>
 
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+		integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+		integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+		crossorigin="anonymous"></script>
+
+	<!-- Show hide form for admin registration -->
+
+	<script>
+		document
+				.addEventListener(
+						"DOMContentLoaded",
+						function() {
+							var adminCheckbox = document
+									.getElementById('checkboxForAdminForm');
+
+							adminCheckbox
+									.addEventListener(
+											"click",
+											function() {
+
+												if (adminCheckbox.checked) {
+													document
+															.getElementById('adminForm').style.display = "block";
+												} else {
+													document
+															.getElementById('adminForm').style.display = "none";
+												}
+											});
+
+							if (adminCheckbox.checked) {
+								document.getElementById('adminForm').style.display = "block";
+							} else {
+								document.getElementById('adminForm').style.display = "none";
+							}
+
+						});
+	</script>
+
+
+	<script>
+		$(document).ready(function() {
+			$("#locales").change(function() {
+				var selectedOption = $('#locales').val();
+				if (selectedOption != '') {
+					window.location.replace('/?lang=' + selectedOption);
+				}
+			});
+		});
+	</script>
+
+
 </body>
+
+
 </html>

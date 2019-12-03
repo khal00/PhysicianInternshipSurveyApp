@@ -8,6 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class LoginController {
 	
 
+	@GetMapping("/showLoginForm")
+	public String showLoginForm() {
+		
+		return "login";
+	}
+	
 	
 	@GetMapping("/access-denied")
 	public String showAccessDenied() {
