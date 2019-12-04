@@ -1,5 +1,7 @@
 To do:
 
+error messages for login form
+
 create new login form
 
 password and email change

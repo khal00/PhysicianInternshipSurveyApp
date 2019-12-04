@@ -24,6 +24,8 @@
 
 <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
 	rel="stylesheet">
+	
+<link href="css/styles.css" rel="sylesheet">
 
 <style>
 body {
@@ -95,16 +97,19 @@ body {
 				<div sec:authorize="isAnonymous()">
 
 					<a th:href="@{/showLoginForm}" th:text="#{index.signin}"
-						class="btn btn-outline-warning"></a>
+						class="btn btn-outline-warning d-none d-lg-inline"></a>
+					
+					<a th:href="@{/showLoginForm}" th:text="#{index.signin}"
+						class="text-warning d-lg-none"></a>	
+					
 				</div>
 
 
 				<div sec:authorize="isAuthenticated()">
 					<div class="ml-auto d-flex">
-						<!-- 
-						<i class="fas fa-user fa-lg mr-2 my-auto" style="color: white"></i>
-					 	-->
-						<div class="dropdown d-flex">
+					
+						<!-- Right dropdown menu for lg and xl screen -->
+						<div class="dropdown d-none d-lg-flex">
 							<a class="text-warning mr-2 dropdown-toggle my-auto"
 								data-toggle="dropdown"
 								th:text="${#authentication.getPrincipal().getUsername()}"
@@ -119,10 +124,29 @@ body {
 									<button type="submit" class="dropdown-item"
 										th:text="#{index.signout}"></button>
 								</form>
-
-
 							</div>
 						</div>
+						
+						<!-- Left dropdown menu for xs to md screen -->
+						<div class="dropdown d-lg-none">
+							<a class="text-warning mr-2 dropdown-toggle my-auto"
+								data-toggle="dropdown"
+								th:text="${#authentication.getPrincipal().getUsername()}"
+								aria-expanded="false" id="UserDropdownMenu" aria-haspopup="true"
+								th:href="@{/}"></a>
+							<div class="dropdown-menu dropdown-menu-left"
+								aria-labelledby="UserDropdownMenu">
+
+								<div class="dropdown-item">Wypełnij Ankietę</div>
+								<div class="dropdown-divider"></div>
+								<form th:action="@{/logout}" method="POST">
+									<button type="submit" class="dropdown-item"
+										th:text="#{index.signout}"></button>
+								</form>
+							</div>
+						</div>
+						
+						
 					</div>
 				</div>
 			</div>
@@ -168,7 +192,7 @@ body {
 
 
 					</section>
-					<!-- Register form -->
+					
 					<div class="row">
 						<div
 							class="d-flex flex-column col-12 col-md-6 mb-3 mb-md-0 text-white">
@@ -179,7 +203,7 @@ body {
 						</div>
 						<section class="col-12 col-md-6" sec:authorize="isAnonymous()">
 							<div
-								class="col-9 col-sm-7 col-md-10 col-lg-8 bg-light rounded px-4 pt-2 pb-2 m-auto ml-md-2">
+								class="col-9 col-sm-7 col-md-10 col-lg-8 col-xl-6 bg-light rounded px-4 pt-2 pb-2 m-auto ml-md-2">
 
 								<!-- Registration Form -->
 								<form th:action="@{/processRegistrationForm}"

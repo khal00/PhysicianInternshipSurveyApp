@@ -70,16 +70,18 @@ body {
 				style="min-height: 700px; background-color: black;">
 
 				<div class="container-fluid my-auto">
-					<section class="row">
-
-					<h1 class="text-white h3 mx-auto mb-4" th:text="#{login.signin}"></h1>
-					
-					</section>
-					
-					<!-- Login form -->
 
 					<section class="row my-auto">
-						<div class="bg-light rounded px-4 pt-4 pb-2 mx-auto col-8 col-sm-6 col-md-5 col-lg-4 col-xl-3">
+						
+						<div
+							class="d-flex flex-column col-12 col-md-6 mb-3 mb-md-0 text-white">
+							<h1 class="h1 my-auto mx-auto mr-md-2 text-right"
+								th:text="#{login.signin}"></h1>
+						</div>
+						
+						<!-- Login form -->
+						
+						<div class="bg-light rounded px-4 pt-4 pb-2 mx-auto ml-md-2 col-8 col-sm-7 col-md-5 col-lg-4 col-xl-3">
 
 							<form th:action="@{/authenticateTheUser}" method="POST">
 
