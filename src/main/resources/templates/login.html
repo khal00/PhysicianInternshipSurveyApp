@@ -39,9 +39,24 @@ body {
 		<nav class="navbar navbar-dark navbar-expand-lg"
 			style="min-height: 64px; background-color: black">
 			<a th:href="@{/}" class="navbar-brand d-inline-block mr-3"
-				style="text-decoration: none;"> <span
-				th:text="#{index.headline}" class="text-white"></span>
+				style="text-decoration: none;"> 
+				<span th:text="#{index.headline}"></span>
 			</a>
+			
+			<button class="navbar-dark navbar-toggler mb-2" type="button"
+				data-toggle="collapse" data-target="#mainmenu"
+				aria-controls="mainmenu" aria-expanded="false"
+				aria-label="navigation switch"
+				th:attr="aria-label=#{index.arialabel}">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="mainmenu">	
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active"><a class="nav-link" th:href="@{/}" 
+					th:text="#{index.home}"></a></li>
+				</ul>
+			</div>
 		</nav>
 
 	</header>
@@ -57,62 +72,49 @@ body {
 				<div class="container-fluid my-auto">
 					<section class="row">
 
-						<!-- Check for login error -->
-						<div th:if="${param.error}"
-							class="alert alert-danger text-center mx-auto mb-5"
-							th:text="#{index.invalid}"></div>
-
-						<!-- Check for logout -->
-						<div th:if="${param.logout}"
-							class="alert alert-success text-center mx-auto mb-5"
-							th:text="#{index.logoutsuccess}"></div>
-
-						<!-- Check for register success or confirmation success -->
-						<div th:if="${successMessage}"
-							class="alert alert-success text-center mx-auto mb-5"
-							th:text="${successMessage}"></div>
-
-						<!-- Check for account activation result -->
-						<div th:if="${message}"
-							class="alert alert-warning text-center mx-auto mb-5"
-							th:text="${message}"></div>
-
-
-
+					<h1 class="text-white h3 mx-auto mb-4" th:text="#{login.signin}"></h1>
+					
 					</section>
+					
 					<!-- Login form -->
+
 					<section class="row my-auto">
-						<div class="bg-light rounded mx-auto">
-							<form class="mx-auto" th:action="@{/authenticateTheUser}"
-								method="POST">
-								<div>
-									<div class="form-group">
-										<label class="sr-only" for="LoginInputEmail"
-											th:text="index.email"></label> <input type="text"
-											style="max-width: 170px" name="username" class="form-control"
-											id="LoginInputEmail" placeholder="email"
-											th:attr="placeholder=#{index.email}">
-									</div>
+						<div class="bg-light rounded px-4 pt-4 pb-2 mx-auto col-8 col-sm-6 col-md-5 col-lg-4 col-xl-3">
 
-									<div class="form-group">
-										<label class="sr-only" for="LoginInputPassword"
-											th:text="index.password"></label> <input type="password"
-											style="max-width: 170px" name="password" class="form-control"
-											id="LoginInputPassword" placeholder="Password"
-											th:attr="placeholder=#{index.password}">
-									</div>
+							<form th:action="@{/authenticateTheUser}" method="POST">
 
-									<div class="form-group">
-										<button type="submit"
-											class="btn btn-primary"
-											th:text="#{index.signin}"></button>
-									</div>
+								<!-- Email / Username -->
+
+								<div class="form-group">
+									<label class="text-primary" for="LoginInputEmail"
+										th:text="#{index.email}"></label> <input type="text"
+										name="username" class="form-control"
+										id="LoginInputEmail" placeholder="email"
+										th:attr="placeholder=#{index.enteremail}">
 								</div>
 
+								<!-- Password -->
+
+								<div class="form-group">
+									<label class="text-primary" for="LoginInputPassword"
+										th:text="#{index.password}"></label> <input type="password"
+										name="password" class="form-control"
+										id="LoginInputPassword" placeholder="Password"
+										th:attr="placeholder=#{index.enterpassword}">
+									<a th:href="@{/}" th:text="#{login.forgotpassword}" class="float-right mt-1" style="font-size: 0.9rem"></a>
+								</div>
+								
+
+								<div class="form-group">
+									<button type="submit" class="btn btn-primary mt-3 w-100"
+										th:text="#{index.signin}"></button>
+								</div>
 							</form>
+							<div class="float-right pb-2" style="font-size: 0.9rem">
+								<span></span>						
+								<a th:href="@{/}" th:text="#{login.donthaveaccount}" class="text-success"></a>
+							</div>
 						</div>
-
-
 					</section>
 
 				</div>
@@ -197,7 +199,7 @@ body {
 			$("#locales").change(function() {
 				var selectedOption = $('#locales').val();
 				if (selectedOption != '') {
-					window.location.replace('/?lang=' + selectedOption);
+					window.location.replace('/showLoginForm?lang=' + selectedOption);
 				}
 			});
 		});
