@@ -81,9 +81,16 @@ body {
 						
 						<!-- Login form -->
 						
-						<div class="bg-light rounded px-4 pt-4 pb-2 mx-auto ml-md-2 col-8 col-sm-7 col-md-5 col-lg-4 col-xl-3">
+						<div class="bg-light rounded px-4 pt-3 pb-2 mx-auto ml-md-2 col-8 col-sm-7 col-md-5 col-lg-4 col-xl-3">
 
 							<form th:action="@{/authenticateTheUser}" method="POST">
+							
+								<!-- Place for errors -->
+								<div class="form-group mt-2">
+									<div th:if="${param.error}" class="alert alert-danger">
+										<span th:text="#{index.invalid}"></span>
+									</div>
+								</div>
 
 								<!-- Email / Username -->
 
@@ -94,6 +101,7 @@ body {
 										id="LoginInputEmail" placeholder="email"
 										th:attr="placeholder=#{index.enteremail}">
 								</div>
+							
 
 								<!-- Password -->
 
@@ -105,7 +113,6 @@ body {
 										th:attr="placeholder=#{index.enterpassword}">
 									<a th:href="@{/}" th:text="#{login.forgotpassword}" class="float-right mt-1" style="font-size: 0.9rem"></a>
 								</div>
-								
 
 								<div class="form-group">
 									<button type="submit" class="btn btn-primary mt-3 w-100"
@@ -161,39 +168,6 @@ body {
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
 		integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
 		crossorigin="anonymous"></script>
-
-	<!-- Show hide form for admin registration -->
-
-	<script>
-		document
-				.addEventListener(
-						"DOMContentLoaded",
-						function() {
-							var adminCheckbox = document
-									.getElementById('checkboxForAdminForm');
-
-							adminCheckbox
-									.addEventListener(
-											"click",
-											function() {
-
-												if (adminCheckbox.checked) {
-													document
-															.getElementById('adminForm').style.display = "block";
-												} else {
-													document
-															.getElementById('adminForm').style.display = "none";
-												}
-											});
-
-							if (adminCheckbox.checked) {
-								document.getElementById('adminForm').style.display = "block";
-							} else {
-								document.getElementById('adminForm').style.display = "none";
-							}
-
-						});
-	</script>
 
 
 	<script>

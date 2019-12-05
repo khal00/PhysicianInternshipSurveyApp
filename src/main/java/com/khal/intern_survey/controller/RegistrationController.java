@@ -176,8 +176,7 @@ public class RegistrationController {
 	    userService.saveRegisteredUser(user);
 	    String message = messages.getMessage("accountactivationmessage.success", null, locale);
 	    redirectedAttributes.addFlashAttribute("successMessage", message);
-	    return "redirect:/?lang=" + request.getLocale().getLanguage(); 
-	
+	    return "redirect:/?lang=" + request.getLocale().getLanguage();	
 	}
 	
 	

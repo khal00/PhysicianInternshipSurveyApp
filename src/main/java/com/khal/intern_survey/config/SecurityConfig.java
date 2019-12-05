@@ -38,6 +38,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.formLogin()
 				.loginPage("/showLoginForm")
 				.loginProcessingUrl("/authenticateTheUser")
+				.defaultSuccessUrl("/showUserPanel")
 				.permitAll()
 			.and()
 				.logout().logoutSuccessUrl("/?logout")

@@ -169,11 +169,6 @@ body {
 
 					<section class="row">
 
-						<!-- Check for login error -->
-						<div th:if="${param.error}"
-							class="alert alert-danger text-center mx-auto mb-5"
-							th:text="#{index.invalid}"></div>
-
 						<!-- Check for logout -->
 						<div th:if="${param.logout}"
 							class="alert alert-success text-center mx-auto mb-5"
@@ -189,8 +184,6 @@ body {
 							class="alert alert-warning text-center mx-auto mb-5"
 							th:text="${message}"></div>
 
-
-
 					</section>
 					
 					<div class="row">
@@ -203,7 +196,7 @@ body {
 						</div>
 						<section class="col-12 col-md-6" sec:authorize="isAnonymous()">
 							<div
-								class="col-9 col-sm-7 col-md-10 col-lg-8 col-xl-6 bg-light rounded px-4 pt-2 pb-2 m-auto ml-md-2">
+								class="col-9 col-sm-7 col-md-10 col-lg-8 col-xl-6 bg-light rounded px-4 pt-3 pb-2 m-auto ml-md-2">
 
 								<!-- Registration Form -->
 								<form th:action="@{/processRegistrationForm}"
@@ -211,8 +204,7 @@ body {
 
 
 									<!-- Place for errors -->
-									<div class="form-group">
-
+									<div class="form-group mt-2">
 										<div th:if="${registrationError}" class="alert alert-danger">
 											<span th:text="#{index.userexists}"></span>
 										</div>
@@ -232,7 +224,6 @@ body {
 
 										<div th:each="err : ${#fields.errors('email')}"
 											th:text="#{${err}}" class="alert alert-danger"></div>
-
 									</div>
 
 
