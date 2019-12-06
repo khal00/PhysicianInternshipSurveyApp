@@ -1,471 +1,280 @@
 <!DOCTYPE html>
-<html class="h-100" xmlns="http://www.w3.org/1999/xhtml"
+<html layout:decorate="~{layout}" class="h-100"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="https://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
-<script src="https://kit.fontawesome.com/bf6e8a4007.js"
-	crossorigin="anonymous"></script>
 <head>
 
-<meta name="description" content="Physician Internship Survey"
-	th:attr="content=#{index.description}">
-<meta name="keywords" content="Physician Internship Survey"
-	th:attr="content=#{index.description}">
-<meta name="author" content="Krzysztof Halewski">
-<meta charset="UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title th:text="#{index.headline}"></title>
-
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-	crossorigin="anonymous">
-
-<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
-	rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 	
-<link href="css/styles.css" rel="sylesheet">
+<!-- Show password strength -->
 
-<style>
-body {
-	font-family: 'Roboto', sans-serif;
-}
-</style>
-
-<script
-	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 <script>
-            var myApp = angular.module("myapp", []);
-            myApp.controller("PasswordController", function($scope) {
+	var myApp = angular.module("myapp", []);
+	myApp
+			.controller(
+					"PasswordController",
+					function($scope) {
+						var strongRegex = new RegExp(
+								"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
+						var mediumRegex = new RegExp(
+								"^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
 
-                var strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})");
-                var mediumRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
+						$scope.passwordStrength = {};
 
-				
-                $scope.passwordStrength = {
+						$scope.analyze = function(value) {
+							if (strongRegex.test(value)) {
+								$scope.passwordStrength["background-color"] = "#e8f5e9";
+							} else if (mediumRegex.test(value)) {
+								$scope.passwordStrength["background-color"] = "#fff9c4";
+							} else {
+								$scope.passwordStrength["background-color"] = "#ffebee";
+							}
+						};
+					});
+</script>
 
-                    };
-                
-                $scope.analyze = function(value) {
-                    if(strongRegex.test(value)) {
-                        $scope.passwordStrength["background-color"] = "#e8f5e9";
-                    } else if(mediumRegex.test(value)) {
-                        $scope.passwordStrength["background-color"] = "#fff9c4";
-                    } else {
-                        $scope.passwordStrength["background-color"] = "#ffebee";
-                    }
-                };
+<!-- Show hide form for admin registration -->
 
-            });
-        </script>
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		var adminCheckbox = document.getElementById('checkboxForAdminForm');
+
+		adminCheckbox.addEventListener("click", function() {
+
+			if (adminCheckbox.checked) {
+				document.getElementById('adminForm').style.display = "block";
+			} else {
+				document.getElementById('adminForm').style.display = "none";
+			}
+		});
+
+		if (adminCheckbox.checked) {
+			document.getElementById('adminForm').style.display = "block";
+		} else {
+			document.getElementById('adminForm').style.display = "none";
+		}
+
+	});
+</script>
 
 </head>
 
-<body class="h-100" data-ng-app="myapp">
+<body data-ng-app="myapp">
 
+	<div layout:fragment="content">
 
-	<header>
-		<nav class="navbar navbar-dark navbar-expand-lg"
-			style="min-height: 64px; background-color: black">
-			<a th:href="@{/}" class="navbar-brand d-inline-block mr-3"
-				style="text-decoration: none;"> <span
-				th:text="#{index.headline}" class="text-white"></span>
-			</a>
+		<!-- Place for messages -->
 
+		<section class="row">
 
-			<button class="navbar-dark navbar-toggler mb-2" type="button"
-				data-toggle="collapse" data-target="#mainmenu"
-				aria-controls="mainmenu" aria-expanded="false"
-				aria-label="navigation switch"
-				th:attr="aria-label=#{index.arialabel}">
-				<span class="navbar-toggler-icon"></span>
-			</button>
+			<!-- Check for logout -->
+			<div th:if="${param.logout}"
+				class="alert alert-success text-center mx-auto mb-5"
+				th:text="#{index.logoutsuccess}"></div>
 
+			<!-- Check for register success or confirmation success -->
+			<div th:if="${successMessage}"
+				class="alert alert-success text-center mx-auto mb-5"
+				th:text="${successMessage}"></div>
 
-			<div class="collapse navbar-collapse" id="mainmenu">
+			<!-- Check for account activation result -->
+			<div th:if="${message}"
+				class="alert alert-warning text-center mx-auto mb-5"
+				th:text="${message}"></div>
 
-				<ul class="navbar-nav mr-auto">
+		</section>
 
-					<li class="nav-item active"><a class="nav-link" th:href="@{/}" 
-						th:text="#{index.home}"></a></li>
-
-				</ul>
-
-				<!-- Sign in -->
-
-				<div sec:authorize="isAnonymous()">
-
-					<a th:href="@{/showLoginForm}" th:text="#{index.signin}"
-						class="btn btn-outline-warning d-none d-lg-inline"></a>
-					
-					<a th:href="@{/showLoginForm}" th:text="#{index.signin}"
-						class="text-warning d-lg-none"></a>	
-					
-				</div>
-
-
-				<div sec:authorize="isAuthenticated()">
-					<div class="ml-auto d-flex">
-					
-						<!-- Right dropdown menu for lg and xl screen -->
-						<div class="dropdown d-none d-lg-flex">
-							<a class="text-warning mr-2 dropdown-toggle my-auto"
-								data-toggle="dropdown"
-								th:text="${#authentication.getPrincipal().getUsername()}"
-								aria-expanded="false" id="UserDropdownMenu" aria-haspopup="true"
-								th:href="@{/}"></a>
-							<div class="dropdown-menu dropdown-menu-right"
-								aria-labelledby="UserDropdownMenu">
-
-								<div class="dropdown-item">Wypełnij Ankietę</div>
-								<div class="dropdown-divider"></div>
-								<form th:action="@{/logout}" method="POST">
-									<button type="submit" class="dropdown-item"
-										th:text="#{index.signout}"></button>
-								</form>
-							</div>
-						</div>
-						
-						<!-- Left dropdown menu for xs to md screen -->
-						<div class="dropdown d-lg-none">
-							<a class="text-warning mr-2 dropdown-toggle my-auto"
-								data-toggle="dropdown"
-								th:text="${#authentication.getPrincipal().getUsername()}"
-								aria-expanded="false" id="UserDropdownMenu" aria-haspopup="true"
-								th:href="@{/}"></a>
-							<div class="dropdown-menu dropdown-menu-left"
-								aria-labelledby="UserDropdownMenu">
-
-								<div class="dropdown-item">Wypełnij Ankietę</div>
-								<div class="dropdown-divider"></div>
-								<form th:action="@{/logout}" method="POST">
-									<button type="submit" class="dropdown-item"
-										th:text="#{index.signout}"></button>
-								</form>
-							</div>
-						</div>
-						
-						
-					</div>
-				</div>
+		<div class="row">
+			<div
+				class="d-flex flex-column col-12 col-md-6 mb-3 mb-md-0 text-white">
+				<h1 class="h1 mt-auto mx-auto mr-md-2 text-right"
+					th:text="#{index.h1}"></h1>
+				<p class="mr-md-2 mt-1 mb-auto mx-auto text-right lead"
+					th:text="#{index.instructions}"></p>
 			</div>
+			<section class="col-12 col-md-6" sec:authorize="isAnonymous()">
+				<div
+					class="col-9 col-sm-7 col-md-10 col-lg-8 col-xl-6 bg-light rounded px-4 pt-3 pb-2 m-auto ml-md-2">
 
-		</nav>
-
-	</header>
-
-	<div class="container-fluid h-100 bg-light">
+					<!-- Registration Form -->
+					<form th:action="@{/processRegistrationForm}"
+						th:object="${userDTO}" method="POST">
 
 
-		<main>
-
-			<div class="row pb-5"
-				style="min-height: 700px; background-color: black;">
-
-				<div class="container-fluid my-auto">
-
-					<!-- Place for messages -->
-
-					<section class="row">
-
-						<!-- Check for logout -->
-						<div th:if="${param.logout}"
-							class="alert alert-success text-center mx-auto mb-5"
-							th:text="#{index.logoutsuccess}"></div>
-
-						<!-- Check for register success or confirmation success -->
-						<div th:if="${successMessage}"
-							class="alert alert-success text-center mx-auto mb-5"
-							th:text="${successMessage}"></div>
-
-						<!-- Check for account activation result -->
-						<div th:if="${message}"
-							class="alert alert-warning text-center mx-auto mb-5"
-							th:text="${message}"></div>
-
-					</section>
-					
-					<div class="row">
-						<div
-							class="d-flex flex-column col-12 col-md-6 mb-3 mb-md-0 text-white">
-							<h1 class="h1 mt-auto mx-auto mr-md-2 text-right"
-								th:text="#{index.h1}"></h1>
-							<p class="mr-md-2 mt-1 mb-auto mx-auto text-right lead"
-								th:text="#{index.instructions}"></p>
+						<!-- Place for errors -->
+						<div class="form-group mt-2">
+							<div th:if="${registrationError}" class="alert alert-danger">
+								<span th:text="#{index.userexists}"></span>
+							</div>
 						</div>
-						<section class="col-12 col-md-6" sec:authorize="isAnonymous()">
-							<div
-								class="col-9 col-sm-7 col-md-10 col-lg-8 col-xl-6 bg-light rounded px-4 pt-3 pb-2 m-auto ml-md-2">
 
-								<!-- Registration Form -->
-								<form th:action="@{/processRegistrationForm}"
-									th:object="${userDTO}" method="POST">
+						<!-- Email -->
+						<div class="form-group">
+							<label class="text text-success" for="RegisterInputEmail"
+								th:text="#{index.email}"></label> <input type="text"
+								th:field="*{email}" placeholder="email" id="RegisterInputEmail"
+								th:attr="placeholder=#{index.enteremail}" class="form-control"
+								th:errorclass="is-invalid" />
+						</div>
 
+						<div th:if="${#fields.hasErrors('email')}">
 
-									<!-- Place for errors -->
-									<div class="form-group mt-2">
-										<div th:if="${registrationError}" class="alert alert-danger">
-											<span th:text="#{index.userexists}"></span>
-										</div>
-									</div>
-
-									<!-- Email -->
-									<div class="form-group">
-										<label class="text text-success" for="RegisterInputEmail"
-											th:text="#{index.email}"></label> <input type="text"
-											th:field="*{email}" placeholder="email"
-											id="RegisterInputEmail"
-											th:attr="placeholder=#{index.enteremail}"
-											class="form-control" th:errorclass="is-invalid" />
-									</div>
-
-									<div th:if="${#fields.hasErrors('email')}">
-
-										<div th:each="err : ${#fields.errors('email')}"
-											th:text="#{${err}}" class="alert alert-danger"></div>
-									</div>
+							<div th:each="err : ${#fields.errors('email')}"
+								th:text="#{${err}}" class="alert alert-danger"></div>
+						</div>
 
 
-									<!-- Password -->
-									<div class="form-group" data-ng-controller="PasswordController">
-										<label class="text text-success" for="RegisterInputPassword"
-											th:text="#{index.password}"></label> <input type="password"
-											th:field="*{password}" placeholder="password"
-											id="RegisterInputPassword"
-											th:attr="placeholder=#{index.enterpassword}"
-											class="form-control" th:errorclass="is-invalid"
-											data-ng-model="password" data-ng-change="analyze(password)"
-											data-ng-style="passwordStrength" />
-									</div>
-									<div th:if="${#fields.hasErrors('password')}">
+						<!-- Password -->
+						<div class="form-group" data-ng-controller="PasswordController">
+							<label class="text text-success" for="RegisterInputPassword"
+								th:text="#{index.password}"></label> <input type="password"
+								th:field="*{password}" placeholder="password"
+								id="RegisterInputPassword"
+								th:attr="placeholder=#{index.enterpassword}"
+								class="form-control" th:errorclass="is-invalid"
+								data-ng-model="password" data-ng-change="analyze(password)"
+								data-ng-style="passwordStrength" />
+						</div>
+						<div th:if="${#fields.hasErrors('password')}">
 
-										<div th:each="err : ${#fields.errors('password')}"
-											th:text="#{${err}}" class="alert alert-danger"></div>
+							<div th:each="err : ${#fields.errors('password')}"
+								th:text="#{${err}}" class="alert alert-danger"></div>
 
-									</div>
-
-
-									<!-- Confirm Password -->
-									<div class="form-group">
-										<label class="text text-success" for="InputConfirmPassword"
-											th:text="#{index.confirmpassword}"></label> <input
-											type="password" th:field="*{matchingPassword}"
-											placeholder="confirm password" id="InputConfirmPassword"
-											th:attr="placeholder=#{index.retypepassword}"
-											class="form-control" th:errorclass="is-invalid" />
-									</div>
-									<div th:if="${#fields.hasErrors('matchingPassword')}">
-
-										<div th:each="err : ${#fields.errors('matchingPassword')}"
-											th:text="#{index.password} + ' ' + #{index.isrequired2}"
-											class="alert alert-danger"></div>
-
-									</div>
-
-									<div th:if="${#fields.hasErrors('global')}">
-										<div th:each="err : ${#fields.errors('global')}"
-											th:text="#{${err}}" class="alert alert-danger"></div>
-									</div>
+						</div>
 
 
-									<!-- Admin Personal Data Form -->
+						<!-- Confirm Password -->
+						<div class="form-group">
+							<label class="text text-success" for="InputConfirmPassword"
+								th:text="#{index.confirmpassword}"></label> <input
+								type="password" th:field="*{matchingPassword}"
+								placeholder="confirm password" id="InputConfirmPassword"
+								th:attr="placeholder=#{index.retypepassword}"
+								class="form-control" th:errorclass="is-invalid" />
+						</div>
+						<div th:if="${#fields.hasErrors('matchingPassword')}">
 
-									<div id="adminForm" style="display: none;"
-										th:object="${adminData}">
+							<div th:each="err : ${#fields.errors('matchingPassword')}"
+								th:text="#{index.password} + ' ' + #{index.isrequired2}"
+								class="alert alert-danger"></div>
 
-										<!-- First Name -->
+						</div>
 
-										<div class="form-group">
-											<label class="text text-success" for="InputFirstName"
-												th:text="#{index.firstname}"></label> <input type="text"
-												th:field="*{firstName}" placeholder="First Name"
-												id="InputFirstName"
-												th:attr="placeholder=#{index.enterfname}"
-												class="form-control" th:errorclass="is-invalid" />
-										</div>
-
-										<div th:if="${#fields.hasErrors('firstName')}">
-
-											<div th:each="err : ${#fields.errors('firstName')}"
-												th:text="#{index.firstname} + ' ' + #{index.isrequired2}"
-												class="alert alert-danger"></div>
-
-										</div>
-
-										<!-- Last Name -->
-
-										<div class="form-group">
-											<label class="text text-success" for="InputLastName"
-												th:text="#{index.lastname}"></label> <input type="text"
-												th:field="*{lastName}" placeholder="Last Name"
-												id="InputLastName" th:attr="placeholder=#{index.enterlname}"
-												class="form-control" th:errorclass="is-invalid" />
-										</div>
-
-										<div th:if="${#fields.hasErrors('lastName')}">
-
-											<div th:each="err : ${#fields.errors('lastName')}"
-												th:text="#{index.lastname} + ' ' + #{index.isrequired2}"
-												class="alert alert-danger"></div>
-
-										</div>
-
-										<!-- Phone Number -->
-
-										<div class="form-group">
-											<label class="text text-success" for="InputPhoneNumber"
-												th:text="#{index.phonenumber}"></label> <input type="text"
-												th:field="*{phoneNumber}" placeholder="Phone Number"
-												id="InputPhoneNumber"
-												th:attr="placeholder=#{index.enterphonenumber}"
-												class="form-control" th:errorclass="is-invalid" />
-										</div>
-
-										<div th:if="${#fields.hasErrors('phoneNumber')}">
-
-											<div th:each="err : ${#fields.errors('phoneNumber')}"
-												th:text="#{${err}}" class="alert alert-danger"></div>
-
-										</div>
-
-										<!-- Medical Chamber -->
-
-										<div class="form-group">
-											<label class="text text-success" for="ChamberSelect"
-												th:text="#{index.medicalchamber}"></label> <select
-												th:field="*{medicalChamber}" id="ChamberSelect"
-												class="form-control" th:errorclass="is-invalid">
-												<option value="OIL w Szczecinie">OIL w Szczecinie</option>
-												<option value="OIL w Warszawie">OIL w Warszawie</option>
-												<option value="OIL w Krakowie">OIL w Krakowie</option>
-											</select>
-										</div>
-
-										<div th:if="${#fields.hasErrors('medicalChamber')}"
-											class="text-danger">
-											<ul>
-												<li th:each="err : ${#fields.errors('medicalChamber')}"
-													th:text="#{index.medicalchamber} + ' ' + #{index.isrequired3}" />
-											</ul>
-										</div>
-
-									</div>
+						<div th:if="${#fields.hasErrors('global')}">
+							<div th:each="err : ${#fields.errors('global')}"
+								th:text="#{${err}}" class="alert alert-danger"></div>
+						</div>
 
 
+						<!-- Admin Personal Data Form -->
 
-									<div class="form-group mt-4">
-										<button type="submit" class="btn btn-success w-100">
-											<span th:text="#{index.register}"></span>
-										</button>
-									</div>
+						<div id="adminForm" style="display: none;"
+							th:object="${adminData}">
 
-									<div class="form-group form-check">
-										<input type="checkbox" class="form-check-input"
-											id="checkboxForAdminForm" name="checkboxForAdminForm"
-											th:checked="${expandAdminForm}"> <label
-											class="form-check-label" for="checkboxForAdminForm"
-											th:text="#{index.registerasadmin}"></label>
-									</div>
+							<!-- First Name -->
 
-								</form>
+							<div class="form-group">
+								<label class="text text-success" for="InputFirstName"
+									th:text="#{index.firstname}"></label> <input type="text"
+									th:field="*{firstName}" placeholder="First Name"
+									id="InputFirstName" th:attr="placeholder=#{index.enterfname}"
+									class="form-control" th:errorclass="is-invalid" />
+							</div>
 
+							<div th:if="${#fields.hasErrors('firstName')}">
+
+								<div th:each="err : ${#fields.errors('firstName')}"
+									th:text="#{index.firstname} + ' ' + #{index.isrequired2}"
+									class="alert alert-danger"></div>
 
 							</div>
 
-						</section>
-					</div>
+							<!-- Last Name -->
+
+							<div class="form-group">
+								<label class="text text-success" for="InputLastName"
+									th:text="#{index.lastname}"></label> <input type="text"
+									th:field="*{lastName}" placeholder="Last Name"
+									id="InputLastName" th:attr="placeholder=#{index.enterlname}"
+									class="form-control" th:errorclass="is-invalid" />
+							</div>
+
+							<div th:if="${#fields.hasErrors('lastName')}">
+
+								<div th:each="err : ${#fields.errors('lastName')}"
+									th:text="#{index.lastname} + ' ' + #{index.isrequired2}"
+									class="alert alert-danger"></div>
+
+							</div>
+
+							<!-- Phone Number -->
+
+							<div class="form-group">
+								<label class="text text-success" for="InputPhoneNumber"
+									th:text="#{index.phonenumber}"></label> <input type="text"
+									th:field="*{phoneNumber}" placeholder="Phone Number"
+									id="InputPhoneNumber"
+									th:attr="placeholder=#{index.enterphonenumber}"
+									class="form-control" th:errorclass="is-invalid" />
+							</div>
+
+							<div th:if="${#fields.hasErrors('phoneNumber')}">
+
+								<div th:each="err : ${#fields.errors('phoneNumber')}"
+									th:text="#{${err}}" class="alert alert-danger"></div>
+
+							</div>
+
+							<!-- Medical Chamber -->
+
+							<div class="form-group">
+								<label class="text text-success" for="ChamberSelect"
+									th:text="#{index.medicalchamber}"></label> <select
+									th:field="*{medicalChamber}" id="ChamberSelect"
+									class="form-control" th:errorclass="is-invalid">
+									<option value="OIL w Szczecinie">OIL w Szczecinie</option>
+									<option value="OIL w Warszawie">OIL w Warszawie</option>
+									<option value="OIL w Krakowie">OIL w Krakowie</option>
+								</select>
+							</div>
+
+							<div th:if="${#fields.hasErrors('medicalChamber')}"
+								class="text-danger">
+								<ul>
+									<li th:each="err : ${#fields.errors('medicalChamber')}"
+										th:text="#{index.medicalchamber} + ' ' + #{index.isrequired3}" />
+								</ul>
+							</div>
+
+						</div>
+
+
+
+						<div class="form-group mt-4">
+							<button type="submit" class="btn btn-success w-100">
+								<span th:text="#{index.register}"></span>
+							</button>
+						</div>
+
+						<div class="form-group form-check">
+							<input type="checkbox" class="form-check-input"
+								id="checkboxForAdminForm" name="checkboxForAdminForm"
+								th:checked="${expandAdminForm}"> <label
+								class="form-check-label" for="checkboxForAdminForm"
+								th:text="#{index.registerasadmin}"></label>
+						</div>
+
+					</form>
+
 
 				</div>
-			</div>
-		</main>
-		<div class="row bg-light" style="min-height: 200px">
 
-			<footer class="container-fluid my-auto">
-				<div class="row">
-					<div class="d-flex ml-auto mr-5">
-						<!-- <i class="fas fa-language fa-3x mr-1 my-auto"></i>  -->
-						<div class="my-auto">
-							<img src="images/lang_icon.svg" width="32" height="32"
-								class="mr-2" />
-						</div>
-						<div class="sr-only">
-							<label class="input-group-text" for="locales"
-								th:text="#{index.language}"></label>
-						</div>
-						<select id="locales"
-							class="custom-select border-secondary my-auto"
-							style="max-width: 115px;">
-							<option value="" selected disabled th:text="#{index.language}"></option>
-							<option value="pl_PL" th:text="#{index.polish}"></option>
-							<option value="en" th:text="#{index.english}"></option>
-						</select>
-
-
-					</div>
-				</div>
-
-			</footer>
+			</section>
 		</div>
+
 	</div>
-
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-		integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-		integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-		crossorigin="anonymous"></script>
-
-	<!-- Show hide form for admin registration -->
-
-	<script>
-		document
-				.addEventListener(
-						"DOMContentLoaded",
-						function() {
-							var adminCheckbox = document
-									.getElementById('checkboxForAdminForm');
-
-							adminCheckbox
-									.addEventListener(
-											"click",
-											function() {
-
-												if (adminCheckbox.checked) {
-													document
-															.getElementById('adminForm').style.display = "block";
-												} else {
-													document
-															.getElementById('adminForm').style.display = "none";
-												}
-											});
-
-							if (adminCheckbox.checked) {
-								document.getElementById('adminForm').style.display = "block";
-							} else {
-								document.getElementById('adminForm').style.display = "none";
-							}
-
-						});
-	</script>
-
-
-	<script>
-		$(document).ready(function() {
-			$("#locales").change(function() {
-				var selectedOption = $('#locales').val();
-				if (selectedOption != '') {
-					window.location.replace('/?lang=' + selectedOption);
-				}
-			});
-		});
-	</script>
-
 
 </body>
 

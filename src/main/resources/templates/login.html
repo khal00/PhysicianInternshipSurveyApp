@@ -1,186 +1,72 @@
 <!DOCTYPE html>
-<html class="h-100" xmlns="http://www.w3.org/1999/xhtml"
+<html layout:decorate="~{layout}" class="h-100"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="https://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 
 
 <head>
-
-<meta name="description" content="Physician Internship Survey"
-	th:attr="content=#{index.description}">
-<meta name="keywords" content="Physician Internship Survey"
-	th:attr="content=#{index.description}">
-<meta name="author" content="Krzysztof Halewski">
-<meta charset="UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title th:text="#{index.headline}"></title>
-
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-	crossorigin="anonymous">
-
-<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
-	rel="stylesheet">
-
-<style>
-body {
-	font-family: 'Roboto', sans-serif;
-}
-</style>
-
 </head>
 
 <body class="h-100">
 
+	<div layout:fragment="content">
+		<section class="row my-auto">
 
-	<header>
-		<nav class="navbar navbar-dark navbar-expand-lg"
-			style="min-height: 64px; background-color: black">
-			<a th:href="@{/}" class="navbar-brand d-inline-block mr-3"
-				style="text-decoration: none;"> 
-				<span th:text="#{index.headline}"></span>
-			</a>
-			
-			<button class="navbar-dark navbar-toggler mb-2" type="button"
-				data-toggle="collapse" data-target="#mainmenu"
-				aria-controls="mainmenu" aria-expanded="false"
-				aria-label="navigation switch"
-				th:attr="aria-label=#{index.arialabel}">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-
-			<div class="collapse navbar-collapse" id="mainmenu">	
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item active"><a class="nav-link" th:href="@{/}" 
-					th:text="#{index.home}"></a></li>
-				</ul>
+			<div
+				class="d-flex flex-column col-12 col-md-6 mb-3 mb-md-0 text-white">
+				<h1 class="h1 my-auto mx-auto mr-md-2 text-right"
+					th:text="#{login.signin}"></h1>
 			</div>
-		</nav>
 
-	</header>
+			<!-- Login form -->
 
-	<div class="container-fluid h-100 bg-light">
+			<div
+				class="bg-light rounded px-4 pt-3 pb-2 mx-auto ml-md-2 col-8 col-sm-7 col-md-5 col-lg-4 col-xl-3">
 
+				<form th:action="@{/authenticateTheUser}" method="POST">
 
-		<main>
-
-			<div class="row pb-5"
-				style="min-height: 700px; background-color: black;">
-
-				<div class="container-fluid my-auto">
-
-					<section class="row my-auto">
-						
-						<div
-							class="d-flex flex-column col-12 col-md-6 mb-3 mb-md-0 text-white">
-							<h1 class="h1 my-auto mx-auto mr-md-2 text-right"
-								th:text="#{login.signin}"></h1>
+					<!-- Place for errors -->
+					<div class="form-group mt-2">
+						<div th:if="${param.error}" class="alert alert-danger">
+							<span th:text="#{index.invalid}"></span>
 						</div>
-						
-						<!-- Login form -->
-						
-						<div class="bg-light rounded px-4 pt-3 pb-2 mx-auto ml-md-2 col-8 col-sm-7 col-md-5 col-lg-4 col-xl-3">
-
-							<form th:action="@{/authenticateTheUser}" method="POST">
-							
-								<!-- Place for errors -->
-								<div class="form-group mt-2">
-									<div th:if="${param.error}" class="alert alert-danger">
-										<span th:text="#{index.invalid}"></span>
-									</div>
-								</div>
-
-								<!-- Email / Username -->
-
-								<div class="form-group">
-									<label class="text-primary" for="LoginInputEmail"
-										th:text="#{index.email}"></label> <input type="text"
-										name="username" class="form-control"
-										id="LoginInputEmail" placeholder="email"
-										th:attr="placeholder=#{index.enteremail}">
-								</div>
-							
-
-								<!-- Password -->
-
-								<div class="form-group">
-									<label class="text-primary" for="LoginInputPassword"
-										th:text="#{index.password}"></label> <input type="password"
-										name="password" class="form-control"
-										id="LoginInputPassword" placeholder="Password"
-										th:attr="placeholder=#{index.enterpassword}">
-									<a th:href="@{/}" th:text="#{login.forgotpassword}" class="float-right mt-1" style="font-size: 0.9rem"></a>
-								</div>
-
-								<div class="form-group">
-									<button type="submit" class="btn btn-primary mt-3 w-100"
-										th:text="#{index.signin}"></button>
-								</div>
-							</form>
-							<div class="float-right pb-2" style="font-size: 0.9rem">
-								<span></span>						
-								<a th:href="@{/}" th:text="#{login.donthaveaccount}" class="text-success"></a>
-							</div>
-						</div>
-					</section>
-
-				</div>
-			</div>
-		</main>
-		<div class="row bg-light" style="min-height: 200px">
-
-			<footer class="container-fluid my-auto">
-				<div class="row">
-					<div class="d-flex ml-auto mr-5">
-						<!-- <i class="fas fa-language fa-3x mr-1 my-auto"></i>  -->
-						<div class="my-auto">
-							<img src="images/lang_icon.svg" width="32" height="32"
-								class="mr-2" />
-						</div>
-						<div class="sr-only">
-							<label class="input-group-text" for="locales"
-								th:text="#{index.language}"></label>
-						</div>
-						<select id="locales"
-							class="custom-select border-secondary my-auto"
-							style="max-width: 115px;">
-							<option value="" selected disabled th:text="#{index.language}"></option>
-							<option value="pl_PL" th:text="#{index.polish}"></option>
-							<option value="en" th:text="#{index.english}"></option>
-						</select>
 					</div>
+
+					<!-- Email / Username -->
+
+					<div class="form-group">
+						<label class="text-primary" for="LoginInputEmail"
+							th:text="#{index.email}"></label> <input type="text"
+							name="username" class="form-control" id="LoginInputEmail"
+							placeholder="email" th:attr="placeholder=#{index.enteremail}">
+					</div>
+
+
+					<!-- Password -->
+
+					<div class="form-group">
+						<label class="text-primary" for="LoginInputPassword"
+							th:text="#{index.password}"></label> <input type="password"
+							name="password" class="form-control" id="LoginInputPassword"
+							placeholder="Password"
+							th:attr="placeholder=#{index.enterpassword}"> <a
+							th:href="@{/}" th:text="#{login.forgotpassword}"
+							class="float-right mt-1" style="font-size: 0.9rem"></a>
+					</div>
+
+					<div class="form-group">
+						<button type="submit" class="btn btn-primary mt-3 w-100"
+							th:text="#{index.signin}"></button>
+					</div>
+				</form>
+				<div class="float-right pb-2" style="font-size: 0.9rem">
+					<span></span> <a th:href="@{/}" th:text="#{login.donthaveaccount}"
+						class="text-success"></a>
 				</div>
-
-			</footer>
-		</div>
+			</div>
+		</section>
 	</div>
-
-	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-		integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-		integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-		crossorigin="anonymous"></script>
-
-
-	<script>
-		$(document).ready(function() {
-			$("#locales").change(function() {
-				var selectedOption = $('#locales').val();
-				if (selectedOption != '') {
-					window.location.replace('/showLoginForm?lang=' + selectedOption);
-				}
-			});
-		});
-	</script>
-
 
 </body>
 

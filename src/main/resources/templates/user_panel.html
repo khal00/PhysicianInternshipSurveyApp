@@ -1,34 +1,12 @@
 <!DOCTYPE html>
-<html class="h-100" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="https://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<html layout:decorate="~{layout}">
 <head>
-<meta name="description" content="Physician Internship Survey"
-	th:attr="content=#{index.description}">
-<meta name="keywords" content="Physician Internship Survey"
-	th:attr="content=#{index.description}">
-<meta name="author" content="Krzysztof Halewski">
-<meta charset="UTF-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title th:text="#{index.headline}"></title>
-
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-	crossorigin="anonymous">
-
-<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap"
-	rel="stylesheet">
-	
-<link href="css/styles.css" rel="sylesheet">
-
-<title>Insert title here</title>
-
+	<title></title>
 </head>
 <body>
-
-	<div th:replace="fragments/header :: header">...</div>
-
+	
+	<div layout:fragment="content">
+		<div class="text-primary">Some text</div>
+	</div>	 
 </body>
 </html>

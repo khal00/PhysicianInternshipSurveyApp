@@ -9,6 +9,9 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import org.thymeleaf.spring5.SpringTemplateEngine;
+
+import nz.net.ultraq.thymeleaf.LayoutDialect;
 
 @Configuration
 //@ComponentScan(basePackages = "com.khal.intern_survey.config")
@@ -31,6 +34,11 @@ public class MvcConfig implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 	    registry.addInterceptor(localeChangeInterceptor());
+	}
+	
+	@Bean
+	public LayoutDialect layoutDialect() {
+	    return new LayoutDialect();
 	}
 	
 	
