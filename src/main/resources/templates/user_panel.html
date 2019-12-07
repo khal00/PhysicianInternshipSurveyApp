@@ -5,6 +5,9 @@
 </head>
 <body>
 	
+	<div layout:fragment="header_login_content">
+		<div th:replace="fragments/header_login_section :: header_login_section"></div>
+	</div>
 	<div layout:fragment="content">
 		<div class="text-primary">Some text</div>
 	</div>	 

@@ -63,7 +63,11 @@
 
 <body data-ng-app="myapp">
 
-	<div layout:fragment="content">
+	<div layout:fragment="header_login_content">
+		<div th:replace="fragments/header_login_section :: header_login_section"></div>
+	</div>
+
+	<div layout:fragment="main_content">
 
 		<!-- Place for messages -->
 
