@@ -20,10 +20,20 @@ CREATE TABLE `verification_token` (
 `expiry_date` date NOT NULL,
 `token` varchar (50) NOT NULL,
 PRIMARY KEY (`id`),
-CONSTRAINT `token_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+CONSTRAINT `verification_token_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+DROP TABLE IF EXISTS `password_reset_token`;
+CREATE TABLE `password_reset_token` (
+`id` int NOT NULL AUTO_INCREMENT,
+`user_id` int NOT NULL,
+`expiry_date` date NOT NULL,
+`token` varchar (50) NOT NULL,
+PRIMARY KEY (`id`),
+CONSTRAINT `reset_token_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `admin_personal_data`;
 CREATE TABLE `admin_personal_data` (

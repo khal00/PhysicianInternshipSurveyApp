@@ -26,5 +26,7 @@ public interface UserService extends UserDetailsService{
 	public void createVerificationToken(User user, String token);
  
 	public VerificationToken getVerificationToken(String VerificationToken);
+	
+	public void createPasswordResetTokenForUser(User user, String token);
 
 }

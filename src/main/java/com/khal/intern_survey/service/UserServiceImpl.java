@@ -15,10 +15,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.khal.intern_survey.UserDTO.UserDTO;
+import com.khal.intern_survey.dao.PasswordResetTokenRepository;
 import com.khal.intern_survey.dao.RoleRepository;
 import com.khal.intern_survey.dao.UserRepository;
 import com.khal.intern_survey.dao.VerificationTokenRepository;
 import com.khal.intern_survey.entity.AdminPersonalData;
+import com.khal.intern_survey.entity.PasswordResetToken;
 import com.khal.intern_survey.entity.Role;
 import com.khal.intern_survey.entity.User;
 import com.khal.intern_survey.entity.VerificationToken;
@@ -40,11 +42,12 @@ public class UserServiceImpl implements UserService {
 	
     @Autowired
     private VerificationTokenRepository tokenRepository;
-	
+    
+    @Autowired
+	private PasswordResetTokenRepository passwordResetTokenRepository;
 	
 	@Override
-	public List<User> findAll() {
-		
+	public List<User> findAll() {		
 		return userRepository.findAll();
 	}
 	
@@ -130,7 +133,10 @@ public class UserServiceImpl implements UserService {
 		return tokenRepository.findByToken(token);
 	}
 	
-	
+	public void createPasswordResetTokenForUser(User user, String token) {
+	    PasswordResetToken newToken = new PasswordResetToken(token, user);
+	    passwordResetTokenRepository.save(newToken);
+	}
 
 
 }
