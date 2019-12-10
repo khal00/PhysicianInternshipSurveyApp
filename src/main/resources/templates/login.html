@@ -26,11 +26,15 @@
 
 				<form th:action="@{/authenticateTheUser}" method="POST">
 
-					<!-- Place for errors -->
+					<!-- Place for messages -->
 					<div class="form-group mt-2">
 						<div th:if="${param.error}" class="alert alert-danger">
 							<span th:text="#{index.invalid}"></span>
 						</div>
+
+						<div th:if="${message}"
+							class="alert alert-warning text-center mx-auto mb-5"
+							th:text="${message}"></div>
 					</div>
 
 					<!-- Email / Username -->

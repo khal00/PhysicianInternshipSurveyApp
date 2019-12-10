@@ -3,6 +3,7 @@ package com.khal.intern_survey.controller;
 import java.util.Calendar;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,13 +71,12 @@ public class RegistrationController {
 			, @Valid @ModelAttribute("adminData") AdminPersonalData adminData
 			, BindingResult adminBindingResult
 			, Model theModel
-			, WebRequest request
+			, HttpServletRequest request
 			, RedirectAttributes redirectedAttributes) {
 			
 		String email = userDTO.getEmail();
-		String appUrl = request.getContextPath();
+		String appUrl = getBaseUrl(request);
 		Locale locale = LocaleContextHolder.getLocale();
-
 		
 		// check if user selected admin form
 		if(checkboxAdminValue != null) {
@@ -179,6 +179,12 @@ public class RegistrationController {
 	    return "redirect:/?lang=" + request.getLocale().getLanguage();	
 	}
 	
-	
+	public static String getBaseUrl(HttpServletRequest request) {
+		String scheme = request.getScheme() + "://";
+		String serverName = request.getServerName();
+		String serverPort = (request.getServerPort() == 80) ? "" : ":" + request.getServerPort();
+		String contextPath = request.getContextPath();
+		return scheme + serverName + serverPort + contextPath;
+	}
 
 }

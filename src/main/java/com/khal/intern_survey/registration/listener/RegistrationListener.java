@@ -36,7 +36,7 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
         User user = event.getUser();
         String token = UUID.randomUUID().toString();
         userService.createVerificationToken(user, token);
-         
+
         String recipientAddress = user.getEmail();
         String subject = messages.getMessage("accountactivationemail.subject", null, event.getLocale());
         String confirmationUrl 
@@ -46,7 +46,7 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(recipientAddress);
         email.setSubject(subject);
-        email.setText(message + " " + "http://localhost:8080" + confirmationUrl);
+        email.setText(message + " " + confirmationUrl);
         mailSender.send(email);
     }
 	
