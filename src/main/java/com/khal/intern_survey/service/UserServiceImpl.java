@@ -14,7 +14,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import com.khal.intern_survey.UserDTO.UserDTO;
+
+import com.khal.intern_survey.DTO.UserDTO;
 import com.khal.intern_survey.dao.PasswordResetTokenRepository;
 import com.khal.intern_survey.dao.RoleRepository;
 import com.khal.intern_survey.dao.UserRepository;

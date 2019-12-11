@@ -1,4 +1,4 @@
-package com.khal.intern_survey.UserDTO;
+package com.khal.intern_survey.DTO;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -50,8 +50,5 @@ public class UserDTO {
 	public void setMatchingPassword(String matchingPassword) {
 		this.matchingPassword = matchingPassword;
 	}
-	
-	
-	
 	
 }

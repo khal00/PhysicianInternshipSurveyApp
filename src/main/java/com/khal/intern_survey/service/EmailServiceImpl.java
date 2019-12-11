@@ -5,7 +5,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
-import com.khal.intern_survey.UserDTO.UserDTO;
+import com.khal.intern_survey.DTO.UserDTO;
 
 @Component
 public class EmailServiceImpl implements EmailService{
