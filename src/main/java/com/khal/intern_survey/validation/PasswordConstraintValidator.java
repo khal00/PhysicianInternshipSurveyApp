@@ -21,7 +21,7 @@ public class PasswordConstraintValidator implements ConstraintValidator<ValidPas
 	@Override
 	public boolean isValid(String password, ConstraintValidatorContext context) {
 
-		if (password.equalsIgnoreCase("")) {
+		if (password == null) {
 			return true;
 		}
 

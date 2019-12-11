@@ -24,15 +24,35 @@
 			crossorigin="anonymous"></script>
 		<!-- Language change script -->
 		<script>
-			$(document).ready(function() {
-				$("#locales").change(function() {
-					var selectedOption = $('#locales').val();
-					if (selectedOption != '') {
-						window.location.replace(location.protocol + '//' + location.host + location.pathname + '?lang=' + selectedOption);
-					}
-				});
-			});
+			function replaceUrlParam(url, paramName, paramValue) {
+				if (paramValue == null) {
+					paramValue = '';
+				}
+				var pattern = new RegExp('\\b(' + paramName + '=).*?(&|#|$)');
+				if (url.search(pattern) >= 0) {
+					return url.replace(pattern, '$1' + paramValue + '$2');
+				}
+				url = url.replace(/[?#]$/, '');
+				return url + (url.indexOf('?') > 0 ? '&' : '?') + paramName
+						+ '=' + paramValue;
+			}
+
+			$(document).ready(
+					function() {
+						$("#locales").change(
+								function() {
+									var selectedOption = $('#locales').val();
+									
+									if (selectedOption != '') {
+										var newUrl = replaceUrlParam(window.location.href, 'lang', selectedOption)
+										window.location
+												.replace(newUrl);
+									}
+								});
+					});
 		</script>
+
+
 	</div>
 
 </body>

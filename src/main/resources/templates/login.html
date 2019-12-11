@@ -11,6 +11,17 @@
 <body class="h-100">
 
 	<div layout:fragment="main_content">
+	
+		<!-- Place for messages -->
+
+		<section class="row">
+
+			<!-- Check for password changed message -->
+			<div th:if="${password_changed_message}"
+				class="alert alert-success text-center mx-auto mb-5"
+				th:text="${password_changed_message}"></div>
+
+		</section>
 		<section class="row my-auto">
 
 			<div
@@ -26,7 +37,7 @@
 
 				<form th:action="@{/authenticateTheUser}" method="POST">
 
-					<!-- Place for messages -->
+					<!-- Place for form messages -->
 					<div class="form-group mt-2">
 						<div th:if="${param.error}" class="alert alert-danger">
 							<span th:text="#{index.invalid}"></span>

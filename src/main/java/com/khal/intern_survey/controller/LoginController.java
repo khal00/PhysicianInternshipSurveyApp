@@ -1,10 +1,7 @@
 package com.khal.intern_survey.controller;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.Iterator;
-import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -12,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.mail.SimpleMailMessage;
@@ -23,18 +21,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.khal.intern_survey.DTO.PasswordDTO;
-import com.khal.intern_survey.DTO.UserDTO;
 import com.khal.intern_survey.dao.PasswordResetTokenRepository;
 import com.khal.intern_survey.entity.PasswordResetToken;
 import com.khal.intern_survey.entity.User;
@@ -42,6 +37,13 @@ import com.khal.intern_survey.service.UserService;
 
 @Controller
 public class LoginController {
+	
+	@InitBinder
+	public void initBinder(WebDataBinder dataBinder) {
+		
+		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+	}
 
 	@Autowired
 	private UserService userService;
@@ -113,12 +115,12 @@ public class LoginController {
 	}
 
 	@GetMapping("/changePassword")
-	public String showChangePasswordPage(Locale locale, RedirectAttributes redirAttributes, @RequestParam("id") long id,
+	public String showChangePasswordPage(Locale locale, RedirectAttributes redirectAttributes, @RequestParam("id") long id,
 			@RequestParam("token") String token, Model theModel) {
 		
 		String result = validatePasswordResetToken(id, token);
 		if (result != null) {
-			redirAttributes.addFlashAttribute("message", messages.getMessage("reset." + result, null, locale));
+			redirectAttributes.addFlashAttribute("message", messages.getMessage("reset." + result, null, locale));
 			return "redirect:/?lang=" + locale.getLanguage();
 		}
 		
@@ -148,15 +150,18 @@ public class LoginController {
 	
 	@PostMapping("/savePassword")
 	public String savePassword(@Valid @ModelAttribute ("passwordDTO") PasswordDTO passwordDTO
-			, BindingResult bindingResult) {
-
-		System.out.println(passwordDTO.getPassword());
+			, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 	
 		if(bindingResult.hasErrors()) {
 			return "update_password";
 		}
 		
-		return "login";
+	    User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+	    userService.changeUserPassword(user, passwordDTO.getPassword());
+	
+	    Locale locale = LocaleContextHolder.getLocale();
+	    redirectAttributes.addFlashAttribute("password_changed_message", messages.getMessage("reset.passwordsaved", null, locale));
+		return "redirect:/showLoginForm";
 	}
 	
 

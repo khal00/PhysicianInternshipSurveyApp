@@ -1,7 +1,5 @@
 To do:
 
-lang change with url params
-
 password and email change
 
 page after successful login
