@@ -33,6 +33,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
+//			.antMatchers("resources/static/**").permitAll()
+			.antMatchers("/user/**").hasAnyRole("USER", "OILADMIN", "ADMIN")
 			.antMatchers("/list").hasRole("ADMIN")
 			.antMatchers("/updatePassword*",
                     "/savePassword*",
@@ -42,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.formLogin()
 				.loginPage("/showLoginForm")
 				.loginProcessingUrl("/authenticateTheUser")
-				.defaultSuccessUrl("/showUserPanel")
+				.defaultSuccessUrl("/user/showUserPanel")
 				.permitAll()
 			.and()
 				.logout().logoutSuccessUrl("/?logout")

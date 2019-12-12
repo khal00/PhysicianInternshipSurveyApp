@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}">
+<head>
+	<title></title>
+</head>
+<body>
+	
+	<div layout:fragment="header_login_content">
+		<div th:replace="fragments/header_login_section :: header_login_section"></div>
+	</div>
+	<div layout:fragment="main_content">
+		<div class="row">
+			<div class="rounded bg-dark m-auto p-4 text-white">
+				
+				<div sec:authentication="name"></div>
+				
+			</div>
+		</div>
+	</div>	 
+</body>
+</html>

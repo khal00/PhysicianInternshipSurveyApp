@@ -62,12 +62,6 @@ public class LoginController {
 		return "login";
 	}
 
-	@GetMapping("/showUserPanel")
-	public String showUserPanel() {
-
-		return "user_panel";
-	}
-
 	// Reset password
 
 	@GetMapping("/forgotPassword")
@@ -172,12 +166,14 @@ public class LoginController {
 
 	}
 
-	public static String getBaseUrl(HttpServletRequest request) {
+	public String getBaseUrl(HttpServletRequest request) {
 		String scheme = request.getScheme() + "://";
 		String serverName = request.getServerName();
 		String serverPort = (request.getServerPort() == 80) ? "" : ":" + request.getServerPort();
 		String contextPath = request.getContextPath();
 		return scheme + serverName + serverPort + contextPath;
 	}
+	
+	
 
 }

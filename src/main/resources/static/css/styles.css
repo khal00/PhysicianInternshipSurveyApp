@@ -1,0 +1,4 @@
+.dropdown-item:active {
+background-color: grey;
+outline: none;
+}
