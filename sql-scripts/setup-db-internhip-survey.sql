@@ -35,6 +35,18 @@ CONSTRAINT `reset_token_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+DROP TABLE IF EXISTS `email_update_token`;
+CREATE TABLE `email_update_token` (
+`id` int NOT NULL AUTO_INCREMENT,
+`user_id` int NOT NULL,
+`expiry_date` date NOT NULL,
+`token` varchar (50) NOT NULL,
+`new_email` varchar (30) NOT NULL,
+PRIMARY KEY (`id`),
+CONSTRAINT `verification_token_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 DROP TABLE IF EXISTS `admin_personal_data`;
 CREATE TABLE `admin_personal_data` (
 `id` int NOT NULL AUTO_INCREMENT,
