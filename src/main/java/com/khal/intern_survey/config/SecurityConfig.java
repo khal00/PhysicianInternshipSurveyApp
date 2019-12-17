@@ -25,7 +25,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		
-		auth.authenticationProvider(authenticationProvider());
+//		auth.authenticationProvider(authenticationProvider());
+		auth.userDetailsService(userService);
 		
 	}
 
@@ -56,13 +57,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	    return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
 	
-	@Bean
-	public DaoAuthenticationProvider authenticationProvider() {
-		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
-		auth.setUserDetailsService(userService);
-		auth.setPasswordEncoder(passwordEncoder());
-		return auth;
-	}
+//	@Bean
+//	public DaoAuthenticationProvider authenticationProvider() {
+//		DaoAuthenticationProvider auth = new DaoAuthenticationProvider();
+//		auth.setUserDetailsService(userService);
+//		auth.setPasswordEncoder(passwordEncoder());
+//		return auth;
+//	}
 	
 		
 }
