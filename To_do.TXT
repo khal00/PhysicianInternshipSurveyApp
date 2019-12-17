@@ -14,6 +14,8 @@ role admin privileges to accept the survey (change db field to accepted 0/1 valu
 
 template to show results
 
+Cron operation to delete expired tokens (baeldung)
+
 
 
 

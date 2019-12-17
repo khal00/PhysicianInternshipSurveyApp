@@ -43,7 +43,7 @@ CREATE TABLE `email_update_token` (
 `token` varchar (50) NOT NULL,
 `new_email` varchar (30) NOT NULL,
 PRIMARY KEY (`id`),
-CONSTRAINT `verification_token_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+CONSTRAINT `email_update_token_fk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 

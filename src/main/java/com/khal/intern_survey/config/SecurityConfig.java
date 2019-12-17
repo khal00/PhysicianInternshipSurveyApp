@@ -33,13 +33,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
-//			.antMatchers("resources/static/**").permitAll()
+			.antMatchers("/admin/**").hasRole("ADMIN")
+			.antMatchers("/oil/**").hasAnyRole("OILADMIN", "ADMIN")
 			.antMatchers("/user/**").hasAnyRole("USER", "OILADMIN", "ADMIN")
-			.antMatchers("/list").hasRole("ADMIN")
-			.antMatchers("/updatePassword*",
-                    "/savePassword*",
-                    "/updatePassword*")
-			.hasAuthority("CHANGE_PASSWORD_PRIVILEGE")
+			.antMatchers("/updatePassword*").hasAuthority("CHANGE_PASSWORD_PRIVILEGE")
+			.antMatchers("/", "static/css", "static/images").permitAll()
 			.and()
 			.formLogin()
 				.loginPage("/showLoginForm")
@@ -51,7 +49,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and()
 				.exceptionHandling().accessDeniedPage("/access-denied");
 		
-	// beans
 	}
 	
 	@Bean

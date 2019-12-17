@@ -2,3 +2,7 @@
 background-color: grey;
 outline: none;
 }
+
+.form-container {
+max-width: 350px;
+}

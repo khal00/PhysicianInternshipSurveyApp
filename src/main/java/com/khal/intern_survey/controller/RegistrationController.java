@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.khal.intern_survey.DTO.UserDTO;
@@ -30,6 +29,7 @@ import com.khal.intern_survey.entity.User;
 import com.khal.intern_survey.entity.VerificationToken;
 import com.khal.intern_survey.registration.OnRegistrationCompleteEvent;
 import com.khal.intern_survey.service.UserService;
+import com.khal.intern_survey.util.UtilMethods;
 
 @Controller
 public class RegistrationController {
@@ -75,7 +75,7 @@ public class RegistrationController {
 			, RedirectAttributes redirectedAttributes) {
 			
 		String email = userDTO.getEmail();
-		String appUrl = getBaseUrl(request);
+		String appUrl = UtilMethods.getBaseUrl(request);
 		Locale locale = LocaleContextHolder.getLocale();
 		
 		// check if user selected admin form
@@ -108,11 +108,10 @@ public class RegistrationController {
 			return "index";		
 		}
 		
-		// there is no errors in the form
 		String registrationSuccessMessage = messages.getMessage("index.registersuccess", null, locale);
 		
-		// create admin account if user selected request for admin role option
-		// publish registration event for sending an email confirmation
+		// create admin account if user requested admin role
+		// publish registration event
 		if(checkboxAdminValue != null) {
 			userService.saveUserAndAdminData(userDTO, adminData);
 			
@@ -177,14 +176,6 @@ public class RegistrationController {
 	    String message = messages.getMessage("accountactivationmessage.success", null, locale);
 	    redirectedAttributes.addFlashAttribute("successMessage", message);
 	    return "redirect:/?lang=" + request.getLocale().getLanguage();	
-	}
-	
-	public static String getBaseUrl(HttpServletRequest request) {
-		String scheme = request.getScheme() + "://";
-		String serverName = request.getServerName();
-		String serverPort = (request.getServerPort() == 80) ? "" : ":" + request.getServerPort();
-		String contextPath = request.getContextPath();
-		return scheme + serverName + serverPort + contextPath;
 	}
 
 }

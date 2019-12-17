@@ -12,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.mail.SimpleMailMessage;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -33,7 +31,9 @@ import com.khal.intern_survey.DTO.PasswordDTO;
 import com.khal.intern_survey.dao.PasswordResetTokenRepository;
 import com.khal.intern_survey.entity.PasswordResetToken;
 import com.khal.intern_survey.entity.User;
+import com.khal.intern_survey.service.EmailService;
 import com.khal.intern_survey.service.UserService;
+import com.khal.intern_survey.util.UtilMethods;
 
 @Controller
 public class LoginController {
@@ -52,7 +52,7 @@ public class LoginController {
 	MessageSource messages;
 
 	@Autowired
-	private JavaMailSender mailSender;
+	private EmailService emailService;
 
 	@Autowired
 	private PasswordResetTokenRepository passwordResetTokenRepository;
@@ -75,7 +75,7 @@ public class LoginController {
 			RedirectAttributes redirectAttributes) {
 
 		Locale locale = LocaleContextHolder.getLocale();
-		String appUrl = getBaseUrl(request);
+		String appUrl = UtilMethods.getBaseUrl(request);
 
 		User user = userService.findByEmail(userEmail);
 		if (user == null) {
@@ -86,26 +86,10 @@ public class LoginController {
 
 		String token = UUID.randomUUID().toString();
 		userService.createPasswordResetTokenForUser(user, token);
-		mailSender.send(constructResetTokenEmail(appUrl, locale, token, user));
+		emailService.sendResetTokenEmail(appUrl, locale, token, user);
 		String message = messages.getMessage("reset.emailsent", null, locale);
 		redirectAttributes.addFlashAttribute("successMessage", message);
 		return "redirect:/";
-	}
-
-	// Construct email to reset password
-	private SimpleMailMessage constructResetTokenEmail(String contextPath, Locale locale, String token, User user) {
-		String url = contextPath + "/changePassword?id=" + user.getId() + "&token=" + token;
-		String subject = messages.getMessage("reset.mailsubject", null, locale);
-		String message = messages.getMessage("reset.mailbody", null, locale);
-		return constructEmail(subject, message + " \r\n" + url, user);
-	}
-
-	private SimpleMailMessage constructEmail(String subject, String body, User user) {
-		SimpleMailMessage email = new SimpleMailMessage();
-		email.setSubject(subject);
-		email.setText(body);
-		email.setTo(user.getEmail());
-		return email;
 	}
 
 	@GetMapping("/changePassword")
@@ -165,15 +149,4 @@ public class LoginController {
 		return "access-denied";
 
 	}
-
-	public String getBaseUrl(HttpServletRequest request) {
-		String scheme = request.getScheme() + "://";
-		String serverName = request.getServerName();
-		String serverPort = (request.getServerPort() == 80) ? "" : ":" + request.getServerPort();
-		String contextPath = request.getContextPath();
-		return scheme + serverName + serverPort + contextPath;
-	}
-	
-	
-
 }
