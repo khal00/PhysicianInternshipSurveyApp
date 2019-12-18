@@ -12,4 +12,6 @@ public interface EmailService {
 	public void sendResetTokenEmail(String appUrl, Locale locale, String token, User user);
 
 	void sendRegistrationVerificationEmail(String to, String confirmationUrl, Locale locale);
+
+	public void sendEmailUpdateVerificationToken(String appUrl, Locale locale, String token, User user);
 }

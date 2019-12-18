@@ -44,22 +44,23 @@ public class EmailServiceImpl implements EmailService{
 		
 	}
 	
-//    String recipientAddress = user.getEmail();
-//    String subject = messages.getMessage("accountactivationemail.subject", null, locale.getLocale());
-//    String confirmationUrl 
-//      = event.getAppUrl() + "/registrationConfirm?token=" + token;
-//    String message = messages.getMessage("accountactivationemail.text", null, event.getLocale());
-//     
-//    SimpleMailMessage email = new SimpleMailMessage();
-//    email.setTo(recipientAddress);
-//    email.setSubject(subject);
-//    email.setText(message + " " + confirmationUrl);
-//    mailSender.send(email);
-	
 	@Override
 	public void sendResetTokenEmail(String contextPath, Locale locale, String token, User user) {
 		
 		String url = contextPath + "/changePassword?id=" + user.getId() + "&token=" + token;
+		String subject = messages.getMessage("reset.mailsubject", null, locale);
+		String text = messages.getMessage("reset.mailbody", null, locale);
+		SimpleMailMessage email = new SimpleMailMessage();
+		email.setSubject(subject);
+		email.setText(text + " \r\n" + url);
+		email.setTo(user.getEmail());
+		emailSender.send(email);
+	}
+
+	@Override
+	public void sendEmailUpdateVerificationToken(String appUrl, Locale locale, String token, User user) {
+		
+		String url = appUrl + "/user/updateEmail?id=" + user.getId() + "&token=" + token;
 		String subject = messages.getMessage("reset.mailsubject", null, locale);
 		String text = messages.getMessage("reset.mailbody", null, locale);
 		SimpleMailMessage email = new SimpleMailMessage();
