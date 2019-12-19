@@ -45,7 +45,7 @@ public class EmailServiceImpl implements EmailService{
 	}
 	
 	@Override
-	public void sendResetTokenEmail(String contextPath, Locale locale, String token, User user) {
+	public void sendResetPasswordTokenEmail(String contextPath, Locale locale, String token, User user) {
 		
 		String url = contextPath + "/changePassword?id=" + user.getId() + "&token=" + token;
 		String subject = messages.getMessage("reset.mailsubject", null, locale);
@@ -58,15 +58,15 @@ public class EmailServiceImpl implements EmailService{
 	}
 
 	@Override
-	public void sendEmailUpdateVerificationToken(String appUrl, Locale locale, String token, User user) {
+	public void sendEmailUpdateVerificationToken(String appUrl, Locale locale, String token, String newEmail) {
 		
-		String url = appUrl + "/user/updateEmail?id=" + user.getId() + "&token=" + token;
-		String subject = messages.getMessage("reset.mailsubject", null, locale);
-		String text = messages.getMessage("reset.mailbody", null, locale);
+		String url = appUrl + "/user/confirmNewEmail?token=" + token;
+		String subject = messages.getMessage("emailupdate.mailsubject", null, locale);
+		String text = messages.getMessage("emailupdate.mailbody", null, locale);
 		SimpleMailMessage email = new SimpleMailMessage();
 		email.setSubject(subject);
 		email.setText(text + " \r\n" + url);
-		email.setTo(user.getEmail());
+		email.setTo(newEmail);
 		emailSender.send(email);
 	}
 

@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Table(name = "verification_token")
 public class VerificationToken {
 	
-	private static final int EXPIRATION = 60 * 24;
+	private static final int EXPIRATION = 60 * 72;
 	 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

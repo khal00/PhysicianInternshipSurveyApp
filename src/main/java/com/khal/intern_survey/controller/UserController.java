@@ -1,6 +1,8 @@
 package com.khal.intern_survey.controller;
 
 import java.security.Principal;
+import java.util.Calendar;
+import java.util.Collection;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -9,13 +11,22 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.khal.intern_survey.entity.EmailUpdateToken;
 import com.khal.intern_survey.entity.User;
 import com.khal.intern_survey.service.EmailService;
 import com.khal.intern_survey.service.UserService;
@@ -50,7 +61,10 @@ public class UserController {
 	}
 	
 	@PostMapping("/updateEmail")
-	public String updateEmail(HttpServletRequest request, @RequestParam (value = "email", required = true) String email, Model theModel, Principal principal) {
+	public String updateEmail(HttpServletRequest request, @RequestParam (value = "email", required = true) String newEmail
+			, Model theModel
+			, Principal principal
+			, RedirectAttributes redirectAttributes) {
 
 		String appUrl = UtilMethods.getBaseUrl(request);
 		Locale locale = LocaleContextHolder.getLocale();
@@ -58,14 +72,53 @@ public class UserController {
 		User user = userService.findByEmail(principal.getName());
 		
 		String token = UUID.randomUUID().toString();
-		userService.createVerificationToken(user, token);
+		userService.createEmailUpdateToken(token, user, newEmail);;
         
-        emailService.sendEmailUpdateVerificationToken(appUrl, locale, token, user);
+        emailService.sendEmailUpdateVerificationToken(appUrl, locale, token, newEmail);
         
+        String message = messages.getMessage("emailupdate.infomessage", null, locale);
+        redirectAttributes.addFlashAttribute("infomessage", message);
         
-		return "account_settings";
-		
+		return "redirect:/user/accountSettings";
 	}
+	
+	@GetMapping("/confirmNewEmail")
+	public String confirmNewEmail(WebRequest request, @RequestParam ("token") String token, RedirectAttributes redirectAttributes) {
+		
+		Locale locale = request.getLocale();
+		EmailUpdateToken emailUpdateToken = userService.getEmailUpdateToken(token);
+		
+		if (emailUpdateToken == null) {
+	        String message = messages.getMessage("emailupdate.invalidToken", null, locale);
+	        redirectAttributes.addFlashAttribute("message", message);
+	        return "redirect:/?lang=" + locale.getLanguage();
+		}
+		
+	    Calendar cal = Calendar.getInstance();
+	    if ((emailUpdateToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
+	        String message = messages.getMessage("emailupdate.tokenexpired", null, locale);
+	        redirectAttributes.addFlashAttribute("message", message);
+	        return "redirect:/?lang=" + locale.getLanguage();
+	    } 
+
+		
+//		Update user email
+	    userService.updateUserEmail(emailUpdateToken);
+	    
+//	    User user = emailUpdateToken.getUser();
+//	    Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail()
+//	    		, user.getPassword());
+	    
+//	    SecurityContextHolder.getContext().setAuthentication(authentication);
+	    
+        String message = messages.getMessage("emailupdate.successmessage", null, locale);
+        redirectAttributes.addFlashAttribute("successMessage", message);
+        
+        
+		
+		return "redirect:/?lang=" + locale.getLanguage();
+	}
+	
 	
 	
 }

@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Table(name = "email_update_token")
 public class EmailUpdateToken {
 	
-	private static final int EXPIRATION = 60 * 24;
+	private static final int EXPIRATION = 60 * 72;
 	 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -48,7 +48,6 @@ public class EmailUpdateToken {
 	public EmailUpdateToken() {
 		super();
 	}
-
 
 	public EmailUpdateToken(String token, User user, String newEmail) {
 		super();

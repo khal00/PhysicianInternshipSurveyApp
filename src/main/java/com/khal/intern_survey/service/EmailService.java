@@ -9,9 +9,9 @@ public interface EmailService {
 	
 	public void sendAdminRegistrationRequestAlert(String to, UserDTO userRequestingRole);
 
-	public void sendResetTokenEmail(String appUrl, Locale locale, String token, User user);
+	public void sendResetPasswordTokenEmail(String appUrl, Locale locale, String token, User user);
 
 	void sendRegistrationVerificationEmail(String to, String confirmationUrl, Locale locale);
 
-	public void sendEmailUpdateVerificationToken(String appUrl, Locale locale, String token, User user);
+	public void sendEmailUpdateVerificationToken(String appUrl, Locale locale, String token, String newEmail);
 }

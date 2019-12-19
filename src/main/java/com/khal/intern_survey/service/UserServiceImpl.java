@@ -16,11 +16,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.khal.intern_survey.DTO.UserDTO;
+import com.khal.intern_survey.dao.EmailUpdateTokenRepository;
 import com.khal.intern_survey.dao.PasswordResetTokenRepository;
 import com.khal.intern_survey.dao.RoleRepository;
 import com.khal.intern_survey.dao.UserRepository;
 import com.khal.intern_survey.dao.VerificationTokenRepository;
 import com.khal.intern_survey.entity.AdminPersonalData;
+import com.khal.intern_survey.entity.EmailUpdateToken;
 import com.khal.intern_survey.entity.PasswordResetToken;
 import com.khal.intern_survey.entity.Role;
 import com.khal.intern_survey.entity.User;
@@ -46,6 +48,9 @@ public class UserServiceImpl implements UserService {
     
     @Autowired
 	private PasswordResetTokenRepository passwordResetTokenRepository;
+    
+    @Autowired
+    private EmailUpdateTokenRepository emailUpdateTokenRepository;
 	
 	@Override
 	public List<User> findAll() {		
@@ -108,7 +113,7 @@ public class UserServiceImpl implements UserService {
 				mapRolesToAuthorities(user.getRoles()));
 	}
 	
-	private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
+	public Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
 	}
 
@@ -134,6 +139,7 @@ public class UserServiceImpl implements UserService {
 		return tokenRepository.findByToken(token);
 	}
 	
+	@Override
 	public void createPasswordResetTokenForUser(User user, String token) {
 	    PasswordResetToken newToken = new PasswordResetToken(token, user);
 	    passwordResetTokenRepository.save(newToken);
@@ -143,8 +149,26 @@ public class UserServiceImpl implements UserService {
 	public void changeUserPassword(User user, String password) {
 		user.setPassword(passwordEncoder.encode(password));
 		userRepository.save(user);
+	}
+
+	@Override
+	public void createEmailUpdateToken(String token, User user, String newEmail) {
+		EmailUpdateToken emailUpdateToken = new EmailUpdateToken(token, user, newEmail);
+		emailUpdateTokenRepository.save(emailUpdateToken);
 		
 	}
 
+	@Override
+	public EmailUpdateToken getEmailUpdateToken(String token) {
+		EmailUpdateToken emailUpdateToken = emailUpdateTokenRepository.findByToken(token);
+		
+		return emailUpdateToken;
+	}
 
+	@Override
+	public void updateUserEmail(EmailUpdateToken emailUpdateToken) {
+		User user = emailUpdateToken.getUser();
+		user.setEmail(emailUpdateToken.getNewEmail());
+		userRepository.save(user);
+	}
 }

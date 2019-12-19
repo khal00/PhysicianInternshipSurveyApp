@@ -86,7 +86,7 @@ public class LoginController {
 
 		String token = UUID.randomUUID().toString();
 		userService.createPasswordResetTokenForUser(user, token);
-		emailService.sendResetTokenEmail(appUrl, locale, token, user);
+		emailService.sendResetPasswordTokenEmail(appUrl, locale, token, user);
 		String message = messages.getMessage("reset.emailsent", null, locale);
 		redirectAttributes.addFlashAttribute("successMessage", message);
 		return "redirect:/";

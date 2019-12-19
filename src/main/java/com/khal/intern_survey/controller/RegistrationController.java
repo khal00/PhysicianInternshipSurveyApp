@@ -72,7 +72,7 @@ public class RegistrationController {
 			, BindingResult adminBindingResult
 			, Model theModel
 			, HttpServletRequest request
-			, RedirectAttributes redirectedAttributes) {
+			, RedirectAttributes redirectAttributes) {
 			
 		String email = userDTO.getEmail();
 		String appUrl = UtilMethods.getBaseUrl(request);
@@ -121,11 +121,11 @@ public class RegistrationController {
 		        eventPublisher.publishEvent(new OnRegistrationCompleteEvent (registeredUser, locale, appUrl));
 		    } catch (Exception e) {
 		    	String errorMessage = messages.getMessage("index.emailerror", null, locale);
-		        redirectedAttributes.addFlashAttribute("message", errorMessage);
+		        redirectAttributes.addFlashAttribute("message", errorMessage);
 		    	return "redirect:/";
 		    }
 			
-			redirectedAttributes.addFlashAttribute("successMessage", registrationSuccessMessage);
+			redirectAttributes.addFlashAttribute("successMessage", registrationSuccessMessage);
 			return "redirect:/";
 		}
 		
@@ -138,43 +138,43 @@ public class RegistrationController {
 	        eventPublisher.publishEvent(new OnRegistrationCompleteEvent (registeredUser, locale, appUrl));
 	    } catch (Exception e) {
 	    	String errorMessage = messages.getMessage("index.emailerror", null, locale);
-	        redirectedAttributes.addFlashAttribute("message", errorMessage);
+	        redirectAttributes.addFlashAttribute("message", errorMessage);
 	    	return "redirect:/";
 	    }
 		
-		redirectedAttributes.addFlashAttribute("successMessage", registrationSuccessMessage);
+		redirectAttributes.addFlashAttribute("successMessage", registrationSuccessMessage);
 		return "redirect:/";
 		 
 	}
 	
 	// registration confirmed by email
 	@GetMapping("/registrationConfirm")
-	public String confirmRegistration (WebRequest request, Model model, @RequestParam("token") String token
-			, RedirectAttributes redirectedAttributes) {
+	public String confirmRegistration (WebRequest request, @RequestParam("token") String token
+			, RedirectAttributes redirectAttributes) {
 	  
 	    Locale locale = request.getLocale();
 	     
 	    VerificationToken verificationToken = userService.getVerificationToken(token);
 	    if (verificationToken == null) {
 	        String message = messages.getMessage("accountactivationmessage.invalidToken", null, locale);
-	        redirectedAttributes.addFlashAttribute("message", message);
+	        redirectAttributes.addFlashAttribute("message", message);
 	        return "redirect:/?lang=" + locale.getLanguage();
 	    }
-	     
-	    User user = verificationToken.getUser();
-	    
+	         
 	    Calendar cal = Calendar.getInstance();
 	    if ((verificationToken.getExpiryDate().getTime() - cal.getTime().getTime()) <= 0) {
 	        String message = messages.getMessage("accountactivationmessage.expired", null, locale);
-	        redirectedAttributes.addFlashAttribute("message", message);
+	        redirectAttributes.addFlashAttribute("message", message);
 	        return "redirect:/?lang=" + locale.getLanguage();
 	    } 
 	    
 	    // activate user account
+	    User user = verificationToken.getUser();
+	    
 	    user.setEnabled(true); 
 	    userService.saveRegisteredUser(user);
 	    String message = messages.getMessage("accountactivationmessage.success", null, locale);
-	    redirectedAttributes.addFlashAttribute("successMessage", message);
+	    redirectAttributes.addFlashAttribute("successMessage", message);
 	    return "redirect:/?lang=" + request.getLocale().getLanguage();	
 	}
 
