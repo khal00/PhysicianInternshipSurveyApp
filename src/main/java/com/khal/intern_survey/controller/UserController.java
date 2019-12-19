@@ -54,8 +54,6 @@ public class UserController {
 	
 	@GetMapping("/accountSettings")
 	public String showAccountSettings(Principal principal, Model theModel) {
-		System.out.println("Principal: " + principal);
-		System.out.println("Principal.getName: " + principal.getName());
 		
 		User user = userService.findByEmail(principal.getName());
 		theModel.addAttribute("user", user);
