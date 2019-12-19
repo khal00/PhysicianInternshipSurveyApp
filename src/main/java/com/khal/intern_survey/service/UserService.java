@@ -1,12 +1,15 @@
 package com.khal.intern_survey.service;
 
+import java.util.Collection;
 import java.util.List;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import com.khal.intern_survey.DTO.UserDTO;
 import com.khal.intern_survey.entity.AdminPersonalData;
 import com.khal.intern_survey.entity.EmailUpdateToken;
+import com.khal.intern_survey.entity.Role;
 import com.khal.intern_survey.entity.User;
 import com.khal.intern_survey.entity.VerificationToken;
 
@@ -37,5 +40,7 @@ public interface UserService extends UserDetailsService{
 	public EmailUpdateToken getEmailUpdateToken(String token);
 	
 	public void updateUserEmail(EmailUpdateToken emailUpdateToken);
+
+	public Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles);
 
 }

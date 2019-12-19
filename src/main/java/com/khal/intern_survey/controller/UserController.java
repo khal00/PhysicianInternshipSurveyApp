@@ -1,6 +1,7 @@
 package com.khal.intern_survey.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Locale;
@@ -11,12 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.session.SessionRegistry;
-import org.springframework.security.core.session.SessionRegistryImpl;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -53,6 +54,8 @@ public class UserController {
 	
 	@GetMapping("/accountSettings")
 	public String showAccountSettings(Principal principal, Model theModel) {
+		System.out.println("Principal: " + principal);
+		System.out.println("Principal.getName: " + principal.getName());
 		
 		User user = userService.findByEmail(principal.getName());
 		theModel.addAttribute("user", user);
@@ -105,16 +108,16 @@ public class UserController {
 //		Update user email
 	    userService.updateUserEmail(emailUpdateToken);
 	    
-//	    User user = emailUpdateToken.getUser();
-//	    Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail()
-//	    		, user.getPassword());
+//	    Re-authenticate user to update principal
+	    User user = emailUpdateToken.getUser();
 	    
-//	    SecurityContextHolder.getContext().setAuthentication(authentication);
+	    UserDetails userDetails = userService.loadUserByUsername(user.getEmail());
+	    Collection<? extends GrantedAuthority> authorities = userService.mapRolesToAuthorities(user.getRoles());
+	    Authentication authentication = new PreAuthenticatedAuthenticationToken(userDetails, user.getPassword(), authorities);
+	    SecurityContextHolder.getContext().setAuthentication(authentication);
 	    
         String message = messages.getMessage("emailupdate.successmessage", null, locale);
         redirectAttributes.addFlashAttribute("successMessage", message);
-        
-        
 		
 		return "redirect:/?lang=" + locale.getLanguage();
 	}
