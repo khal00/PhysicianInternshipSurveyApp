@@ -1,32 +1,34 @@
 package com.khal.intern_survey.controller;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Locale;
 import java.util.UUID;
-
 import javax.servlet.http.HttpServletRequest;
-
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.khal.intern_survey.DTO.EmailDTO;
+import com.khal.intern_survey.DTO.PasswordDTO;
 import com.khal.intern_survey.entity.EmailUpdateToken;
 import com.khal.intern_survey.entity.User;
 import com.khal.intern_survey.service.EmailService;
@@ -38,13 +40,16 @@ import com.khal.intern_survey.util.UtilMethods;
 public class UserController {
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
 	
 	@Autowired
-	MessageSource messages;
+	private MessageSource messages;
 	
 	@Autowired
-	EmailService emailService;
+	private EmailService emailService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@GetMapping("/showUserPanel")
 	public String showUserPanel() {
@@ -56,19 +61,35 @@ public class UserController {
 	public String showAccountSettings(Principal principal, Model theModel) {
 		
 		User user = userService.findByEmail(principal.getName());
-		theModel.addAttribute("user", user);
-		
+		theModel.addAttribute("emailDTO", new EmailDTO(user.getEmail()));
 		return "account_settings";
 	}
 	
+	
 	@PostMapping("/updateEmail")
-	public String updateEmail(HttpServletRequest request, @RequestParam (value = "email", required = true) String newEmail
+	public String updateEmail(HttpServletRequest request
+			, @Valid @ModelAttribute ("emailDTO") EmailDTO emailDTO
+			, BindingResult bindingResult
 			, Model theModel
 			, Principal principal
 			, RedirectAttributes redirectAttributes) {
-
+		
+		if(bindingResult.hasErrors()) {
+			return "account_settings";
+		}
+		
+		String newEmail = emailDTO.getEmailAddress();
+		
 		String appUrl = UtilMethods.getBaseUrl(request);
 		Locale locale = LocaleContextHolder.getLocale();
+		
+		// Check if new email is not already in use
+		User tempUser = userService.findByEmail(newEmail);
+		if(tempUser != null) {
+			String message = messages.getMessage("emailupdate.emailexists", null, locale);
+	        redirectAttributes.addFlashAttribute("errorMessage", message);
+	        return "redirect:/user/accountSettings";
+		}
 		
 		User user = userService.findByEmail(principal.getName());
 		
@@ -118,6 +139,28 @@ public class UserController {
         redirectAttributes.addFlashAttribute("successMessage", message);
 		
 		return "redirect:/?lang=" + locale.getLanguage();
+	}
+	
+	@PostMapping("/updatePassword")
+	public String updatePassword(Principal principal
+			, @RequestParam String oldPass
+			, @Valid @ModelAttribute ("passDTO") PasswordDTO passwordDTO
+			, BindingResult bindingResult) {
+		
+		if(bindingResult.hasErrors()) {
+			return "redirect:/user/accountSettings";
+		}
+		
+		User user = userService.findByEmail(principal.getName());
+		
+		if(passwordEncoder.matches(oldPass, user.getPassword())){
+			System.out.println("pass match");
+			
+			
+		}
+		
+		
+		return "redirect:/user/accountSettings";
 	}
 	
 	

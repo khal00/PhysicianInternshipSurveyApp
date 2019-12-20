@@ -1,6 +1,11 @@
 .dropdown-item:active {
-background-color: grey;
-outline: none;
+border-style: none !important;
+background-color: grey !important;
+box-shadow: none !important;
+}
+
+.dropdown-item {
+outline: none !important;
 }
 
 .form-container {

@@ -1,5 +1,7 @@
 To do:
 
+add errors to account_settings
+
 check if email is not in db
 
 password and email change
