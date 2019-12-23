@@ -1,10 +1,6 @@
 To do:
 
-add errors to account_settings
-
-check if email is not in db
-
-password and email change
+check other post methods if redirects instead returning view which causes app to crash when changing lang
 
 page after successful login
 

@@ -56,8 +56,14 @@ public class RegistrationController {
 	@GetMapping("/")
 	public String showIndex(Model theModel) {
 		
-		theModel.addAttribute("userDTO", new UserDTO());
-		theModel.addAttribute("adminData", new AdminPersonalData());
+		if (!theModel.containsAttribute("userDTO")) {
+			theModel.addAttribute("userDTO", new UserDTO());
+		}
+		
+		if (!theModel.containsAttribute("adminData")) {
+			theModel.addAttribute("adminData", new AdminPersonalData());
+		}
+				
 		theModel.addAttribute("expandAdminForm", expandAdminForm);
 		
 		return "index";

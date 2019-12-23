@@ -52,12 +52,11 @@
 						th:attr="value=*{emailAddress}" autocomplete="off" th:field="*{emailAddress}">
 						
 						<div th:if="${#fields.hasErrors('emailAddress')}">
-
 							<div th:each="err : ${#fields.errors('emailAddress')}"
 								th:text="#{${err}}" class="alert alert-danger"></div>
 						</div>
 						
-						<!-- Check for error message -->
+						<!-- Check for email error message -->
 						<div th:if="${errorMessage}"
 							class="alert alert-danger text-center mx-auto mb-5"
 							th:text="${errorMessage}"></div>
@@ -68,16 +67,44 @@
 					</div>					
 				</form>
 				
-				<form th:action="@{/user/updatePassword}" method="POST">
+				<form th:action="@{/user/updatePassword}" method="POST" th:object="${passwordDTO}">
 					<div style="background-color: #262626" class="form-group rounded px-3 pt-3 pb-2">
 						<label for="oldPassInput" th:text="#{account.passUpdate}"></label>
-						<input type="password" name="oldPass" class="form-control mb-3" id="oldPassInput">
+						<input type="password" name="oldPass" class="form-control mb-3" id="oldPassInput"
+						placeholder="Enter current password" th:attr="placeholder=#{account.enteroldpass}">
+						
+						<!-- Check for password error message -->
+						<div th:if="${passwordErrorMessage}"
+							class="alert alert-danger text-center mx-auto mb-5"
+							th:text="${passwordErrorMessage}"></div>
+						
 						
 						<label for="newPassInput" th:text="#{account.newPass}"></label>
-						<input type="password" name="newPass" class="form-control mb-3" id="newPassInput">
+						<input type="password" name="newPass" class="form-control mb-3" id="newPassInput"
+						th:field="*{password}" placeholder="Enter new password" th:attr="placeholder=#{account.enternewpass}">
+						
+						<div th:if="${#fields.hasErrors('password')}">
+							<div th:each="err : ${#fields.errors('password')}"
+								th:text="#{${err}}" class="alert alert-danger"></div>
+						</div>
 						
 						<label for="confirmPassInput" th:text="#{account.confirmPass}"></label>
-						<input type="password" name="confirmPass" class="form-control mb-3" id="confirmPassInput">
+						<input type="password" name="confirmPass" class="form-control mb-3" id="confirmPassInput"
+						th:field="*{matchingPassword}" placeholder="Retype new password" th:attr="placeholder=#{account.retypenewpass}">
+						
+						<div th:if="${#fields.hasErrors('matchingPassword')}">
+
+							<div th:each="err : ${#fields.errors('matchingPassword')}"
+								th:text="#{index.password} + ' ' + #{index.isrequired2}"
+								class="alert alert-danger"></div>
+
+						</div>
+						
+
+						<div th:if="${#fields.hasErrors('global')}">
+							<div th:each="err : ${#fields.errors('global')}"
+								th:text="#{${err}}" class="alert alert-danger"></div>
+						</div>
 						
 						<div class="form-group mt-2">
 							<button class="btn btn-warning btn-sm" th:text="#{account.updatebutton}"></button>
