@@ -112,7 +112,13 @@
 					</div>					
 				</form>
 				
-				
+				<form th:action="@{/user/deleteAccount}" method="POST">
+					<div style="background-color: #262626" class="form-group rounded px-3 pt-3 pb-1">
+						<div class="form-group">
+							<button class="btn btn-outline-danger btn-sm" th:text="#{account.deleteButton}"></button>
+						</div>
+					</div>
+				</form>			
 			</div>
 		</div>
 	</div>	 

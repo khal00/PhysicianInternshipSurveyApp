@@ -1,6 +1,6 @@
 To do:
 
-check other post methods if redirects instead returning view which causes app to crash when changing lang
+delete account
 
 page after successful login
 

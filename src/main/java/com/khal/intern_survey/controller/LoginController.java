@@ -71,8 +71,9 @@ public class LoginController {
 	}
 
 	@PostMapping("/resetPassword")
-	public String resetPassword(HttpServletRequest request, @RequestParam("username") String userEmail,
-			RedirectAttributes redirectAttributes) {
+	public String resetPassword(HttpServletRequest request
+			, @RequestParam("username") String userEmail
+			, RedirectAttributes redirectAttributes) {
 
 		Locale locale = LocaleContextHolder.getLocale();
 		String appUrl = UtilMethods.getBaseUrl(request);
@@ -93,8 +94,11 @@ public class LoginController {
 	}
 
 	@GetMapping("/changePassword")
-	public String showChangePasswordPage(Locale locale, RedirectAttributes redirectAttributes, @RequestParam("id") long id,
-			@RequestParam("token") String token, Model theModel) {
+	public String showChangePasswordPage(Locale locale
+			, RedirectAttributes redirectAttributes
+			, @RequestParam("id") long id
+			, @RequestParam("token") String token
+			, Model theModel) {
 		
 		String result = validatePasswordResetToken(id, token);
 		if (result != null) {
@@ -128,7 +132,8 @@ public class LoginController {
 	
 	@PostMapping("/savePassword")
 	public String savePassword(@Valid @ModelAttribute ("passwordDTO") PasswordDTO passwordDTO
-			, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+			, BindingResult bindingResult
+			, RedirectAttributes redirectAttributes) {
 	
 		if(bindingResult.hasErrors()) {
 			return "update_password";

@@ -76,7 +76,6 @@ public class RegistrationController {
 			, BindingResult userBindingResult
 			, @Valid @ModelAttribute("adminData") AdminPersonalData adminData
 			, BindingResult adminBindingResult
-			, Model theModel
 			, HttpServletRequest request
 			, RedirectAttributes redirectAttributes) {
 			
@@ -93,25 +92,28 @@ public class RegistrationController {
 		
 		
 		// form validation
+
+		if(adminBindingResult.hasErrors() && expandAdminForm == true) {
+
+			redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userDTO", userBindingResult);
+			redirectAttributes.addFlashAttribute("userDTO", userDTO);
+			redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.adminData", adminBindingResult);
+			redirectAttributes.addFlashAttribute("adminData", adminData);
+			return "redirect:/?lang=" + request.getLocale().getLanguage();
+		}
+
+		
 		if (userBindingResult.hasErrors()){
-			theModel.addAttribute("expandAdminForm", expandAdminForm);
-			return "index";
+			redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userDTO", userBindingResult);
+			redirectAttributes.addFlashAttribute("userDTO", userDTO);
+			return "redirect:/?lang=" + request.getLocale().getLanguage();
 	    }
 		
 		// check if email exists in db
 		User existing = userService.findByEmail(email);
 		if (existing != null) {
-			theModel.addAttribute("userDTO", new UserDTO());
-			theModel.addAttribute("registrationError", "User already exists.");
-			theModel.addAttribute("adminDTO", new AdminPersonalData());
-			return "index";
-		}
-		
-		// user requested admin privileges but the form has errors
-		if(adminBindingResult.hasErrors() && expandAdminForm == true) {
-
-			theModel.addAttribute("expandAdminForm", expandAdminForm);
-			return "index";		
+			redirectAttributes.addFlashAttribute("registrationError", "User already exists.");
+			return "redirect:/?lang=" + request.getLocale().getLanguage();
 		}
 		
 		String registrationSuccessMessage = messages.getMessage("index.registersuccess", null, locale);
@@ -128,14 +130,14 @@ public class RegistrationController {
 		    } catch (Exception e) {
 		    	String errorMessage = messages.getMessage("index.emailerror", null, locale);
 		        redirectAttributes.addFlashAttribute("message", errorMessage);
-		    	return "redirect:/";
+		        return "redirect:/?lang=" + request.getLocale().getLanguage();
 		    }
 			
 			redirectAttributes.addFlashAttribute("successMessage", registrationSuccessMessage);
-			return "redirect:/";
+			return "redirect:/?lang=" + request.getLocale().getLanguage();
 		}
 		
-		// create user account
+		// create regular user account
 		userService.saveUser(userDTO);
 		
 		User registeredUser = userService.findByEmail(email);
@@ -145,11 +147,11 @@ public class RegistrationController {
 	    } catch (Exception e) {
 	    	String errorMessage = messages.getMessage("index.emailerror", null, locale);
 	        redirectAttributes.addFlashAttribute("message", errorMessage);
-	    	return "redirect:/";
+	        return "redirect:/?lang=" + request.getLocale().getLanguage();
 	    }
 		
 		redirectAttributes.addFlashAttribute("successMessage", registrationSuccessMessage);
-		return "redirect:/";
+		return "redirect:/?lang=" + request.getLocale().getLanguage();
 		 
 	}
 	
