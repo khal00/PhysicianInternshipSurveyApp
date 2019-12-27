@@ -76,7 +76,7 @@ INSERT INTO `users`
 VALUES 
 (1,'xi@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',true),
 (2,'jin@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',true),
-(3,'ping@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',false);
+(3,'ping@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',false),
 (4,'krrsssfire@gmail.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',true);
 
 INSERT INTO `admin_personal_data`
@@ -86,8 +86,8 @@ VALUES
 
 INSERT INTO `user_admin_data`
 VALUES
-(2,1),
-(3,2);
+(1,1),
+(2,2);
 
 
 DROP TABLE IF EXISTS `role`;
@@ -113,11 +113,11 @@ CREATE TABLE `users_roles` (
 PRIMARY KEY (`user_id`,`role_id`),
 KEY (`role_id`),
   
-CONSTRAINT `user_roles_user_fk` FOREIGN KEY (`user_id`) 
+CONSTRAINT `users_roles_user_fk` FOREIGN KEY (`user_id`) 
 REFERENCES `users` (`id`) 
-ON DELETE NO ACTION ON UPDATE NO ACTION,
+ON DELETE CASCADE ON UPDATE CASCADE,
   
-CONSTRAINT `user_roles_role_fk` FOREIGN KEY (`role_id`) 
+CONSTRAINT `users_roles_role_fk` FOREIGN KEY (`role_id`) 
 REFERENCES `role` (`id`) 
 ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -144,6 +144,7 @@ CREATE TABLE `main_section` (
                                                                                                                                                                                                
 PRIMARY KEY `quest_id_idx_1` (`quest_id`),
 CONSTRAINT `quest_id_fk_1` FOREIGN KEY (`quest_id`) REFERENCES `users` (`id`)
+ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 

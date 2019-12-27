@@ -36,7 +36,7 @@ public class User {
 		inverseJoinColumns = { @JoinColumn(name = "admin_data_id", referencedColumnName = "id")})
 	private AdminPersonalData adminPersonalData;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "users_roles", 
 		joinColumns = @JoinColumn(name = "user_id"), 
 		inverseJoinColumns = @JoinColumn(name = "role_id"))

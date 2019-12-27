@@ -18,7 +18,7 @@ ConstraintValidator<ContactNumberConstraint, String> {
 	  }
 	  
       return contactField != null && contactField.matches("[0-9]+")
-        && (contactField.length() > 9) && (contactField.length() < 14);
+        && (contactField.length() > 8) && (contactField.length() < 14);
   }
 
 }

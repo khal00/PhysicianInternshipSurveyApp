@@ -43,4 +43,5 @@ public interface UserService extends UserDetailsService{
 
 	public Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles);
 
+	void deleteUserAccount(User user);
 }

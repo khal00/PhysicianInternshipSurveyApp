@@ -1,7 +1,5 @@
 To do:
 
-delete account
-
 page after successful login
 
 form for adding new survey for user

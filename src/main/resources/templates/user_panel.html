@@ -8,8 +8,12 @@
 	<div layout:fragment="header_login_content">
 		<div th:replace="fragments/header_login_section :: header_login_section"></div>
 	</div>
-	<div layout:fragment="content">
-		<div class="text-primary">Some text</div>
+	<div layout:fragment="main_content">
+		<div class="row">
+			<form class="m-auto">
+				<button type="submit" class="btn btn-outline-light btn-lg" th:text="#{panel.fillFormButton}"></button>
+			</form>
+		</div>
 	</div>	 
 </body>
 </html>

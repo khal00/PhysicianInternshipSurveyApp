@@ -1,33 +1,33 @@
 <!DOCTYPE html>
-<html layout:decorate="~{layout}"
-	xmlns:th="https://www.thymeleaf.org">
+<html layout:decorate="~{layout}" xmlns:th="https://www.thymeleaf.org">
 <head>
-	<title th:text="#{account.title}"></title>
-	
-	<style>
-	
-		input {
-			background-color: #1a1a1a !important;
-			border-style: none !important;
-			color: #e6e6e6 !important;
-		}
-		
-		.form-control:focus {
-			border-width: 1px !important;
-  			border-style: solid !important;
-  			border-color: #808080 !important;
-			box-shadow: none;
-		}
-		
-	</style>
+<title th:text="#{account.title}"></title>
+
+<style>
+input {
+	background-color: #1a1a1a !important;
+	border-style: none !important;
+	color: #e6e6e6 !important;
+}
+
+.form-control:focus {
+	border-width: 1px !important;
+	border-style: solid !important;
+	border-color: #808080 !important;
+	box-shadow: none;
+}
+</style>
+
+
 </head>
 <body>
-	
+
 	<div layout:fragment="header_login_content">
-		<div th:replace="fragments/header_login_section :: header_login_section"></div>
+		<div
+			th:replace="fragments/header_login_section :: header_login_section"></div>
 	</div>
 	<div layout:fragment="main_content">
-	
+
 		<section class="row">
 
 			<!-- Check for success message -->
@@ -41,57 +41,69 @@
 				th:text="${infomessage}"></div>
 
 		</section>
-		
+
 		<div class="row">
-			<div class="rounded m-auto p-4" style="color: #e6e6e6; background-color: #333333">
+			<div class="rounded m-auto p-4"
+				style="color: #e6e6e6; background-color: #333333">
 				<h1 class="h5 mb-3" th:text="#{account.title}"></h1>
-				<form th:action="@{/user/updateEmail}" method="POST" class="mb-4" th:object="${emailDTO}">
-					<div style="background-color: #262626" class="form-group rounded px-3 pt-3 pb-2">
+				<form th:action="@{/user/updateEmail}" method="POST" class="mb-4"
+					th:object="${emailDTO}">
+					<div style="background-color: #262626"
+						class="form-group rounded px-3 pt-3 pb-2">
 						<label for="emailInput" th:text="#{account.emailUpdate}"></label>
-						<input type="text" name="email" class="form-control mb-3" id="emailInput" value="email" 
-						th:attr="value=*{emailAddress}" autocomplete="off" th:field="*{emailAddress}">
-						
+						<input type="text" name="email" class="form-control mb-3"
+							id="emailInput" value="email" th:attr="value=*{emailAddress}"
+							autocomplete="off" th:field="*{emailAddress}">
+
 						<div th:if="${#fields.hasErrors('emailAddress')}">
 							<div th:each="err : ${#fields.errors('emailAddress')}"
 								th:text="#{${err}}" class="alert alert-danger"></div>
 						</div>
-						
+
 						<!-- Check for email error message -->
 						<div th:if="${errorMessage}"
 							class="alert alert-danger text-center mx-auto mb-5"
 							th:text="${errorMessage}"></div>
-												
+
 						<div class="form-group mt-2">
-							<button class="btn btn-warning btn-sm" th:text="#{account.updatebutton}"></button>
+							<button class="btn btn-warning btn-sm"
+								th:text="#{account.updatebutton}"></button>
 						</div>
-					</div>					
+					</div>
 				</form>
-				
-				<form th:action="@{/user/updatePassword}" method="POST" th:object="${passwordDTO}">
-					<div style="background-color: #262626" class="form-group rounded px-3 pt-3 pb-2">
+
+				<form th:action="@{/user/updatePassword}" method="POST"
+					th:object="${passwordDTO}">
+					<div style="background-color: #262626"
+						class="form-group rounded px-3 pt-3 pb-2">
 						<label for="oldPassInput" th:text="#{account.passUpdate}"></label>
-						<input type="password" name="oldPass" class="form-control mb-3" id="oldPassInput"
-						placeholder="Enter current password" th:attr="placeholder=#{account.enteroldpass}">
-						
+						<input type="password" name="oldPass" class="form-control mb-3"
+							id="oldPassInput" placeholder="Enter current password"
+							th:attr="placeholder=#{account.enteroldpass}">
+
 						<!-- Check for password error message -->
 						<div th:if="${passwordErrorMessage}"
 							class="alert alert-danger text-center mx-auto mb-5"
 							th:text="${passwordErrorMessage}"></div>
-						
-						
-						<label for="newPassInput" th:text="#{account.newPass}"></label>
-						<input type="password" name="newPass" class="form-control mb-3" id="newPassInput"
-						th:field="*{password}" placeholder="Enter new password" th:attr="placeholder=#{account.enternewpass}">
-						
+
+
+						<label for="newPassInput" th:text="#{account.newPass}"></label> <input
+							type="password" name="newPass" class="form-control mb-3"
+							id="newPassInput" th:field="*{password}"
+							placeholder="Enter new password"
+							th:attr="placeholder=#{account.enternewpass}">
+
 						<div th:if="${#fields.hasErrors('password')}">
 							<div th:each="err : ${#fields.errors('password')}"
 								th:text="#{${err}}" class="alert alert-danger"></div>
 						</div>
-						
+
 						<label for="confirmPassInput" th:text="#{account.confirmPass}"></label>
-						<input type="password" name="confirmPass" class="form-control mb-3" id="confirmPassInput"
-						th:field="*{matchingPassword}" placeholder="Retype new password" th:attr="placeholder=#{account.retypenewpass}">
-						
+						<input type="password" name="confirmPass"
+							class="form-control mb-3" id="confirmPassInput"
+							th:field="*{matchingPassword}" placeholder="Retype new password"
+							th:attr="placeholder=#{account.retypenewpass}">
+
 						<div th:if="${#fields.hasErrors('matchingPassword')}">
 
 							<div th:each="err : ${#fields.errors('matchingPassword')}"
@@ -99,28 +111,59 @@
 								class="alert alert-danger"></div>
 
 						</div>
-						
+
 
 						<div th:if="${#fields.hasErrors('global')}">
 							<div th:each="err : ${#fields.errors('global')}"
 								th:text="#{${err}}" class="alert alert-danger"></div>
 						</div>
-						
+
 						<div class="form-group mt-2">
-							<button class="btn btn-warning btn-sm" th:text="#{account.updatebutton}"></button>
-						</div>
-					</div>					
-				</form>
-				
-				<form th:action="@{/user/deleteAccount}" method="POST">
-					<div style="background-color: #262626" class="form-group rounded px-3 pt-3 pb-1">
-						<div class="form-group">
-							<button class="btn btn-outline-danger btn-sm" th:text="#{account.deleteButton}"></button>
+							<button class="btn btn-warning btn-sm"
+								th:text="#{account.updatebutton}"></button>
 						</div>
 					</div>
-				</form>			
+				</form>
+
+				<div>
+
+					<div style="background-color: #262626"
+						class="form-group rounded px-3 pt-3 pb-1">
+						<h2 class="h6" th:text="#{account.deleteSection}"></h2>
+						<div class="form-group">
+							<button class="btn btn-outline-danger btn-sm" data-toggle="modal"
+								data-target="#deleteModal" th:text="#{account.deleteButton}"></button>
+						</div>
+					</div>
+
+					<!-- Modal -->
+					<div class="modal fade" id="deleteModal" tabindex="-1"
+						role="dialog" aria-labelledby="deleteModalLabel"
+						aria-hidden="true" style="color: black" >
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="deleteModalLabel" th:text="#{account.deleteSection}"></h5>
+									<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+										<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body" th:text="#{account.modal.confirm}"></div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal" th:text="#{account.modal.close}"></button>
+									<form th:action="@{/user/deleteAccount}" method="POST">
+										<button type="submit" class="btn btn-danger" th:text="#{account.modal.deleteButton}"></button>
+									</form>
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>	 
+	</div>
 </body>
 </html>

@@ -196,6 +196,20 @@ public class UserController {
 		return "redirect:/user/accountSettings";
 	}
 	
+	@PostMapping("/deleteAccount")
+	public String deleteAccont(Principal principal, RedirectAttributes redirectAttributes) {
+		
+		Locale locale = LocaleContextHolder.getLocale();
+		
+		User user = userService.findByEmail(principal.getName());
+		userService.deleteUserAccount(user);
+		SecurityContextHolder.clearContext();
+		
+		String message = messages.getMessage("account.accountDeletedMessage", null, locale);
+		redirectAttributes.addFlashAttribute("message", message);
+		return "redirect:/";
+	}
+	
 	
 	
 }

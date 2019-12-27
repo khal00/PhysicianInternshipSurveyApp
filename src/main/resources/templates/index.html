@@ -83,7 +83,7 @@
 				class="alert alert-success text-center mx-auto mb-5"
 				th:text="${successMessage}"></div>
 
-			<!-- Check for account activation result -->
+			<!-- Check for information message -->
 			<div th:if="${message}"
 				class="alert alert-warning text-center mx-auto mb-5"
 				th:text="${message}"></div>
@@ -96,7 +96,8 @@
 				<h1 class="h1 mt-auto mx-auto mr-md-2 text-right"
 					th:text="#{index.h1}"></h1>
 				<p class="mr-md-2 mt-1 mb-auto mx-auto text-right lead"
-					th:text="#{index.instructions}"></p>
+					th:text="#{index.instructions}"
+					sec:authorize="isAnonymous()"></p>
 			</div>
 			<section class="col-12 col-md-6" sec:authorize="isAnonymous()">
 				<div
@@ -273,6 +274,15 @@
 				</div>
 
 			</section>
+			
+			<section class="col-12 col-md-6" sec:authorize="isAuthenticated()">
+				<div class="col-9 col-sm-7 col-md-10 col-lg-8 col-xl-6 px-4 pt-3 pb-2 m-auto ml-md-2 form-container">
+					<form>
+						<button type="submit" class="btn btn-outline-light btn-lg" th:text="#{panel.fillFormButton}"></button>
+					</form>
+				</div>
+			</section>
+		
 		</div>
 
 	</div>

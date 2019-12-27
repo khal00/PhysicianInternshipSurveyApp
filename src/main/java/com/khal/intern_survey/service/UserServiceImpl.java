@@ -172,4 +172,9 @@ public class UserServiceImpl implements UserService {
 		user.setEmail(emailUpdateToken.getNewEmail());
 		userRepository.save(user);
 	}
+	
+	@Override
+	public void deleteUserAccount(User user) {
+		userRepository.delete(user);
+	}
 }
