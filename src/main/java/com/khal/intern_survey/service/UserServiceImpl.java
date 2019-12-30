@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
 		User theUser = new User();
 		theUser.setEmail(userDTO.getEmail());
 		theUser.setPassword(passwordEncoder.encode(userDTO.getPassword()));		
-		theUser.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
+//		theUser.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
 		theUser.setAdminPersonalData(adminPersonalData);
 		userRepository.save(theUser);
 		emailServiceImpl.sendAdminRegistrationRequestAlert("krzhalewski@gmail.com", userDTO);

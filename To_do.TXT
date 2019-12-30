@@ -1,7 +1,5 @@
 To do:
 
-page after successful login
-
 form for adding new survey for user
 
 survey form (at least part of it)

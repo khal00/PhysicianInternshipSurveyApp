@@ -44,6 +44,12 @@ public class User {
 	
 	@Column(name = "enabled")
 	private boolean enabled;
+	
+	@OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "users_questionnaires", 
+		joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id")},
+		inverseJoinColumns = { @JoinColumn(name = "questionnaire_id", referencedColumnName = "id")})
+	private Questionnaire questionnaire;
 
 	public User() {
 	}
@@ -116,6 +122,14 @@ public class User {
 
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+	}
+
+	public Questionnaire getQuestionnaire() {
+		return questionnaire;
+	}
+
+	public void setQuestionnaire(Questionnaire questionnaire) {
+		this.questionnaire = questionnaire;
 	}
 
 	@Override

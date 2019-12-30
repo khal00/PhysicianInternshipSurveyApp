@@ -14,6 +14,6 @@ CREATE TABLE `internal_medicine` (
   `acquired_practical_knowledge` float DEFAULT NULL,
   `surgery` float DEFAULT NULL,
   
-  PRIMARY KEY `username_idx_1` (`id`),
-  CONSTRAINT `username_ibfk_2` FOREIGN KEY (`id`) REFERENCES `questionnaire_head_section` (`id`)
+  PRIMARY KEY (`id`),
+  CONSTRAINT `username_ibfk_2` FOREIGN KEY (`id`) REFERENCES `main_section` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
