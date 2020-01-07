@@ -124,14 +124,10 @@ VALUES
 CREATE TABLE `questionnaires` (
 `id` int NOT NULL AUTO_INCREMENT,
 `status` varchar(15) DEFAULT 'draft',
-`medical_chamber` varchar(50) NOT NULL,
-`unit_name` varchar(50) NOT NULL,                                                                                                                                                                                               
+`medical_chamber` varchar(50),
+`unit_name` varchar(50),                                                                                                                                                                                               
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-INSERT INTO questionnaires
-(medical_chamber, unit_name) 
-VALUES ('OIL w Szczecinie', 'SPWSZ');
 
 CREATE TABLE `users_questionnaires` (
 `user_id` int NOT NULL,

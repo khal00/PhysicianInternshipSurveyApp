@@ -27,9 +27,45 @@ input {
 	</div>
 	
 	<div layout:fragment="main_content">
+		
 		<div class="row">
-			<h1 class="h4 p-3 text-white" th:text="#{questionnaire.title}"></h1>
-			<div class="rounded p-4" style="color: #e6e6e6; background-color: #333333">
+			<h1 class="mx-auto h4 p-3 text-white" th:text="#{questionnaire.title}"></h1>
+		</div>
+		<div class="row">
+			<div class="mx-auto rounded pt-4 px-4 pb-3" style="color: #e6e6e6; background-color: #333333">
+				<form th:action="@{/survey/saveQuestionnaire}" method="POST" th:object="${questionnaire}">
+													
+					<div class="form-group d-none">
+						<input type="text"
+						th:field="*{id}" id="questionnaireIdInput"/>
+					</div>
+					
+					<div class="form-group">
+						<label for="medicalChamberInput"
+							th:text="#{questionnaire.medicalChamber}"></label> <input type="text"
+							th:field="*{medicalChamber}" id="medicalChamberInput"
+							class="form-control"
+							th:errorclass="is-invalid" />
+					</div>
+					
+					<div class="form-group">
+						<label for="unitNameInput"
+							th:text="#{questionnaire.unitName}"></label> <input type="text"
+							th:field="*{unitName}" id="unitNameInput"
+							class="form-control"
+							th:errorclass="is-invalid" />
+					</div>
+
+					<div class="form-group">
+						<button type="submit" name="action" value="save" class="btn btn-warning btn-sm" th:text="#{questionnaire.saveButton}">Save</button>
+    				</div>
+    				
+    				<div class="form-group">
+						<button type="submit" name="action" value="send"  class="btn btn-success btn-sm" th:text="#{questionnaire.sendButton}">Send</button>
+    				</div>
+    				
+					
+				</form>
 				
 			</div>
 		</div>

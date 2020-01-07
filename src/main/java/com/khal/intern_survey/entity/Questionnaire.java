@@ -28,6 +28,7 @@ public class Questionnaire {
 
 	public Questionnaire() {
 		super();
+		this.status = DRAFT;
 	}
 
 	public Questionnaire(String medicalChamber, String unitName) {
@@ -57,43 +58,43 @@ public class Questionnaire {
 
 
 
-	protected Long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	protected void setId(Long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	protected String getStatus() {
+	public String getStatus() {
 		return status;
 	}
 
-	protected void setStatus(String status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	protected String getMedicalChamber() {
+	public String getMedicalChamber() {
 		return medicalChamber;
 	}
 
-	protected void setMedicalChamber(String medicalChamber) {
+	public void setMedicalChamber(String medicalChamber) {
 		this.medicalChamber = medicalChamber;
 	}
 
-	protected String getUnitName() {
+	public String getUnitName() {
 		return unitName;
 	}
 
-	protected void setUnitName(String unitName) {
+	public void setUnitName(String unitName) {
 		this.unitName = unitName;
 	}
 
-	protected User getUser() {
+	public User getUser() {
 		return user;
 	}
 
-	protected void setUser(User user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 	

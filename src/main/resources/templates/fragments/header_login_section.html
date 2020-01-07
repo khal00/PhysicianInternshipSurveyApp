@@ -34,7 +34,11 @@
 					<div class="dropdown-menu dropdown-menu-right"
 						aria-labelledby="UserDropdownMenu">
 
-						<div class="dropdown-item">Wypełnij Ankietę</div>
+						<form th:action="@{/survey/showQuestionnaire}" method="GET" sec:authorize="hasRole('ROLE_USER')">
+							<button type="submit" class="dropdown-item"
+								th:text="#{header.user.showQuestionnaireButton}"></button>
+						</form>
+						
 						<form th:action="@{/user/accountSettings}" method="GET">
 							<button type="submit" class="dropdown-item"
 								th:text="#{header.user.accountsettings}"></button>
@@ -57,7 +61,11 @@
 					<div class="dropdown-menu dropdown-menu-left"
 						aria-labelledby="UserDropdownMenu">
 
-						<div class="dropdown-item">Wypełnij Ankietę</div>
+						<form th:action="@{/survey/showQuestionnaire}" method="GET" sec:authorize="hasRole('ROLE_USER')">
+							<button type="submit" class="dropdown-item"
+								th:text="#{header.user.showQuestionnaireButton}"></button>
+						</form>
+								
 						<form th:action="@{/user/accountSettings}" method="GET">
 							<button type="submit" class="dropdown-item"
 								th:text="#{header.user.accountsettings}"></button>
