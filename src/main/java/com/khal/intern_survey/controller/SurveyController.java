@@ -1,6 +1,7 @@
 package com.khal.intern_survey.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.khal.intern_survey.dao.InternshipUnitRepository;
+import com.khal.intern_survey.entity.InternshipUnit;
 import com.khal.intern_survey.entity.Questionnaire;
 import com.khal.intern_survey.entity.User;
 import com.khal.intern_survey.service.QuestionnaireService;
@@ -25,6 +28,9 @@ public class SurveyController {
 	@Autowired
 	QuestionnaireService questionnaireService;
 	
+	@Autowired
+	InternshipUnitRepository internshipUnitRepository;
+	
 	@GetMapping("/showQuestionnaire")
 	public String showQuestionnaire(Principal principal, Model theModel) {
 		
@@ -38,8 +44,11 @@ public class SurveyController {
 			userService.saveRegisteredUser(user);
 		}
 		
+		List<InternshipUnit> units = internshipUnitRepository.findByOrderByNameAsc();
+		
 		theModel.addAttribute("questionnaire", questionnaire);
-
+		theModel.addAttribute("units", units);
+		
 		return "questionnaire_view";
 	}
 	

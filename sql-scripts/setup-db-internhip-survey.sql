@@ -125,7 +125,7 @@ CREATE TABLE `questionnaires` (
 `id` int NOT NULL AUTO_INCREMENT,
 `status` varchar(15) DEFAULT 'draft',
 `medical_chamber` varchar(50),
-`unit_name` varchar(50),                                                                                                                                                                                               
+`unit_name` varchar(150),                                                                                                                                                                                               
 PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -145,3 +145,12 @@ ON DELETE CASCADE ON UPDATE CASCADE
 
 SET FOREIGN_KEY_CHECKS = 1;
 
+CREATE TABLE `internship_unit` (
+`id` int NOT NULL AUTO_INCREMENT,
+`name` varchar(150),
+PRIMARY KEY (`id`)
+);
+
+INSERT INTO `internship_unit` VALUES
+(1,'Samodzielny Publiczny Szpital Kliniczny Nr 1 PUM w Szczecinie'),
+(2,'Samodzielny Publiczny Szpital Kliniczny Nr 2 PUM w Szczecinie');
