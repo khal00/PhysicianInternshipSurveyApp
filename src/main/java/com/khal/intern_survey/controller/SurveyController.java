@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.khal.intern_survey.dao.InternshipUnitRepository;
 import com.khal.intern_survey.entity.InternshipUnit;
@@ -34,7 +35,7 @@ public class SurveyController {
 	
 	@GetMapping("/showQuestionnaire")
 	public String showQuestionnaire(Principal principal, Model theModel) {
-		
+	
 		User user = userService.findByEmail(principal.getName());
 		Questionnaire questionnaire = user.getQuestionnaire();
 
@@ -70,12 +71,11 @@ public class SurveyController {
 	}
 	
 	@GetMapping("/unitSearch")
-	public String searchUnitByMedicalChamber(Principal principal, Model theModel) {
+	public String searchUnitByMedicalChamber(Principal principal, Model theModel, @RequestParam (value = "chamberSelected") String chamberSelected) {
 		
-		String medicalChamber = "OIL w Warszawie";
 		
-		List<InternshipUnit> units = internshipUnitService.findByMedicalChamber(medicalChamber);
-		System.out.println(units);
+		List<InternshipUnit> units = internshipUnitService.findByMedicalChamber(chamberSelected);
+
 		User user = userService.findByEmail(principal.getName());
 		Questionnaire questionnaire = user.getQuestionnaire();
 		
