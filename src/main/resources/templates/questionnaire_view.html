@@ -42,6 +42,7 @@ input {
 		}
 	</script>
 
+
 </head>
 <body>
 
@@ -49,6 +50,7 @@ input {
 		<div
 			th:replace="fragments/header_login_section :: header_login_section"></div>
 	</div>
+
 	
 	<div layout:fragment="main_content">
 		
@@ -83,6 +85,7 @@ input {
 						<select th:field="*{unitName}" id="unitNameSelect" class="custom-select" th:object="${questionnaire}" th:fragment="units_list">
 							<option th:each="unit : ${units}" th:value="${unit.name}" th:text="${unit.name}">							
 						</select>
+						
 					</div>
 
 					<div class="form-group mt-4">

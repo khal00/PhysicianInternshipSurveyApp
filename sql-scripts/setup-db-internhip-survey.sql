@@ -148,9 +148,13 @@ SET FOREIGN_KEY_CHECKS = 1;
 CREATE TABLE `internship_unit` (
 `id` int NOT NULL AUTO_INCREMENT,
 `name` varchar(150),
+`medical_chamber` varchar(50),
 PRIMARY KEY (`id`)
 );
 
 INSERT INTO `internship_unit` VALUES
-(1,'Samodzielny Publiczny Szpital Kliniczny Nr 1 PUM w Szczecinie'),
-(2,'Samodzielny Publiczny Szpital Kliniczny Nr 2 PUM w Szczecinie');
+(1,'Samodzielny Publiczny Szpital Kliniczny Nr 1 w Szczecinie','OIL w Szczecinie'),
+(2,'Samodzielny Publiczny Szpital Kliniczny Nr 2 w Szczecinie','OIL w Szczecinie'),
+(3,'ZOZ MSWIA w Warszawie','OIL w Warszawie'),
+(4,'111 Szpital Wojskowy w Poznaniu','WIL w Poznaniu');
+
