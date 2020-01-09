@@ -18,6 +18,30 @@ input {
 }
 </style>
 
+	<script th:inline="javascript">
+	
+		function loadUnitSearchResult()
+		{
+			$.ajax({
+			  type: 'get',
+			  url: /*[[ @{'/survey/unitSearch'} ]]*/,
+			
+			  success: function(data){
+				
+				  /*<![CDATA[*/
+				  
+				  
+				  $('.units_list').html(data);
+				  
+				  
+				  /*]]>*/
+				},
+			  
+			})
+			
+		}
+	</script>
+
 </head>
 <body>
 
@@ -43,24 +67,26 @@ input {
 					<div class="form-group">
 						<label for="medicalChamberSelect"
 							th:text="#{questionnaire.medicalChamber}"></label> 
-						<select	th:field="*{medicalChamber}" id="medicalChamberSelect" class="custom-select">
+						<select	th:field="*{medicalChamber}" id="medicalChamberSelect" class="custom-select" onchange="loadUnitSearchResult()">
 							<option value="OIL Szczecin">OIL w Szczecinie</option>
 							<option value="OIL Szczecin">OIL w Warszawie</option>
-							<option value="OIL Szczecin">OIL w Krakowie</option>
+							<option value="OIL Szczecin">WIL w Poznaniu</option>
 						</select>	
 							
 					</div>
 					
+					
+					
 					<div class="form-group">
 						<label for="unitNameSelect"
 							th:text="#{questionnaire.unitName}"></label> 
-						<select th:field="*{unitName}" id="unitNameSelect" class="custom-select">
+						<select th:field="*{unitName}" id="unitNameSelect" class="custom-select" th:object="${questionnaire}" th:fragment="units_list">
 							<option th:each="unit : ${units}" th:value="${unit.name}" th:text="${unit.name}">							
 						</select>
 					</div>
 
-					<div class="form-group">
-						<button type="submit" name="action" value="save" class="btn btn-warning btn-sm" th:text="#{questionnaire.saveButton}">Save</button>
+					<div class="form-group mt-4">
+						<button type="submit" name="action" value="save" class="btn btn-warning btn-sm mr-2" th:text="#{questionnaire.saveButton}">Save</button>
     					<button type="submit" name="action" value="send"  class="btn btn-success btn-sm" th:text="#{questionnaire.sendButton}">Send</button>
     				</div>
 					
@@ -70,5 +96,6 @@ input {
 		</div>
 
 	</div>
+	
 </body>
 </html>

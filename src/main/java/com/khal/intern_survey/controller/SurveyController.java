@@ -15,6 +15,7 @@ import com.khal.intern_survey.dao.InternshipUnitRepository;
 import com.khal.intern_survey.entity.InternshipUnit;
 import com.khal.intern_survey.entity.Questionnaire;
 import com.khal.intern_survey.entity.User;
+import com.khal.intern_survey.service.InternshipUnitService;
 import com.khal.intern_survey.service.QuestionnaireService;
 import com.khal.intern_survey.service.UserService;
 
@@ -29,7 +30,7 @@ public class SurveyController {
 	QuestionnaireService questionnaireService;
 	
 	@Autowired
-	InternshipUnitRepository internshipUnitRepository;
+	InternshipUnitService internshipUnitService;
 	
 	@GetMapping("/showQuestionnaire")
 	public String showQuestionnaire(Principal principal, Model theModel) {
@@ -44,7 +45,7 @@ public class SurveyController {
 			userService.saveRegisteredUser(user);
 		}
 		
-		List<InternshipUnit> units = internshipUnitRepository.findByOrderByNameAsc();
+		List<InternshipUnit> units = internshipUnitService.findAll();
 		
 		theModel.addAttribute("questionnaire", questionnaire);
 		theModel.addAttribute("units", units);
@@ -66,6 +67,22 @@ public class SurveyController {
 //		questionnaireService.saveQuestionnaire(questionnaire);
 		
 		return "redirect:/survey/showQuestionnaire";
+	}
+	
+	@GetMapping("/unitSearch")
+	public String searchUnitByMedicalChamber(Principal principal, Model theModel) {
+		
+		String medicalChamber = "OIL w Warszawie";
+		
+		List<InternshipUnit> units = internshipUnitService.findByMedicalChamber(medicalChamber);
+		System.out.println(units);
+		User user = userService.findByEmail(principal.getName());
+		Questionnaire questionnaire = user.getQuestionnaire();
+		
+		theModel.addAttribute("questionnaire", questionnaire);
+		theModel.addAttribute("units", units);
+		
+		return "questionnaire_view::units_list";
 	}
 	
 }

@@ -13,14 +13,17 @@ public class InternshipUnit {
 	private Long id;
 	
 	private String name;
+	
+	private String medicalChamber;
 
 	public InternshipUnit() {
 		super();
 	}
 
-	public InternshipUnit(String name) {
+	public InternshipUnit(Long id, String name, String medicalChamber) {
 		super();
 		this.name = name;
+		this.medicalChamber = medicalChamber;
 	}
 
 	public Long getId() {
@@ -38,6 +41,13 @@ public class InternshipUnit {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
+	public String getMedicalChamber() {
+		return medicalChamber;
+	}
+
+	public void setMedicalChamber(String medicalChamber) {
+		this.medicalChamber = medicalChamber;
+	}
 
 }

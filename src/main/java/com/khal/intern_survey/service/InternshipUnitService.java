@@ -7,5 +7,7 @@ import com.khal.intern_survey.entity.InternshipUnit;
 public interface InternshipUnitService {
 	
 	public List<InternshipUnit> findAll();
+	
+	public List<InternshipUnit> findByMedicalChamber(String medicalChamber);
 
 }
