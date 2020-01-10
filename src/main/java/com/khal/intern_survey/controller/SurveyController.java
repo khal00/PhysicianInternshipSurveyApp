@@ -73,7 +73,6 @@ public class SurveyController {
 	@GetMapping("/unitSearch")
 	public String searchUnitByMedicalChamber(Principal principal, Model theModel, @RequestParam (value = "chamberSelected") String chamberSelected) {
 		
-		
 		List<InternshipUnit> units = internshipUnitService.findByMedicalChamber(chamberSelected);
 
 		User user = userService.findByEmail(principal.getName());
@@ -82,7 +81,7 @@ public class SurveyController {
 		theModel.addAttribute("questionnaire", questionnaire);
 		theModel.addAttribute("units", units);
 		
-		return "questionnaire_view::units_list";
+		return "questionnaire_view :: units_list";
 	}
 	
 }

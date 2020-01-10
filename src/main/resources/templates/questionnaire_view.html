@@ -64,7 +64,7 @@ input {
 			<h1 class="mx-auto h4 p-3 text-white" th:text="#{questionnaire.title}"></h1>
 		</div>
 		<div class="row">
-			<div class="mx-auto rounded pt-4 px-4 pb-3 col-10 col-sm-8 col-md-6 col-xl-3" style="color: #e6e6e6; background-color: #333333">
+			<div class="mx-auto rounded pt-4 px-4 pb-3 col-10 col-sm-8 col-md-6 col-xl-4" style="color: #e6e6e6; background-color: #333333">
 				<form th:action="@{/survey/saveQuestionnaire}" method="POST" th:object="${questionnaire}">
 													
 					<div class="form-group d-none">
@@ -76,9 +76,10 @@ input {
 						<label for="medicalChamberSelect"
 							th:text="#{questionnaire.medicalChamber}"></label> 
 						<select	th:field="*{medicalChamber}" id="medicalChamberSelect" class="custom-select" onchange="loadUnitSearchResult()">
-							<option value="OIL w Szczecinie">OIL w Szczecinie</option>
-							<option value="OIL w Warszawie">OIL w Warszawie</option>
-							<option value="WIL w Poznaniu">WIL w Poznaniu</option>
+							<option value="" th:selected="selected" th:disabled="disabled" th:text="#{questionnaire.chooseChamber}"></option>
+							<option value="OIL w Szczecinie" th:attr="value=#{questionnaire.oilszczecin}" th:text="#{questionnaire.oilszczecin}">OIL w Szczecinie</option>
+							<option value="OIL w Warszawie" th:attr="value=#{questionnaire.oilwarszawa}" th:text="#{questionnaire.oilwarszawa}">OIL w Warszawie</option>
+							<option value="WIL w Poznaniu" th:attr="value=#{questionnaire.oilpoznan}" th:text="#{questionnaire.oilpoznan}">WIL w Poznaniu</option>
 						</select>	
 							
 					</div>
@@ -89,6 +90,7 @@ input {
 						<label for="unitNameSelect"
 							th:text="#{questionnaire.unitName}"></label> 
 						<select th:field="*{unitName}" id="unitNameSelect" class="custom-select units_list" th:object="${questionnaire}" th:fragment="units_list" name="unitSelect">
+							<option value="" th:selected th:disabled th:text="#{questionnaire.chooseUnit}"></option>
 							<option th:each="unit : ${units}" th:value="${unit.name}" th:text="${unit.name}">							
 						</select>
 						
