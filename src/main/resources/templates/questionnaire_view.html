@@ -83,8 +83,9 @@ input {
 					<div class="form-group">
 						<label for="unitNameSelect"
 							th:text="#{questionnaire.unitName}"></label> 
-						<select th:field="*{unitName}" id="unitNameSelect" class="custom-select units_list" th:object="${questionnaire}" th:fragment="units_list">
-							<option th:each="unit : ${units}" th:value="${unit.name}" th:text="${unit.name}">							
+						<select name="unitName" id="unitNameSelect" class="custom-select units_list" th:object="${questionnaire}" th:fragment="units_list">
+							<option th:each="unit : ${units}" th:value="${unit.name}" th:text="${unit.name}"
+							th:selected="${unit.name.contains(questionnaire.unitName != null ? questionnaire.unitName : 'null')}">							
 						</select>
 						
 					</div>
