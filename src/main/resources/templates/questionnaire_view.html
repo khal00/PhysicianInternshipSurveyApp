@@ -35,11 +35,7 @@ input {
 			  success: function(data){
 				
 				  /*<![CDATA[*/
-				  
-				  
-				  $('.units_list').html(data);
-				  
-				  
+				  $('.units_list').html(data);				  
 				  /*]]>*/
 				},
 			  
@@ -74,23 +70,20 @@ input {
 					
 					<div class="form-group">
 						<label for="medicalChamberSelect"
-							th:text="#{questionnaire.medicalChamber}"></label> 
-						<select	th:field="*{medicalChamber}" id="medicalChamberSelect" class="custom-select" onchange="loadUnitSearchResult()">
-							<option value="" th:selected="selected" th:disabled="disabled" th:text="#{questionnaire.chooseChamber}"></option>
-							<option value="OIL w Szczecinie" th:attr="value=#{questionnaire.oilszczecin}" th:text="#{questionnaire.oilszczecin}">OIL w Szczecinie</option>
-							<option value="OIL w Warszawie" th:attr="value=#{questionnaire.oilwarszawa}" th:text="#{questionnaire.oilwarszawa}">OIL w Warszawie</option>
-							<option value="WIL w Poznaniu" th:attr="value=#{questionnaire.oilpoznan}" th:text="#{questionnaire.oilpoznan}">WIL w Poznaniu</option>
-						</select>	
+							th:text="#{questionnaire.medicalChamber}"></label>
 							
+						<select name="medicalChamber" id="medicalChamberSelect" class="custom-select" onchange="loadUnitSearchResult()">
+							<option value="" th:selected="selected" th:disabled="disabled" th:text="#{questionnaire.chooseChamber}"></option>
+							<option th:each="chamber : ${T(com.khal.intern_survey.DTO.MedicalChamberEnum).values()}" th:value="${chamber}" th:text="${chamber.name}"
+							th:selected="${chamber.name.contains(questionnaire.medicalChamber != null ? questionnaire.medicalChamber.name : 'null')}"></option>
+						</select>
 					</div>
-					
-					
+						
 					
 					<div class="form-group">
 						<label for="unitNameSelect"
 							th:text="#{questionnaire.unitName}"></label> 
-						<select th:field="*{unitName}" id="unitNameSelect" class="custom-select units_list" th:object="${questionnaire}" th:fragment="units_list" name="unitSelect">
-							<option value="" th:selected th:disabled th:text="#{questionnaire.chooseUnit}"></option>
+						<select th:field="*{unitName}" id="unitNameSelect" class="custom-select units_list" th:object="${questionnaire}" th:fragment="units_list">
 							<option th:each="unit : ${units}" th:value="${unit.name}" th:text="${unit.name}">							
 						</select>
 						

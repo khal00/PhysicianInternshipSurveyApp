@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.khal.intern_survey.DTO.MedicalChamberEnum;
+
 @Entity
 public class InternshipUnit {
 	
@@ -19,8 +21,8 @@ public class InternshipUnit {
 	public InternshipUnit() {
 		super();
 	}
-
-	public InternshipUnit(Long id, String name, String medicalChamber) {
+	
+	public InternshipUnit(String name, String medicalChamber) {
 		super();
 		this.name = name;
 		this.medicalChamber = medicalChamber;
@@ -49,5 +51,6 @@ public class InternshipUnit {
 	public void setMedicalChamber(String medicalChamber) {
 		this.medicalChamber = medicalChamber;
 	}
+
 
 }

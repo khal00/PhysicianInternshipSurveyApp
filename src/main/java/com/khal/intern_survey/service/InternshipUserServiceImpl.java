@@ -13,6 +13,12 @@ public class InternshipUserServiceImpl implements InternshipUnitService {
 	
 	@Autowired
 	InternshipUnitRepository internshipUnitRepository;
+	
+	@Override
+	public InternshipUnit findByName(String name) {
+
+		return internshipUnitRepository.findByName(name);
+	}
 
 	@Override
 	public List<InternshipUnit> findAll() {
@@ -27,7 +33,6 @@ public class InternshipUserServiceImpl implements InternshipUnitService {
 		List<InternshipUnit> units = internshipUnitRepository.findByMedicalChamberOrderByNameAsc(medicalChamber);
 		return units;
 	}
-	
 	
 
 }

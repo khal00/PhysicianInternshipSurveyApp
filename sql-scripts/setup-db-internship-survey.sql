@@ -153,8 +153,8 @@ PRIMARY KEY (`id`)
 );
 
 INSERT INTO `internship_unit` VALUES
-(1,'Samodzielny Publiczny Szpital Kliniczny Nr 1 w Szczecinie','OIL w Szczecinie'),
-(2,'Samodzielny Publiczny Szpital Kliniczny Nr 2 w Szczecinie','OIL w Szczecinie'),
-(3,'ZOZ MSWIA w Warszawie','OIL w Warszawie'),
-(4,'111 Szpital Wojskowy w Poznaniu','WIL w Poznaniu');
+(1,'Samodzielny Publiczny Szpital Kliniczny Nr 1 w Szczecinie','SZCZECIN'),
+(2,'SPSK Nr 2 w Szczecinie','SZCZECIN'),
+(3,'ZOZ MSWIA w Warszawie','WARSZAWA'),
+(4,'111 Szpital Wojskowy w Poznaniu','POZNAN');
 

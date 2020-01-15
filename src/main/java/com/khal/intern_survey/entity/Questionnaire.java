@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.khal.intern_survey.DTO.MedicalChamberEnum;
+
 @Entity
 @Table(name = "questionnaires")
 public class Questionnaire {
@@ -17,7 +19,7 @@ public class Questionnaire {
 	
 	private String status;
 	
-	private String medicalChamber;
+	private MedicalChamberEnum medicalChamber;
 	
 	private String unitName;
 	
@@ -31,7 +33,7 @@ public class Questionnaire {
 		this.status = DRAFT;
 	}
 
-	public Questionnaire(String medicalChamber, String unitName) {
+	public Questionnaire(MedicalChamberEnum medicalChamber, String unitName) {
 		super();
 		this.status = DRAFT;
 		this.medicalChamber = medicalChamber;
@@ -40,7 +42,7 @@ public class Questionnaire {
 
 
 
-	public Questionnaire(String medicalChamber, String unitName, User user) {
+	public Questionnaire(MedicalChamberEnum medicalChamber, String unitName, User user) {
 		super();
 		this.status = DRAFT;
 		this.medicalChamber = medicalChamber;
@@ -48,7 +50,7 @@ public class Questionnaire {
 		this.user = user;
 	}
 
-	public Questionnaire(String status, String medicalChamber, String unitName, User user) {
+	public Questionnaire(String status, MedicalChamberEnum medicalChamber, String unitName, User user) {
 		super();
 		this.status = status;
 		this.medicalChamber = medicalChamber;
@@ -74,11 +76,11 @@ public class Questionnaire {
 		this.status = status;
 	}
 
-	public String getMedicalChamber() {
+	public MedicalChamberEnum getMedicalChamber() {
 		return medicalChamber;
 	}
 
-	public void setMedicalChamber(String medicalChamber) {
+	public void setMedicalChamber(MedicalChamberEnum medicalChamber) {
 		this.medicalChamber = medicalChamber;
 	}
 

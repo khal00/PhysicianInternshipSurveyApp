@@ -1,6 +1,7 @@
 package com.khal.intern_survey.controller;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.khal.intern_survey.DTO.MedicalChamberEnum;
 import com.khal.intern_survey.dao.InternshipUnitRepository;
 import com.khal.intern_survey.entity.InternshipUnit;
 import com.khal.intern_survey.entity.Questionnaire;
@@ -38,7 +40,8 @@ public class SurveyController {
 	
 		User user = userService.findByEmail(principal.getName());
 		Questionnaire questionnaire = user.getQuestionnaire();
-
+		
+		// check if user already started the survey if not create new questionnaire
 		if (questionnaire == null) {
 			questionnaire = new Questionnaire();
 			questionnaireService.saveQuestionnaire(questionnaire);
@@ -46,8 +49,17 @@ public class SurveyController {
 			userService.saveRegisteredUser(user);
 		}
 		
-		List<InternshipUnit> units = internshipUnitService.findAll();
+		// set list of units. In case user chose medical chamber before filter the units accordingly
+		List<InternshipUnit> units;
 		
+		MedicalChamberEnum medicalChamber = questionnaire.getMedicalChamber();
+		
+		if (medicalChamber == null) {
+			units = internshipUnitService.findAll();
+		} else {
+			units = internshipUnitService.findByMedicalChamber(medicalChamber.toString());
+		}
+				
 		theModel.addAttribute("questionnaire", questionnaire);
 		theModel.addAttribute("units", units);
 		
@@ -56,6 +68,14 @@ public class SurveyController {
 	
 	@PostMapping(value = "/saveQuestionnaire", params = "action=save")
 	public String saveQuestionnaire(@ModelAttribute ("questionnaire") Questionnaire questionnaire) {
+		
+		//check if user selected unit but didn't selected chamber name
+		if (questionnaire.getMedicalChamber() == null && questionnaire.getUnitName() != null) {
+			
+			InternshipUnit unit = internshipUnitService.findByName(questionnaire.getUnitName());
+			MedicalChamberEnum chamber = MedicalChamberEnum.valueOf(unit.getMedicalChamber());
+			questionnaire.setMedicalChamber(chamber);
+		}
 		
 		questionnaireService.saveQuestionnaire(questionnaire);
 		
@@ -70,6 +90,7 @@ public class SurveyController {
 		return "redirect:/survey/showQuestionnaire";
 	}
 	
+	// Re-send new units list if user changed medical chamber
 	@GetMapping("/unitSearch")
 	public String searchUnitByMedicalChamber(Principal principal, Model theModel, @RequestParam (value = "chamberSelected") String chamberSelected) {
 		
@@ -83,5 +104,7 @@ public class SurveyController {
 		
 		return "questionnaire_view :: units_list";
 	}
+	
+	
 	
 }

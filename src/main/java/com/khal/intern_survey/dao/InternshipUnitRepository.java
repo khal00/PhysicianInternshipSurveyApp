@@ -8,6 +8,8 @@ import com.khal.intern_survey.entity.InternshipUnit;
 
 public interface InternshipUnitRepository extends JpaRepository<InternshipUnit, Long> {
 	
+	public InternshipUnit findByName(String name);
+	
 	public List<InternshipUnit> findByOrderByNameAsc();
 	
 	public List<InternshipUnit> findByMedicalChamberOrderByNameAsc(String medicalChamber);
