@@ -11,6 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter @Setter @NoArgsConstructor
 @Entity
 public class PasswordResetToken {
 	
@@ -27,10 +33,6 @@ public class PasswordResetToken {
     private User user;
   
     private Date expiryDate;
-    
-    public PasswordResetToken() {
-        super();
-    }
 
     public PasswordResetToken(final String token) {
         super();
@@ -45,34 +47,6 @@ public class PasswordResetToken {
         this.token = token;
         this.user = user;
         this.expiryDate = calculateExpiryDate(EXPIRATION);
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(final String token) {
-        this.token = token;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(final User user) {
-        this.user = user;
-    }
-
-    public Date getExpiryDate() {
-        return expiryDate;
-    }
-
-    public void setExpiryDate(final Date expiryDate) {
-        this.expiryDate = expiryDate;
     }
 
     private Date calculateExpiryDate(final int expiryTimeInMinutes) {

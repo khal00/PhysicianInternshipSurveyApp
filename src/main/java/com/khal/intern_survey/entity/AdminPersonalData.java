@@ -11,6 +11,12 @@ import javax.validation.constraints.NotBlank;
 
 import com.khal.intern_survey.validation.ContactNumberConstraint;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 @Entity
 @Table(name = "admin_personal_data")
 public class AdminPersonalData {
@@ -39,72 +45,5 @@ public class AdminPersonalData {
 	
 	@OneToOne(mappedBy = "adminPersonalData")
 	private User user;
-
-
-	public AdminPersonalData() {
-	}
-
-	public AdminPersonalData(String firstName, String lastName, String phoneNumber, String medicalChamber, User user) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.phoneNumber = phoneNumber;
-		this.medicalChamber = medicalChamber;
-		this.user = user;
-	}
-
-
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public void setPhoneNumber(String phoneNumber) {
-		this.phoneNumber = phoneNumber;
-	}
-
-	public String getMedicalChamber() {
-		return medicalChamber;
-	}
-
-	public void setMedicalChamber(String medicalChamber) {
-		this.medicalChamber = medicalChamber;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-	
-	
-	
-	
 
 }

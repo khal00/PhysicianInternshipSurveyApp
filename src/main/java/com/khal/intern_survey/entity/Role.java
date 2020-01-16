@@ -7,6 +7,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor @ToString
 @Entity
 @Table(name = "role")
 public class Role {
@@ -19,33 +26,4 @@ public class Role {
 	@Column(name = "name")
 	private String name;
 
-
-	public Role() {
-	}
-
-	public Role(String name, String authority) {
-		this.name = name;
-	}
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	@Override
-	public String toString() {
-		return "Role [id=" + id + ", name=" + name + "]";
-	}
-	
 }

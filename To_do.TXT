@@ -1,8 +1,10 @@
 To do:
 
-create OIL list: consider enum
+sending quest. by user, field validation
 
-form for adding new survey for user
+qest status changed to sent, UUID generated, UUID is injected into quest, UUID is sent by email to user
+
+option to create second questionnaire?
 
 survey form (at least part of it)
 

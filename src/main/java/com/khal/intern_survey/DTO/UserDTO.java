@@ -8,7 +8,12 @@ import com.khal.intern_survey.validation.FieldsValueMatch;
 import com.khal.intern_survey.validation.ValidEmail;
 import com.khal.intern_survey.validation.ValidPassword;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter @Setter @NoArgsConstructor @AllArgsConstructor
 @FieldsValueMatch.List({@FieldsValueMatch (field = "password", fieldMatch = "matchingPassword")})
 public class UserDTO {
 	
@@ -22,33 +27,5 @@ public class UserDTO {
 	
 	@NotBlank(message = "is required")
 	private String matchingPassword;
-
-	public UserDTO() {
-	}
-
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getMatchingPassword() {
-		return matchingPassword;
-	}
-
-	public void setMatchingPassword(String matchingPassword) {
-		this.matchingPassword = matchingPassword;
-	}
 	
 }

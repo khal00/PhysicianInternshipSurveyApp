@@ -70,9 +70,9 @@ public class SurveyController {
 	public String saveQuestionnaire(@ModelAttribute ("questionnaire") Questionnaire questionnaire) {
 		
 		//check if user selected unit but didn't selected chamber name
-		if (questionnaire.getMedicalChamber() == null && questionnaire.getUnitName() != null) {
+		if (questionnaire.getMedicalChamber() == null && questionnaire.getUnit() != null) {
 			
-			InternshipUnit unit = internshipUnitService.findByName(questionnaire.getUnitName());
+			InternshipUnit unit = questionnaire.getUnit();
 			MedicalChamberEnum chamber = MedicalChamberEnum.valueOf(unit.getMedicalChamber());
 			questionnaire.setMedicalChamber(chamber);
 		}
