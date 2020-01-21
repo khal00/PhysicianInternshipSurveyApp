@@ -27,7 +27,7 @@ input {
 			var chamber = chamberSelect.value;
 			$.ajax({
 			  type: 'get',
-			  url: /*[[ @{'/survey/unitSearch'} ]]*/,
+			  url: /*[[ @{/survey/unitSearch/{id}(id=${questionnaire.id})}]]*/,
 			  data: {
 				  "chamberSelected":chamber
 			  },
@@ -62,17 +62,23 @@ input {
 		<div class="row">
 			<div class="mx-auto rounded pt-4 px-4 pb-3 col-10 col-sm-8 col-md-6 col-xl-4" style="color: #e6e6e6; background-color: #333333">
 				<form th:action="@{/survey/saveQuestionnaire}" method="POST" th:object="${questionnaire}">
-													
+											
 					<div class="form-group d-none">
 						<input type="text"
 						th:field="*{id}" id="questionnaireIdInput"/>
+					</div>
+					
+					<div class="form-group d-none">
+						<input type="text"
+						th:field="*{user.id}" id="questionnaireIdInput"/>
 					</div>
 					
 					<div class="form-group">
 						<label for="medicalChamberSelect"
 							th:text="#{questionnaire.medicalChamber}"></label>
 							
-						<select name="medicalChamber" id="medicalChamberSelect" class="custom-select" onchange="loadUnitSearchResult()">
+						<select name="medicalChamber" id="medicalChamberSelect" class="custom-select" onchange="loadUnitSearchResult()"
+						th:disabled="${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).SENT}">
 							<option value="" th:selected="selected" th:disabled="disabled" th:text="#{questionnaire.chooseChamber}"></option>
 							<option th:each="chamber : ${T(com.khal.intern_survey.DTO.MedicalChamberEnum).values()}" th:value="${chamber}" th:text="${chamber.name}"
 							th:selected="${chamber.name.contains(questionnaire.medicalChamber != null ? questionnaire.medicalChamber.name : 'null')}"></option>
@@ -83,7 +89,9 @@ input {
 					<div class="form-group">
 						<label for="unitNameSelect"
 							th:text="#{questionnaire.unitName}"></label> 
-						<select name="unit" id="unitNameSelect" class="custom-select units_list" th:object="${questionnaire}" th:fragment="units_list">
+						<select name="unit" id="unitNameSelect" class="custom-select units_list" th:fragment="units_list"
+						th:disabled="${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).SENT}">
+							<option value="" th:selected="selected" th:disabled="disabled" th:text="#{questionnaire.chooseUnit}"></option>
 							<option th:each="unit : ${units}" th:value="${unit.id}" th:text="${unit.name}"
 							th:selected="${unit.name.contains(questionnaire.unit != null ? questionnaire.unit.getName() : 'null')}">							
 						</select>
@@ -91,8 +99,9 @@ input {
 					</div>
 
 					<div class="form-group mt-4">
-						<button type="submit" name="action" value="save" class="btn btn-warning btn-sm mr-2" th:text="#{questionnaire.saveButton}">Save</button>
-    					<button type="submit" name="action" value="send"  class="btn btn-success btn-sm" th:text="#{questionnaire.sendButton}">Send</button>
+						<button th:if="${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" type="submit" name="action" value="save" class="btn btn-warning btn-sm mr-2" th:text="#{questionnaire.saveButton}">Save</button>
+    					<button th:if="${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" type="submit" name="action" value="send"  class="btn btn-success btn-sm" th:text="#{questionnaire.sendButton}">Send</button>
+    					<a th:href="@{/survey/showQuestList}" th:text="#{questList.backToList}" class="float-right" style="text-decoration:none;	"></a>
     				</div>
 					
 				</form>

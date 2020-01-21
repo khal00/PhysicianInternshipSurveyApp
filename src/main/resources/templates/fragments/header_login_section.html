@@ -34,7 +34,7 @@
 					<div class="dropdown-menu dropdown-menu-right"
 						aria-labelledby="UserDropdownMenu">
 
-						<form th:action="@{/survey/showQuestionnaire}" method="GET" sec:authorize="hasRole('ROLE_USER')">
+						<form th:action="@{/survey/showQuestList}" method="GET" sec:authorize="hasRole('ROLE_USER')">
 							<button type="submit" class="dropdown-item"
 								th:text="#{header.user.showQuestionnaireButton}"></button>
 						</form>
@@ -61,7 +61,7 @@
 					<div class="dropdown-menu dropdown-menu-left"
 						aria-labelledby="UserDropdownMenu">
 
-						<form th:action="@{/survey/showQuestionnaire}" method="GET" sec:authorize="hasRole('ROLE_USER')">
+						<form th:action="@{/survey/showQuestList}" method="GET" sec:authorize="hasRole('ROLE_USER')">
 							<button type="submit" class="dropdown-item"
 								th:text="#{header.user.showQuestionnaireButton}"></button>
 						</form>

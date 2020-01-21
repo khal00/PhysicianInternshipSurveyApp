@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter @AllArgsConstructor
 public enum MedicalChamberEnum {
-	SZCZECIN("OIL w Szczecinie"), WARSZAWA("OIL w Warszawie"), POZNAN("WIL w Poznaniu");
+	WROCŁAW("DIL we Wrocławiu"), SZCZECIN("OIL w Szczecinie"), WARSZAWA("OIL w Warszawie"), POZNAN("WIL w Poznaniu");
 	
 	private final String name;
 

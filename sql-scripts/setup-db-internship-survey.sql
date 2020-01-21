@@ -1,6 +1,6 @@
 DROP DATABASE IF EXISTS `internship_survey`;
 
-CREATE DATABASE IF NOT EXISTS `internship_survey`;
+CREATE DATABASE `internship_survey` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
 USE `internship_survey`;
 
 CREATE TABLE `users` (
@@ -10,7 +10,7 @@ CREATE TABLE `users` (
 `enabled` boolean NOT NULL DEFAULT FALSE,
 PRIMARY KEY (`id`),
 UNIQUE KEY (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 CREATE TABLE `verification_token` (
 `id` int NOT NULL AUTO_INCREMENT,
@@ -20,7 +20,7 @@ CREATE TABLE `verification_token` (
 PRIMARY KEY (`id`),
 CONSTRAINT `verification_token_ibfk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 CREATE TABLE `password_reset_token` (
 `id` int NOT NULL AUTO_INCREMENT,
@@ -30,7 +30,7 @@ CREATE TABLE `password_reset_token` (
 PRIMARY KEY (`id`),
 CONSTRAINT `reset_token_ibfk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 CREATE TABLE `email_update_token` (
 `id` int NOT NULL AUTO_INCREMENT,
@@ -41,7 +41,7 @@ CREATE TABLE `email_update_token` (
 PRIMARY KEY (`id`),
 CONSTRAINT `email_update_token_ibfk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 CREATE TABLE `admin_personal_data` (
 `id` int NOT NULL AUTO_INCREMENT,
@@ -50,7 +50,7 @@ CREATE TABLE `admin_personal_data` (
 `phone_number` varchar(15) NOT NULL,
 `medical_chamber` varchar(50),
 PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 CREATE TABLE `user_admin_data` (
 `user_id` int NOT NULL,
@@ -61,7 +61,7 @@ ON DELETE CASCADE ON UPDATE CASCADE,
 
 CONSTRAINT `admin_data_ibfk` FOREIGN KEY (`admin_data_id`) REFERENCES `admin_personal_data` (`id`)
 ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 -- test password: x
 
@@ -86,7 +86,7 @@ CREATE TABLE `role` (
 `id` int NOT NULL AUTO_INCREMENT,
 `name` varchar(50) DEFAULT NULL,
 PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 
 INSERT INTO `role` (name)
@@ -108,7 +108,7 @@ ON DELETE CASCADE ON UPDATE CASCADE,
 CONSTRAINT `users_roles_role_ibfk` FOREIGN KEY (`role_id`) 
 REFERENCES `role` (`id`) 
 ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 SET FOREIGN_KEY_CHECKS = 1;
 
@@ -127,7 +127,7 @@ CREATE TABLE `internship_unit` (
 `name` varchar(150) NOT NULL,
 `medical_chamber` varchar(50) NOT NULL,
 PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
 INSERT INTO `internship_unit` VALUES
 (1,'Samodzielny Publiczny Szpital Kliniczny Nr 1 w Szczecinie','SZCZECIN'),
@@ -140,28 +140,23 @@ CREATE TABLE `questionnaires` (
 `id` int NOT NULL AUTO_INCREMENT,
 `status` varchar(15) DEFAULT 'draft',
 `medical_chamber` varchar(50),
-`unit_id` int,                                                                                                                                                                                              
-PRIMARY KEY (`id`),
-KEY (`unit_id`),
-CONSTRAINT `unit_id_ibfk` FOREIGN KEY (`unit_id`) REFERENCES `internship_unit`(`id`)
-ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-
-CREATE TABLE `users_questionnaires` (
+`unit_id` int,
 `user_id` int NOT NULL,
-`questionnaire_id` int NOT NULL,
-PRIMARY KEY (`user_id`,`questionnaire_id`),
-  
-CONSTRAINT `users_quest_user_ibfk` FOREIGN KEY (`user_id`) 
-REFERENCES `users` (`id`) 
-ON DELETE CASCADE ON UPDATE CASCADE,
-  
-CONSTRAINT `users_quest_quest_ibfk` FOREIGN KEY (`questionnaire_id`) 
-REFERENCES `questionnaires` (`id`) 
+`create_time` timestamp NOT NULL, 
+PRIMARY KEY (`id`),
+KEY (`create_time`),
+KEY (`unit_id`),
+KEY (`user_id`),
+
+CONSTRAINT `unit_id_ibfk` FOREIGN KEY (`unit_id`) REFERENCES `internship_unit`(`id`)
+ON DELETE NO ACTION ON UPDATE NO ACTION,
+
+CONSTRAINT `user_id_ibfk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
 ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB;
 
-SET FOREIGN_KEY_CHECKS = 1;
-
-
+/*
+INSERT INTO `questionnaires` VALUES
+(1, 'Draft', 'OIL w Warszawie', 3, 1),
+(2, 'Draft', 'OIL w Szczecinie', 2, 1);
+*/

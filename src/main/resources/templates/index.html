@@ -236,12 +236,11 @@
 
 							<div class="form-group">
 								<label class="text text-success" for="ChamberSelect"
-									th:text="#{index.medicalchamber}"></label> <select
-									th:field="*{medicalChamber}" id="ChamberSelect"
+									th:text="#{index.medicalchamber}"></label> 
+									<select th:name="medicalChamber" id="ChamberSelect"
 									class="form-control" th:errorclass="is-invalid">
-									<option value="OIL w Szczecinie">OIL w Szczecinie</option>
-									<option value="OIL w Warszawie">OIL w Warszawie</option>
-									<option value="OIL w Krakowie">OIL w Krakowie</option>
+									<option value="" th:selected="selected" th:disabled="disabled" th:text="#{questionnaire.chooseChamber}"></option>
+									<option th:each="chamber : ${T(com.khal.intern_survey.DTO.MedicalChamberEnum).values()}" th:value="${chamber}" th:text="${chamber.name}"></option>
 								</select>
 							</div>
 
@@ -277,8 +276,8 @@
 			
 			<section class="col-12 col-md-6" sec:authorize="hasRole('ROLE_USER')">
 				<div class="col-9 col-sm-7 col-md-10 col-lg-8 col-xl-6 px-4 pt-3 pb-2 m-auto ml-md-2 form-container">
-					<form class="text-center" th:action="@{/survey/showQuestionnaire}">
-						<button type="submit" class="btn btn-outline-light btn-lg" th:text="#{index.userPanel.showQuestionnaireButton}"></button>
+					<form class="text-center" th:action="@{/survey/showQuestList}">
+						<button type="submit" class="btn btn-outline-success btn-lg" th:text="#{index.userPanel.showQuestionnaireButton}"></button>
 					</form>
 				</div>
 			</section>

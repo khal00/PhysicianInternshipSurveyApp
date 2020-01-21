@@ -8,7 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
+import com.khal.intern_survey.DTO.MedicalChamberEnum;
 import com.khal.intern_survey.validation.ContactNumberConstraint;
 
 import lombok.AllArgsConstructor;
@@ -39,9 +41,9 @@ public class AdminPersonalData {
 	@Column(name = "phone_number")
 	private String phoneNumber;
 	
-	@NotBlank(message = "is required")
+	@NotNull(message = "is required")
 	@Column(name = "medical_chamber")
-	private String medicalChamber;
+	private MedicalChamberEnum medicalChamber;
 	
 	@OneToOne(mappedBy = "adminPersonalData")
 	private User user;
