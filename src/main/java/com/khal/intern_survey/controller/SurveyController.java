@@ -1,21 +1,38 @@
 package com.khal.intern_survey.controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
+import org.apache.pdfbox.io.IOUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
+import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
 import org.apache.pdfbox.pdmodel.font.PDFont;
+import org.apache.pdfbox.pdmodel.font.PDSimpleFont;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ResourceUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,6 +40,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.khal.intern_survey.DTO.MedicalChamberEnum;
@@ -46,6 +64,9 @@ public class SurveyController {
 	
 	@Autowired
 	InternshipUnitService internshipUnitService;
+	
+	@Autowired
+	MessageSource messages;
 	
 	@GetMapping("/showQuestList")
 	public String showAllQuestionnaires(Principal principal, Model theModel) {
@@ -134,39 +155,53 @@ public class SurveyController {
 		questionnaire.setStatus(Status.SENT);
 		questionnaireService.saveQuestionnaire(questionnaire);
 		
-
-		try (PDDocument document = new PDDocument()) {
-			
-			PDPage page = new PDPage();
-			document.addPage(page);
-			
-			PDFont pdFont = PDType1Font.TIMES_ROMAN;
-			
-			try (PDPageContentStream contentStream = new PDPageContentStream(document, page)){
-
-				contentStream.beginText();
-				contentStream.setFont(pdFont, 14);
-				contentStream.newLineAtOffset(50, 100);
-				contentStream.showText(questionnaire.getUnit().getName());
-				contentStream.endText();
-				contentStream.close();
-				document.save("newsurvey.pdf");
-				document.close();
-				
-			}
-			
-		} catch (IOException ioe) {
-			ioe.printStackTrace();
-		}
-		
-
-
-
-		
-		return "redirect:/survey/showQuestionnaire/" + questionnaire.getId();
+		return "redirect:/survey/sendQuestPDF/" + questionnaire.getId();
 	}
 	
-	// Re-send new units list if user changed medical chamber
+	@GetMapping(value = "/sendQuestPDF/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+	public @ResponseBody byte[] returnQuestPDF(@PathVariable ("id") long id) throws IOException{
+		
+		Locale locale = LocaleContextHolder.getLocale();
+		String pdfTitle = messages.getMessage("questList.pdfTitle", null, locale);
+		Questionnaire questionnaire = questionnaireService.findById(id);
+		
+		PDDocument document = new PDDocument();
+			
+		PDPage page = new PDPage();
+		document.addPage(page);			
+		PDType0Font font = PDType0Font.load(document, new File("src/main/resources/static/font/AbhayaLibre-Regular.ttf"));
+		
+		PDDocumentInformation info = document.getDocumentInformation();
+		info.setTitle(pdfTitle);
+				
+		PDPageContentStream contentStream = new PDPageContentStream(document, page);
+		contentStream.beginText();
+		contentStream.setFont(font, 14);
+		contentStream.newLineAtOffset(25, 750);
+		contentStream.showText(messages.getMessage("questPdf.title", null, locale));
+		contentStream.showText(questionnaire.getUnit().getName());
+		contentStream.endText();
+		contentStream.close();
+		
+		AccessPermission ap = new AccessPermission();
+		ap.setReadOnly();
+		StandardProtectionPolicy policy 
+			= new StandardProtectionPolicy("pass01", "", ap);
+		
+		int keyLength = 256;
+		policy.setEncryptionKeyLength(keyLength);
+		policy.setPermissions(ap);
+		document.protect(policy);
+		
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		document.save(outputStream);
+		document.close();
+			
+		return outputStream.toByteArray();
+
+	}
+	
+	// Re-send units list if user changed medical chamber
 	@GetMapping("/unitSearch/{id}")
 	public String searchUnitByMedicalChamber(Model theModel, @RequestParam (value = "chamberSelected") String chamberSelected
 			, @PathVariable ("id") long id) {

@@ -4,11 +4,9 @@ sending quest. by user, field validation
 
 qest status changed to sent, UUID generated, UUID is injected into quest, UUID is sent by email to user
 
-option to create second questionnaire?
+add pdf encryption
 
 survey form (at least part of it)
-
-saving survey, sending survey for acceptance (generate token maybe?)
 
 role admin privileges to accept the survey (change db field to accepted 0/1 value possibly)
 

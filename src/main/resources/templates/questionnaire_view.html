@@ -101,7 +101,7 @@ input {
 					<div class="form-group mt-4">
 						<button th:if="${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" type="submit" name="action" value="save" class="btn btn-warning btn-sm mr-2" th:text="#{questionnaire.saveButton}">Save</button>
     					<button th:if="${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" type="submit" name="action" value="send"  class="btn btn-success btn-sm" th:text="#{questionnaire.sendButton}">Send</button>
-    					<a th:href="@{/survey/showQuestList}" th:text="#{questList.backToList}" class="float-right" style="text-decoration:none;	"></a>
+    					<a th:href="@{/survey/showQuestList}" th:text="#{questList.backToList}" class="float-right text-info" style="text-decoration:none;"></a>
     				</div>
 					
 				</form>

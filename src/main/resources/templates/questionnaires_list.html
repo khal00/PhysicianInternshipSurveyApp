@@ -34,7 +34,7 @@ input {
 		</div>
 		
 		<div class="row">
-			<div class="col-12 col-md-8 col-lg-7 col-xl-6 mx-auto">
+			<div class="col-12 col-md-10 col-lg-8 col-xl-7 mx-auto">
 				<div class="text-white text-center mb-3" th:if="${questionnaires.empty}" th:text="#{questList.noQuestionnaires}"></div>
 				<table th:if="${!questionnaires.empty}" class="table table-borderless text-white text-center ">
 				<caption class="d-none" th:text="#{questList.title}"></caption>
@@ -43,8 +43,7 @@ input {
 							<th th:text="#{questList.date}">
 							<th th:text="#{questList.unit}">
 							<th th:text="#{questList.status}">
-							<th th:text="#{questList.edit}">
-							<th th:text="#{questList.delete}">
+							<th colspan="2" th:text="#{questList.action}">
 
 						</tr>
 					</thead>
@@ -58,11 +57,16 @@ input {
 						    	<span th:case="'2'" th:text="#{questList.statusAccepted}"></span>
 						    </td>
 						    <td>
-						    	<a class="btn btn-sm btn-outline-warning" th:href="@{/survey/showQuestionnaire/{id}(id=${quest.id})}" th:text="#{questList.edit}"
-						    	style="min-width:60px"></a>
+						    	<a th:if="${quest.status.name == 'Draft'}" class="btn btn-sm btn-outline-warning" th:href="@{/survey/showQuestionnaire/{id}(id=${quest.id})}" th:text="#{questList.edit}"
+						    	style="min-width:75px"></a>
+						    	<a th:unless="${quest.status.name == 'Draft'}" class="btn btn-sm btn-outline-info" th:href="@{/survey/showQuestionnaire/{id}(id=${quest.id})}" th:text="#{questList.view}"
+						    	style="min-width:75px"></a>
 						    </td>
 						    <td>
-						    	<a class="btn btn-sm btn-outline-danger" th:href="@{/survey/deleteQuestionnaire/{id}(id=${quest.id})}" th:text="#{questList.delete}"></a>
+						    	<a th:if="${quest.status.name == 'Draft'}" class="btn btn-sm btn-outline-danger" th:href="@{/survey/deleteQuestionnaire/{id}(id=${quest.id})}" th:text="#{questList.delete}"
+						    	style="min-width:75px"></a>
+						    	<a th:unless="${quest.status.name == 'Draft'}" class="btn btn-sm btn-outline-success" th:href="@{/survey/sendQuestPDF/{id}(id=${quest.id})}" th:text="#{questList.download}"
+						    	style="min-width:75px"></a>
 						    </td>
 						</tr>
 					</tbody>
@@ -70,7 +74,7 @@ input {
 			</div>
 		</div>
 		<div class="row mt-4">
-			<a class="btn btn-outline-success mx-auto" th:href="@{/survey/newQuestionnaire}" 
+			<a class="btn btn-success mx-auto" th:href="@{/survey/newQuestionnaire}" 
 			th:text="#{questList.newQuestionnaireBtn}"></a>
 		</div>
 	</div>
