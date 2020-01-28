@@ -40,7 +40,7 @@ import com.khal.intern_survey.util.UtilMethods;
 
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class AccountController {
 	
 	@InitBinder
 	public void initBinder(WebDataBinder dataBinder) {

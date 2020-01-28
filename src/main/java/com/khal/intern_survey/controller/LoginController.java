@@ -61,6 +61,11 @@ public class LoginController {
 	public String showLoginForm() {
 		return "login";
 	}
+	
+	@GetMapping("/showUserPanel")
+	public String showUserPanel() {
+		return "user_panel";
+	}
 
 	// Reset password
 

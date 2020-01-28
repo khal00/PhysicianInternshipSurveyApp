@@ -1,6 +1,8 @@
 package com.khal.intern_survey.config;
 
 
+import java.io.File;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -39,6 +41,11 @@ public class MvcConfig implements WebMvcConfigurer {
 	@Bean
 	public LayoutDialect layoutDialect() {
 	    return new LayoutDialect();
+	}
+	
+	@Bean
+	public File fontFile() {
+		return new File("src/main/resources/static/font/AbhayaLibre-Regular.ttf");
 	}
 	
 	

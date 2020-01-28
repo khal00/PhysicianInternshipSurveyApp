@@ -2,21 +2,6 @@
 <html layout:decorate="~{layout}" xmlns:th="https://www.thymeleaf.org">
 <head>
 <title th:text="#{questionnaire.title}"></title>
-	
-<style>
-input {
-	background-color: #1a1a1a !important;
-	border-style: none !important;
-	color: #e6e6e6 !important;
-}
-
-.form-control:focus {
-	border-width: 1px !important;
-	border-style: solid !important;
-	border-color: #808080 !important;
-	box-shadow: none;
-}
-</style>
 
 	<script th:inline="javascript">		
 
@@ -43,6 +28,18 @@ input {
 			
 		}
 	</script>
+	
+	<script>
+	function validateForm(){
+		var form = document.getElementById('questForm');
+		if (!form.checkValidity()) {
+	          event.preventDefault();
+	          event.stopPropagation();
+	        }
+		form.classList.add('was-validated');
+	
+	}
+	</script>
 
 
 </head>
@@ -60,48 +57,63 @@ input {
 			<h1 class="mx-auto h4 p-3 text-white" th:text="#{questionnaire.title}"></h1>
 		</div>
 		<div class="row">
-			<div class="mx-auto rounded pt-4 px-4 pb-3 col-10 col-sm-8 col-md-6 col-xl-4" style="color: #e6e6e6; background-color: #333333">
-				<form th:action="@{/survey/saveQuestionnaire}" method="POST" th:object="${questionnaire}">
-											
+			<div class="mx-auto rounded pt-4 px-4 pb-3 col-10 col-sm-8 col-md-6 col-xl-4 text-light trans-container">
+				<form id="questForm" th:action="@{/survey/saveQuestionnaire}" method="POST" th:object="${questionnaire}"
+				class="needs-validation" novalidate>
+					
+					<!-- Hidden questionnaire fields -->						
 					<div class="form-group d-none">
 						<input type="text"
 						th:field="*{id}" id="questionnaireIdInput"/>
 					</div>
-					
 					<div class="form-group d-none">
 						<input type="text"
-						th:field="*{user.id}" id="questionnaireIdInput"/>
+						th:field="*{user.id}" id="questionnaireUserIdInput"/>
 					</div>
 					
+					<!-- Medical Chamber -->
 					<div class="form-group">
 						<label for="medicalChamberSelect"
 							th:text="#{questionnaire.medicalChamber}"></label>
 							
 						<select name="medicalChamber" id="medicalChamberSelect" class="custom-select" onchange="loadUnitSearchResult()"
-						th:disabled="${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).SENT}">
+						th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}">
 							<option value="" th:selected="selected" th:disabled="disabled" th:text="#{questionnaire.chooseChamber}"></option>
 							<option th:each="chamber : ${T(com.khal.intern_survey.DTO.MedicalChamberEnum).values()}" th:value="${chamber}" th:text="${chamber.name}"
 							th:selected="${chamber.name.contains(questionnaire.medicalChamber != null ? questionnaire.medicalChamber.name : 'null')}"></option>
 						</select>
 					</div>
 						
-					
+					<!-- Unit -->
 					<div class="form-group">
 						<label for="unitNameSelect"
 							th:text="#{questionnaire.unitName}"></label> 
 						<select name="unit" id="unitNameSelect" class="custom-select units_list" th:fragment="units_list"
-						th:disabled="${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).SENT}">
+						th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
 							<option value="" th:selected="selected" th:disabled="disabled" th:text="#{questionnaire.chooseUnit}"></option>
 							<option th:each="unit : ${units}" th:value="${unit.id}" th:text="${unit.name}"
 							th:selected="${unit.name.contains(questionnaire.unit != null ? questionnaire.unit.getName() : 'null')}">							
 						</select>
-						
+						<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>						
+					</div>
+					
+					<!-- Coordinator -->
+					<div class="form-group">
+						<label for="CoordinatorInput" th:text="#{questionnaire.coordinator}"></label>
+						<input type="text" id="CoordinatorInput" th:field="*{coordinator}" placeholder="coordinator name"
+						th:attr="placeholder=#{questionnaire.coordinator}" class="form-control" 
+						th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+						<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
 					</div>
 
 					<div class="form-group mt-4">
-						<button th:if="${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" type="submit" name="action" value="save" class="btn btn-warning btn-sm mr-2" th:text="#{questionnaire.saveButton}">Save</button>
-    					<button th:if="${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" type="submit" name="action" value="send"  class="btn btn-success btn-sm" th:text="#{questionnaire.sendButton}">Send</button>
-    					<a th:href="@{/survey/showQuestList}" th:text="#{questList.backToList}" class="float-right text-info" style="text-decoration:none;"></a>
+						<button th:if="${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" type="submit" name="action" value="save" class="btn btn-outline-warning btn-sm mr-2" th:text="#{questionnaire.saveButton}">Save</button>
+    					<button th:if="${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" type="submit" name="action" value="send"  class="btn btn-outline-warning btn-sm" th:text="#{questionnaire.sendButton}" onclick='validateForm()'>Send</button>
+    					<a sec:authorize="hasRole('ROLE_MEDICALCHAMBERADMIN')" th:href="@{/chamber/acceptQuest/{id}(id=${questionnaire.id})}"
+    					class="btn btn-outline-warning btn-sm" th:text="#{questionnaire.acceptButton}">Accept</a>
+    					
+    					<a sec:authorize="hasRole('ROLE_USER')" th:href="@{/survey/showQuestListForUser}" th:text="#{questList.backToList}" class="float-right text-light" style="text-decoration:none;"></a>
+    					<a sec:authorize="hasRole('ROLE_MEDICALCHAMBERADMIN')" th:href="@{/chamber/showQuestListForAcceptance}" th:text="#{questList.backToList}" class="float-right text-light" style="text-decoration:none;"></a>
     				</div>
 					
 				</form>
@@ -110,6 +122,8 @@ input {
 		</div>
 
 	</div>
+
+
 	
 </body>
 </html>

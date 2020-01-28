@@ -1,38 +1,30 @@
 package com.khal.intern_survey.controller;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.security.Principal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
+import java.util.UUID;
 
 import javax.validation.Valid;
-
-import org.apache.pdfbox.io.IOUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
-import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.font.PDSimpleFont;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.ResourceUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -68,7 +60,10 @@ public class SurveyController {
 	@Autowired
 	MessageSource messages;
 	
-	@GetMapping("/showQuestList")
+	@Autowired
+	File fontFile;
+	
+	@GetMapping("/showQuestListForUser")
 	public String showAllQuestionnaires(Principal principal, Model theModel) {
 		
 		User user = userService.findByEmail(principal.getName());
@@ -79,7 +74,7 @@ public class SurveyController {
 		
 		theModel.addAttribute("questionnaires", questionnaires);
 		
-		return "questionnaires_list";
+		return "user_questionnaires";
 	}
 	
 	@GetMapping("/newQuestionnaire")
@@ -122,11 +117,17 @@ public class SurveyController {
 	}
 	
 	@GetMapping("/deleteQuestionnaire/{id}")
-	public String deleteQuestionnaire(@PathVariable ("id") long id) {
-
-		questionnaireService.delete(id);
+	public String deleteQuestionnaire(Principal principal, @PathVariable ("id") long id) {
 		
-		return "redirect:/survey/showQuestList";
+		Questionnaire questionnaire = questionnaireService.findById(id);
+		User user = userService.findByEmail(principal.getName());
+		
+		// check if user is authorized to delete questionnaire
+		if(questionnaire.getUser().getId() == user.getId() && questionnaire.getStatus() == Status.DRAFT) {
+			questionnaireService.delete(id);
+		}
+	
+		return "redirect:/survey/showQuestListForUser";
 	}
 	
 	@PostMapping(value = "/saveQuestionnaire", params = "action=save")
@@ -137,7 +138,7 @@ public class SurveyController {
 
 		questionnaireService.saveQuestionnaire(questionnaire);
 		
-		return "redirect:/survey/showQuestList";
+		return "redirect:/survey/showQuestListForUser";
 	}
 
 	@PostMapping(value = "/saveQuestionnaire", params = "action=send")
@@ -153,6 +154,13 @@ public class SurveyController {
 		
 		setMedicalChamberDependingOnSelectedUnit(questionnaire);
 		questionnaire.setStatus(Status.SENT);
+		
+		UUID uuid = UUID.randomUUID();
+		questionnaire.setVerificationId(uuid.toString());
+		
+		LocalDate currentDate = LocalDate.now();
+		questionnaire.setSendDate(currentDate);
+		
 		questionnaireService.saveQuestionnaire(questionnaire);
 		
 		return "redirect:/survey/sendQuestPDF/" + questionnaire.getId();
@@ -162,26 +170,34 @@ public class SurveyController {
 	public @ResponseBody byte[] returnQuestPDF(@PathVariable ("id") long id) throws IOException{
 		
 		Locale locale = LocaleContextHolder.getLocale();
-		String pdfTitle = messages.getMessage("questList.pdfTitle", null, locale);
 		Questionnaire questionnaire = questionnaireService.findById(id);
+		
+		String pdfTitle = messages.getMessage("questList.pdfTitle", null, locale);
+		
 		
 		PDDocument document = new PDDocument();
 			
 		PDPage page = new PDPage();
-		document.addPage(page);			
-		PDType0Font font = PDType0Font.load(document, new File("src/main/resources/static/font/AbhayaLibre-Regular.ttf"));
-		
+		document.addPage(page);
+		PDType0Font font = PDType0Font.load(document, fontFile);
 		PDDocumentInformation info = document.getDocumentInformation();
 		info.setTitle(pdfTitle);
 				
-		PDPageContentStream contentStream = new PDPageContentStream(document, page);
-		contentStream.beginText();
-		contentStream.setFont(font, 14);
-		contentStream.newLineAtOffset(25, 750);
-		contentStream.showText(messages.getMessage("questPdf.title", null, locale));
-		contentStream.showText(questionnaire.getUnit().getName());
-		contentStream.endText();
-		contentStream.close();
+		PDPageContentStream cs = new PDPageContentStream(document, page);
+		cs.beginText();
+		cs.setLeading(20);
+		cs.setFont(font, 14);
+		cs.newLineAtOffset(25, 750);
+		cs.showText(questionnaire.getVerificationId().toString());
+		cs.newLine();
+		cs.showText(messages.getMessage("questPdf.title", null, locale));	
+		cs.newLine();
+		cs.showText(questionnaire.getUnit().getName());
+		cs.setFont(font, 12);
+		cs.newLine();
+		cs.showText(messages.getMessage("questPdf.coordinator", null, locale) + ": " + questionnaire.getCoordinator());
+		cs.endText();
+		cs.close();
 		
 		AccessPermission ap = new AccessPermission();
 		ap.setReadOnly();

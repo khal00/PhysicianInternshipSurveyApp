@@ -11,6 +11,9 @@ import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -50,11 +53,18 @@ public class RegistrationController {
 	@Autowired
 	MessageSource messages;
 	
-	// Flag for admin registration form to expand in index page
+	// Flag for medical chamber admin registration form to expand in index page
 	private boolean expandAdminForm = false;
 	
 	@GetMapping("/")
 	public String showIndex(Model theModel) {
+		
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		if (!(auth instanceof AnonymousAuthenticationToken)) {
+
+		    return ("redirect:/showUserPanel");
+		}
 		
 		if (!theModel.containsAttribute("userDTO")) {
 			theModel.addAttribute("userDTO", new UserDTO());
@@ -118,7 +128,7 @@ public class RegistrationController {
 		
 		String registrationSuccessMessage = messages.getMessage("index.registersuccess", null, locale);
 		
-		// create admin account if user requested admin role
+		// create admin account if user requested medical chamber admin role
 		// publish registration event
 		if(checkboxAdminValue != null) {
 			userService.saveUserAndAdminData(userDTO, adminData);

@@ -1,5 +1,6 @@
 package com.khal.intern_survey.entity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,18 +9,15 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-
 import com.khal.intern_survey.DTO.MedicalChamberEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
-@Getter @Setter @NoArgsConstructor @ToString
+@Getter @Setter @NoArgsConstructor
 @Entity
 @Table(name = "questionnaires")
 public class Questionnaire {
@@ -33,6 +31,8 @@ public class Questionnaire {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
+	private String verificationId;
 	
 	private Status status = Status.DRAFT;
 	
@@ -48,5 +48,11 @@ public class Questionnaire {
 	private User user;
 	
 	private LocalDateTime createTime;
+	
+	private LocalDate sendDate;
+	
+	private String Coordinator;
+	
+	
 	
 }

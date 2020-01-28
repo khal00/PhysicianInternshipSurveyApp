@@ -1,18 +1,18 @@
 To do:
 
-sending quest. by user, field validation
-
-qest status changed to sent, UUID generated, UUID is injected into quest, UUID is sent by email to user
-
-add pdf encryption
-
 survey form (at least part of it)
+
+oiladmin option to add units and coordinators
 
 role admin privileges to accept the survey (change db field to accepted 0/1 value possibly)
 
 template to show results
 
 Cron operation to delete expired tokens (baeldung)
+
+deal with null pointer ex error when user not logged in
+
+add acl
 
 
 

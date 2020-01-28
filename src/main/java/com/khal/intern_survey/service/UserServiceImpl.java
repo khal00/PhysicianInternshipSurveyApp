@@ -69,7 +69,7 @@ public class UserServiceImpl implements UserService {
 		userRepository.save(theUser);
 	}
 	
-//	Save Admin user and send email to system admin to verify request for admin role
+//	Save Admin user and email system admin to verify request for medical chamber admin role
 	
 	@Override
 	public void saveUserAndAdminData(UserDTO userDTO, AdminPersonalData adminPersonalData) {

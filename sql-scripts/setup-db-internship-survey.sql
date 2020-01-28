@@ -74,13 +74,13 @@ VALUES
 
 INSERT INTO `admin_personal_data`
 VALUES
-(1,'Xi','Ho','123456789','OIL w Szczecinie'),
-(2,'Jin','Po','987654321','OIL w Szczecinie');
+(1,'Jin','Jo','987654321','OIL w Szczecinie'),
+(2,'Ping','Po','123456789','OIL w Szczecinie');
 
 INSERT INTO `user_admin_data`
 VALUES
 (1,1),
-(2,2);
+(3,2);
 
 CREATE TABLE `role` (
 `id` int NOT NULL AUTO_INCREMENT,
@@ -91,7 +91,7 @@ PRIMARY KEY (`id`)
 
 INSERT INTO `role` (name)
 VALUES 
-('ROLE_USER'),('ROLE_OILADMIN'),('ROLE_ADMIN');
+('ROLE_USER'),('ROLE_MEDICALCHAMBERADMIN'),('ROLE_ADMIN');
 
 
 CREATE TABLE `users_roles` (
@@ -142,11 +142,15 @@ CREATE TABLE `questionnaires` (
 `medical_chamber` varchar(50),
 `unit_id` int,
 `user_id` int NOT NULL,
-`create_time` timestamp NOT NULL, 
+`create_time` timestamp NOT NULL,
+`send_date` date,
+`verification_id` varchar(36),
+`coordinator` varchar(40),
 PRIMARY KEY (`id`),
 KEY (`create_time`),
 KEY (`unit_id`),
 KEY (`user_id`),
+KEY (`verification_id`),
 
 CONSTRAINT `unit_id_ibfk` FOREIGN KEY (`unit_id`) REFERENCES `internship_unit`(`id`)
 ON DELETE NO ACTION ON UPDATE NO ACTION,
