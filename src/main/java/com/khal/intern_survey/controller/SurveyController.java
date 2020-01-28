@@ -94,7 +94,7 @@ public class SurveyController {
 	
 	@GetMapping("/showQuestionnaire/{id}")
 	public String showQuestionnaire(Model theModel, @PathVariable ("id") long id) {
-	
+		
 		Questionnaire questionnaire = questionnaireService.findById(id);
 
 		// set list of units. In case user chose medical chamber before filter the units accordingly

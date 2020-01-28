@@ -3,20 +3,25 @@ package com.khal.intern_survey.config;
 
 import java.io.File;
 
+import javax.sql.DataSource;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.jdbc.DataSourceBuilder;
+import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
-import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 
 @Configuration
-//@ComponentScan(basePackages = "com.khal.intern_survey.config")
 public class MvcConfig implements WebMvcConfigurer {
 	
 	@Bean
@@ -47,7 +52,6 @@ public class MvcConfig implements WebMvcConfigurer {
 	public File fontFile() {
 		return new File("src/main/resources/static/font/AbhayaLibre-Regular.ttf");
 	}
-	
 	
 
 }

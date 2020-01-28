@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.khal.intern_survey.DTO.MedicalChamberEnum;
@@ -25,6 +26,7 @@ public class QestionnaireServiceImpl implements QuestionnaireService {
 		
 	}
 
+	@PostAuthorize("hasPermission(returnObject, 'READ')")
 	@Override
 	public Questionnaire findById(Long id) {
 		
