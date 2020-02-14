@@ -7,7 +7,7 @@ import com.khal.intern_survey.entity.User;
 
 public interface QuestionnaireService {
 	
-	public void saveQuestionnaire(Questionnaire questionnaire);
+	public Questionnaire saveQuestionnaire(Questionnaire questionnaire);
 
 	public Questionnaire findById(Long id);
 

@@ -3,6 +3,8 @@
 <head>
 <title th:text="#{questionnaire.title}"></title>
 
+	<script src="https://kit.fontawesome.com/bf6e8a4007.js" crossorigin="anonymous"></script>
+
 	<script th:inline="javascript">		
 
 		function loadUnitSearchResult()
@@ -39,7 +41,16 @@
 		form.classList.add('was-validated');
 	
 	}
+	
 	</script>
+	
+	<style>
+	.rate-input{
+		width: 80px;
+		margin-bottom: 25px;
+	}
+	</style>
+	
 
 
 </head>
@@ -54,66 +65,1009 @@
 	<div layout:fragment="main_content">
 		
 		<div class="row">
-			<h1 class="mx-auto h4 p-3 text-white" th:text="#{questionnaire.title}"></h1>
+			<h1 class="mx-auto h3 my-3 my-sm-5 text-white" th:text="#{questionnaire.title}"></h1>
 		</div>
 		<div class="row">
-			<div class="mx-auto rounded pt-4 px-4 pb-3 col-10 col-sm-8 col-md-6 col-xl-4 text-light trans-container">
+			<div class="mx-auto mb-5 rounded py-2 px-2 py-sm-4 px-sm-4 col-11 col-sm-11 col-md-10 col-lg-11 col-xl-10 text-light trans-container">
 				<form id="questForm" th:action="@{/survey/saveQuestionnaire}" method="POST" th:object="${questionnaire}"
 				class="needs-validation" novalidate>
 					
 					<!-- Hidden questionnaire fields -->						
-					<div class="form-group d-none">
-						<input type="text"
-						th:field="*{id}" id="questionnaireIdInput"/>
-					</div>
-					<div class="form-group d-none">
-						<input type="text"
-						th:field="*{user.id}" id="questionnaireUserIdInput"/>
-					</div>
+					<input type="hidden" th:field="*{id}"/>
+					<input type="hidden" th:field="*{user.id}"/>
+					<input type="hidden" th:field="*{sections}"/>
+					<input type="hidden" th:field="*{courses}"/>
 					
+					<div class="rounded mx-auto px-4 py-3 trans-container">
 					<!-- Medical Chamber -->
-					<div class="form-group">
-						<label for="medicalChamberSelect"
-							th:text="#{questionnaire.medicalChamber}"></label>
-							
-						<select name="medicalChamber" id="medicalChamberSelect" class="custom-select" onchange="loadUnitSearchResult()"
-						th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}">
-							<option value="" th:selected="selected" th:disabled="disabled" th:text="#{questionnaire.chooseChamber}"></option>
-							<option th:each="chamber : ${T(com.khal.intern_survey.DTO.MedicalChamberEnum).values()}" th:value="${chamber}" th:text="${chamber.name}"
-							th:selected="${chamber.name.contains(questionnaire.medicalChamber != null ? questionnaire.medicalChamber.name : 'null')}"></option>
-						</select>
-					</div>
+						<div class="form-group">
+							<label for="medicalChamberSelect"
+								th:text="#{questionnaire.medicalChamber}"></label>
+								
+							<select name="medicalChamber" id="medicalChamberSelect" class="custom-select" onchange="loadUnitSearchResult()"
+							th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}">
+								<option value="" th:selected="selected" th:disabled="disabled" th:text="#{questionnaire.chooseChamber}"></option>
+								<option th:each="chamber : ${T(com.khal.intern_survey.DTO.MedicalChamberEnum).values()}" th:value="${chamber}" th:text="${chamber.name}"
+								th:selected="${chamber.name.contains(questionnaire.medicalChamber != null ? questionnaire.medicalChamber.name : 'null')}"></option>
+							</select>
+						</div>
 						
-					<!-- Unit -->
-					<div class="form-group">
-						<label for="unitNameSelect"
-							th:text="#{questionnaire.unitName}"></label> 
-						<select name="unit" id="unitNameSelect" class="custom-select units_list" th:fragment="units_list"
-						th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
-							<option value="" th:selected="selected" th:disabled="disabled" th:text="#{questionnaire.chooseUnit}"></option>
-							<option th:each="unit : ${units}" th:value="${unit.id}" th:text="${unit.name}"
-							th:selected="${unit.name.contains(questionnaire.unit != null ? questionnaire.unit.getName() : 'null')}">							
-						</select>
-						<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>						
+						<!-- Unit -->
+						<div class="form-group">
+							<label for="unitNameSelect"
+								th:text="#{questionnaire.internPlace}"></label> 
+							<select name="unit" id="unitNameSelect" class="custom-select units_list" th:fragment="units_list"
+							th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<option value="" th:selected="selected" th:disabled="disabled" th:text="#{questionnaire.chooseUnit}"></option>
+								<option th:each="unit : ${units}" th:value="${unit.id}" th:text="${unit.name}"
+								th:selected="${unit.name.contains(questionnaire.unit != null ? questionnaire.unit.getName() : 'null')}">							
+							</select>
+							<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>						
+						</div>
 					</div>
 					
 					<!-- Coordinator -->
-					<div class="form-group">
-						<label for="CoordinatorInput" th:text="#{questionnaire.coordinator}"></label>
-						<input type="text" id="CoordinatorInput" th:field="*{coordinator}" placeholder="coordinator name"
-						th:attr="placeholder=#{questionnaire.coordinator}" class="form-control" 
-						th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
-						<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+					
+					<div class="text-light rounded mx-auto px-4 py-3 mt-4 trans-container">
+					
+						<div class="form-row">			
+							<div class="form-group col-sm-8 col-xl-10">
+								<label for="CoordinatorInput" th:text="#{questionnaire.coordinator}"></label>
+								<input type="text" id="CoordinatorInput" th:field="*{coordinator}" placeholder="coordinator name"
+								th:attr="placeholder=#{questionnaire.coordinatorAndTutorName}" class="form-control" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+			
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="coordinatorRatingInput" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+								, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107; font-size: 0.9rem"></i>
+								</a>
+								
+								<input type="number" min="1" max="6" step="1" value="0" id="coordinatorRatingInput" th:field="*{coordinatorRating}" class="form-control rate-input"
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.requiredRange}"></div>
+							</div>
+						</div>	
+						
+					</div>
+					
+					
+					<!-- Internal Medicine -->
+					
+					<div class="text-light rounded mx-auto px-4 py-3 mt-4 trans-container">
+						<h3 class="h6 my-3" th:text="#{questionnaire.internalMed}"></h3>
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="form-group col-sm-8 col-xl-4">
+								<label for="InternalMedTutorName" th:text="#{questionnaire.tutor}"></label>
+								<input type="text" id="InternalTutorName" th:field="*{sections[0].tutorName}" placeholder="Tutor name"
+								th:attr="placeholder=#{questionnaire.coordinatorAndTutorName}" class="form-control" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}">		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="InternalMedTutorRate" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="InternalMedTutorRate" min="1" max="6" step="1" value="0" th:field="*{sections[0].tutor}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+							
+							<div class="form-group col-sm-8 col-xl-4">
+								<label for="InternalMedUnitName" th:text="#{questionnaire.internPlace}"></label>
+								<input type="text" id="InternalMedUnitName" th:field="*{sections[0].unitName}" placeholder="Unit name"
+								th:attr="placeholder=#{questionnaire.unitName}" class="form-control" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}">		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="InternalMedUnitRate" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="InternalMedUnitRate" min="1" max="6" step="1" value="0" th:field="*{sections[0].unit}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+						</div>
+						
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="InternalMedWard" th:text="#{questionnaire.ward}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="InternalMedWard" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="InternalMedWard" min="1" max="6" step="1" value="0" th:field="*{sections[0].ward}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="InternalMedClinic" th:text="#{questionnaire.clinic}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="InternalMedClinic" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="InternalMedClinic" min="1" max="6" step="1" value="0" th:field="*{sections[0].clinic}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+
+						</div>
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="InternalMedNumOfProc" th:text="#{questionnaire.numOfProcedures}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="InternalMedNumOfProc" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleNumOfProc1} + '<br />' + #{questionnaire.ratingScaleNumOfProc6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="InternalMedNumOfProc" min="1" max="6" step="1" value="0" th:field="*{sections[0].numberOfProcedures}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="InternalMedProcAutonomy" th:text="#{questionnaire.proceduresAutonomy}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="InternalMedProcAutonomy" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleProcAuto1} + '<br />' + #{questionnaire.ratingScaleProcAuto6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="InternalMedProcAutonomy" min="1" max="6" step="1" value="0" th:field="*{sections[0].proceduresAutonomy}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+
+						</div>
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="InternalMedTheorKnowledge" th:text="#{questionnaire.theoreticalKnowledge}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="InternalMedTheorKnowledge" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="InternalMedTheorKnowledge" min="1" max="6" step="1" value="0" th:field="*{sections[0].theoreticalKnowledge}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="InternalMedPractKnowledge" th:text="#{questionnaire.practicalKnowledge}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="InternalMedPractKnowledge" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>
+								</a>
+								
+								<input type="number" id="InternalMedPractKnowledge" min="1" max="6" step="1" value="0" th:field="*{sections[0].practicalKnowledge}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+
+						</div>
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="InternalMedDuty" th:text="#{questionnaire.duty}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="InternalMedDuty" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleDuty1} + '<br />' + #{questionnaire.ratingScaleDuty6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="InternalMedDuty" min="1" max="6" step="1" value="0" th:field="*{sections[0].medicalDuty}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+
+						</div>
+							
+					</div>
+					
+					
+					<!-- Transfusiology -->
+					
+					<div class="text-light rounded mx-auto px-4 py-3 mt-4 trans-container">
+						<h3 class="h6 my-3" th:text="#{questionnaire.transfusiology}"></h3>
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="form-group col-sm-8 col-xl-4">
+								<label for="TransfusiologyTutorName" th:text="#{questionnaire.tutor}"></label>
+								<input type="text" id="TransfusiologyTutorName" th:field="*{courses[0].tutorName}" placeholder="Tutor name"
+								th:attr="placeholder=#{questionnaire.coordinatorAndTutorName}" class="form-control" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}">		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="TransfusiologyTutorRate" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="TransfusiologyTutorRate" min="1" max="6" step="1" value="0" th:field="*{courses[0].tutor}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+							
+							<div class="form-group col-sm-8 col-xl-4">
+								<label for="TransfusiologyUnitName" th:text="#{questionnaire.internPlace}"></label>
+								<input type="text" id="TransfusiologyUnitName" th:field="*{courses[0].unitName}" placeholder="Unit name"
+								th:attr="placeholder=#{questionnaire.unitName}" class="form-control" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}">		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="TransfusiologyUnitRate" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="TransfusiologyUnitRate" min="1" max="6" step="1" value="0" th:field="*{courses[0].unit}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+						</div>
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="TransfusiologyTheorKnowledge" th:text="#{questionnaire.theoreticalKnowledge}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="TransfusiologyTheorKnowledge" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="TransfusiologyTheorKnowledge" min="1" max="6" step="1" value="0" th:field="*{courses[0].theoreticalKnowledge}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="TransfusiologyPractKnowledge" th:text="#{questionnaire.practicalKnowledge}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="TransfusiologyPractKnowledge" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="TransfusiologyPractKnowledge" min="1" max="6" step="1" value="0" th:field="*{courses[0].practicalKnowledge}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+
+						</div>
+
+					</div>
+					
+					<!-- Prevention of HIV infection -->
+					
+					<div class="text-light rounded mx-auto px-4 py-3 mt-4 trans-container">
+						<h3 class="h6 my-3" th:text="#{questionnaire.HIVprevention}"></h3>
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="form-group col-sm-8 col-xl-4">
+								<label for="HivTutorName" th:text="#{questionnaire.tutor}"></label>
+								<input type="text" id="HivTutorName" th:field="*{courses[1].tutorName}" placeholder="Tutor name"
+								th:attr="placeholder=#{questionnaire.coordinatorAndTutorName}" class="form-control" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}">		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="HivTutorRate" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="HivTutorRate" min="1" max="6" step="1" value="0" th:field="*{courses[1].tutor}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+							
+							<div class="form-group col-sm-8 col-xl-4">
+								<label for="HivUnitName" th:text="#{questionnaire.internPlace}"></label>
+								<input type="text" id="HivUnitName" th:field="*{courses[1].unitName}" placeholder="Unit name"
+								th:attr="placeholder=#{questionnaire.unitName}" class="form-control" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}">		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="HivUnitRate" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="HivUnitRate" min="1" max="6" step="1" value="0" th:field="*{courses[1].unit}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+						</div>
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="HivTheorKnowledge" th:text="#{questionnaire.theoreticalKnowledge}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="HivTheorKnowledge" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="HivTheorKnowledge" min="1" max="6" step="1" value="0" th:field="*{courses[1].theoreticalKnowledge}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="HivPractKnowledge" th:text="#{questionnaire.practicalKnowledge}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="HivPractKnowledge" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="HivPractKnowledge" min="1" max="6" step="1" value="0" th:field="*{courses[1].practicalKnowledge}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+
+						</div>
+
+					</div>
+					
+					<!-- Pediatrics -->
+					
+					<div class="text-light rounded mx-auto px-4 py-3 mt-4 trans-container">
+						<h3 class="h6 my-3" th:text="#{questionnaire.pediatrics}"></h3>
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="form-group col-sm-8 col-xl-4">
+								<label for="PediatricsTutorName" th:text="#{questionnaire.tutor}"></label>
+								<input type="text" id="InternalTutorName" th:field="*{sections[1].tutorName}" placeholder="Tutor name"
+								th:attr="placeholder=#{questionnaire.coordinatorAndTutorName}" class="form-control" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}">		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="PediatricsTutorRate" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="PediatricsTutorRate" min="1" max="6" step="1" value="0" th:field="*{sections[1].tutor}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+							
+							<div class="form-group col-sm-8 col-xl-4">
+								<label for="PediatricsUnitName" th:text="#{questionnaire.internPlace}"></label>
+								<input type="text" id="PediatricsUnitName" th:field="*{sections[1].unitName}" placeholder="Unit name"
+								th:attr="placeholder=#{questionnaire.unitName}" class="form-control" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}">		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="PediatricsUnitRate" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="PediatricsUnitRate" min="1" max="6" step="1" value="0" th:field="*{sections[1].unit}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+						</div>
+						
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="PediatricsWard" th:text="#{questionnaire.ward}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="PediatricsWard" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="PediatricsWard" min="1" max="6" step="1" value="0" th:field="*{sections[1].ward}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="PediatricsClinic" th:text="#{questionnaire.clinic}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="PediatricsClinic" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="PediatricsClinic" min="1" max="6" step="1" value="0" th:field="*{sections[1].clinic}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+
+						</div>
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="PediatricsNumOfProc" th:text="#{questionnaire.numOfProcedures}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="PediatricsNumOfProc" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleNumOfProc1} + '<br />' + #{questionnaire.ratingScaleNumOfProc6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="PediatricsNumOfProc" min="1" max="6" step="1" value="0" th:field="*{sections[1].numberOfProcedures}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="PediatricsProcAutonomy" th:text="#{questionnaire.proceduresAutonomy}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="PediatricsProcAutonomy" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleProcAuto1} + '<br />' + #{questionnaire.ratingScaleProcAuto6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="PediatricsProcAutonomy" min="1" max="6" step="1" value="0" th:field="*{sections[1].proceduresAutonomy}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+
+						</div>
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="PediatricsTheorKnowledge" th:text="#{questionnaire.theoreticalKnowledge}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="PediatricsTheorKnowledge" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="PediatricsTheorKnowledge" min="1" max="6" step="1" value="0" th:field="*{sections[1].theoreticalKnowledge}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="PediatricsPractKnowledge" th:text="#{questionnaire.practicalKnowledge}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="PediatricsPractKnowledge" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>
+								</a>
+								
+								<input type="number" id="PediatricsPractKnowledge" min="1" max="6" step="1" value="0" th:field="*{sections[1].practicalKnowledge}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+
+						</div>
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="PediatricsDuty" th:text="#{questionnaire.duty}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="PediatricsDuty" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleDuty1} + '<br />' + #{questionnaire.ratingScaleDuty6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="PediatricsDuty" min="1" max="6" step="1" value="0" th:field="*{sections[1].medicalDuty}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+
+						</div>
+							
+					</div>
+					
+					<!-- General Surgery -->
+					
+					<div class="text-light rounded mx-auto px-4 py-3 mt-4 trans-container">
+						<h3 class="h6 my-3" th:text="#{questionnaire.surgery}"></h3>
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="form-group col-sm-8 col-xl-4">
+								<label for="GeneralSurgeryTutorName" th:text="#{questionnaire.tutor}"></label>
+								<input type="text" id="InternalTutorName" th:field="*{sections[2].tutorName}" placeholder="Tutor name"
+								th:attr="placeholder=#{questionnaire.coordinatorAndTutorName}" class="form-control" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}">		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="GeneralSurgeryTutorRate" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="GeneralSurgeryTutorRate" min="1" max="6" step="1" value="0" th:field="*{sections[2].tutor}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+							
+							<div class="form-group col-sm-8 col-xl-4">
+								<label for="GeneralSurgeryUnitName" th:text="#{questionnaire.internPlace}"></label>
+								<input type="text" id="GeneralSurgeryUnitName" th:field="*{sections[2].unitName}" placeholder="Unit name"
+								th:attr="placeholder=#{questionnaire.unitName}" class="form-control" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}">		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="GeneralSurgeryUnitRate" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="GeneralSurgeryUnitRate" min="1" max="6" step="1" value="0" th:field="*{sections[2].unit}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+						</div>
+						
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="GeneralSurgeryWard" th:text="#{questionnaire.ward}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="GeneralSurgeryWard" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="GeneralSurgeryWard" min="1" max="6" step="1" value="0" th:field="*{sections[2].ward}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="GeneralSurgeryClinic" th:text="#{questionnaire.clinic}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="GeneralSurgeryClinic" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="GeneralSurgeryClinic" min="1" max="6" step="1" value="0" th:field="*{sections[2].clinic}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+
+						</div>
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="GeneralSurgeryNumOfProc" th:text="#{questionnaire.numOfProcedures}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="GeneralSurgeryNumOfProc" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleNumOfProc1} + '<br />' + #{questionnaire.ratingScaleNumOfProc6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="GeneralSurgeryNumOfProc" min="1" max="6" step="1" value="0" th:field="*{sections[2].numberOfProcedures}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="GeneralSurgeryProcAutonomy" th:text="#{questionnaire.proceduresAutonomy}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="GeneralSurgeryProcAutonomy" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleProcAuto1} + '<br />' + #{questionnaire.ratingScaleProcAuto6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="GeneralSurgeryProcAutonomy" min="1" max="6" step="1" value="0" th:field="*{sections[2].proceduresAutonomy}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+
+						</div>
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="GeneralSurgeryTheorKnowledge" th:text="#{questionnaire.theoreticalKnowledge}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="GeneralSurgeryTheorKnowledge" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="GeneralSurgeryTheorKnowledge" min="1" max="6" step="1" value="0" th:field="*{sections[2].theoreticalKnowledge}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="GeneralSurgeryPractKnowledge" th:text="#{questionnaire.practicalKnowledge}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="GeneralSurgeryPractKnowledge" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>
+								</a>
+								
+								<input type="number" id="GeneralSurgeryPractKnowledge" min="1" max="6" step="1" value="0" th:field="*{sections[2].practicalKnowledge}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+
+						</div>
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="GeneralSurgeryDuty" th:text="#{questionnaire.duty}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="GeneralSurgeryDuty" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleDuty1} + '<br />' + #{questionnaire.ratingScaleDuty6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="GeneralSurgeryDuty" min="1" max="6" step="1" value="0" th:field="*{sections[2].medicalDuty}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+
+						</div>
+							
+					</div>
+					
+					<!-- Obsterics and Gynecology -->
+					
+					<div class="text-light rounded mx-auto px-4 py-3 mt-4 trans-container">
+						<h3 class="h6 my-3" th:text="#{questionnaire.obsterics}"></h3>
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="form-group col-sm-8 col-xl-4">
+								<label for="ObstericsAndGynTutorName" th:text="#{questionnaire.tutor}"></label>
+								<input type="text" id="InternalTutorName" th:field="*{sections[3].tutorName}" placeholder="Tutor name"
+								th:attr="placeholder=#{questionnaire.coordinatorAndTutorName}" class="form-control" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}">		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="ObstericsAndGynTutorRate" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="ObstericsAndGynTutorRate" min="1" max="6" step="1" value="0" th:field="*{sections[3].tutor}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+							
+							<div class="form-group col-sm-8 col-xl-4">
+								<label for="ObstericsAndGynUnitName" th:text="#{questionnaire.internPlace}"></label>
+								<input type="text" id="ObstericsAndGynUnitName" th:field="*{sections[3].unitName}" placeholder="Unit name"
+								th:attr="placeholder=#{questionnaire.unitName}" class="form-control" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}">		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="ObstericsAndGynUnitRate" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="ObstericsAndGynUnitRate" min="1" max="6" step="1" value="0" th:field="*{sections[3].unit}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+						</div>
+						
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="ObstericsAndGynWard" th:text="#{questionnaire.ward}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="ObstericsAndGynWard" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="ObstericsAndGynWard" min="1" max="6" step="1" value="0" th:field="*{sections[3].ward}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="ObstericsAndGynClinic" th:text="#{questionnaire.clinic}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="ObstericsAndGynClinic" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="ObstericsAndGynClinic" min="1" max="6" step="1" value="0" th:field="*{sections[3].clinic}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+
+						</div>
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="ObstericsAndGynNumOfProc" th:text="#{questionnaire.numOfProcedures}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="ObstericsAndGynNumOfProc" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleNumOfProc1} + '<br />' + #{questionnaire.ratingScaleNumOfProc6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="ObstericsAndGynNumOfProc" min="1" max="6" step="1" value="0" th:field="*{sections[3].numberOfProcedures}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="ObstericsAndGynProcAutonomy" th:text="#{questionnaire.proceduresAutonomy}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="ObstericsAndGynProcAutonomy" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleProcAuto1} + '<br />' + #{questionnaire.ratingScaleProcAuto6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="ObstericsAndGynProcAutonomy" min="1" max="6" step="1" value="0" th:field="*{sections[3].proceduresAutonomy}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+
+						</div>
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="ObstericsAndGynTheorKnowledge" th:text="#{questionnaire.theoreticalKnowledge}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="ObstericsAndGynTheorKnowledge" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="ObstericsAndGynTheorKnowledge" min="1" max="6" step="1" value="0" th:field="*{sections[3].theoreticalKnowledge}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="ObstericsAndGynPractKnowledge" th:text="#{questionnaire.practicalKnowledge}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="ObstericsAndGynPractKnowledge" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>
+								</a>
+								
+								<input type="number" id="ObstericsAndGynPractKnowledge" min="1" max="6" step="1" value="0" th:field="*{sections[3].practicalKnowledge}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+
+						</div>
+						
+						<div class="form-row" style="font-size:0.9rem">
+							
+							<div class="col-sm-8 col-xl-4">
+								<label for="ObstericsAndGynDuty" th:text="#{questionnaire.duty}"></label>		
+							</div>
+							
+							<div class="form-group col-sm-4 col-xl-2">
+								<label for="ObstericsAndGynDuty" th:text="#{questionnaire.rating}"></label>
+								
+								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
+									, data-content=#{questionnaire.ratingScaleDuty1} + '<br />' + #{questionnaire.ratingScaleDuty6}" style="cursor: pointer">
+									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+								</a>
+								
+								<input type="number" id="ObstericsAndGynDuty" min="1" max="6" step="1" value="0" th:field="*{sections[3].medicalDuty}" class="form-control rate-input" 
+								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
+								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
+							</div>
+
+						</div>
+							
 					</div>
 
+	
+					<!-- Action buttons -->
+					
 					<div class="form-group mt-4">
-						<button th:if="${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" type="submit" name="action" value="save" class="btn btn-outline-warning btn-sm mr-2" th:text="#{questionnaire.saveButton}">Save</button>
-    					<button th:if="${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" type="submit" name="action" value="send"  class="btn btn-outline-warning btn-sm" th:text="#{questionnaire.sendButton}" onclick='validateForm()'>Send</button>
+						<button th:if="${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" type="submit" name="action" value="save" class="btn btn-outline-warning btn-sm mr-2 float-left" th:text="#{questionnaire.saveButton}">Save</button>
+    					<button th:if="${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" type="submit" name="action" value="send"  class="btn btn-outline-warning btn-sm float-left mr-3 mb-3" th:text="#{questionnaire.sendButton}" onclick='validateForm()'>Send</button>
     					<a sec:authorize="hasRole('ROLE_MEDICALCHAMBERADMIN')" th:href="@{/chamber/acceptQuest/{id}(id=${questionnaire.id})}"
-    					class="btn btn-outline-warning btn-sm" th:text="#{questionnaire.acceptButton}">Accept</a>
+    					class="btn btn-outline-warning btn-sm float-left" th:text="#{questionnaire.acceptButton}">Accept</a>
     					
-    					<a sec:authorize="hasRole('ROLE_USER')" th:href="@{/survey/showQuestListForUser}" th:text="#{questList.backToList}" class="float-right text-light" style="text-decoration:none;"></a>
-    					<a sec:authorize="hasRole('ROLE_MEDICALCHAMBERADMIN')" th:href="@{/chamber/showQuestListForAcceptance}" th:text="#{questList.backToList}" class="float-right text-light" style="text-decoration:none;"></a>
+    					<a sec:authorize="hasRole('ROLE_USER')" th:href="@{/survey/showQuestListForUser}" th:text="#{questList.backToList}" class="float-left float-sm-right text-light" style="text-decoration:none;"></a>
+    					<a sec:authorize="hasRole('ROLE_MEDICALCHAMBERADMIN')" th:href="@{/chamber/showQuestListForAcceptance}" th:text="#{questList.backToList}" class="float-left float-sm-right text-light" style="text-decoration:none;"></a>
     				</div>
 					
 				</form>
@@ -122,7 +1076,6 @@
 		</div>
 
 	</div>
-
 
 	
 </body>

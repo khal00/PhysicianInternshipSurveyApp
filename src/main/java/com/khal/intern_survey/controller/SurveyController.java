@@ -22,8 +22,12 @@ import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.MediaType;
+import org.springframework.security.acls.jdbc.JdbcMutableAclService;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,11 +39,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.khal.intern_survey.DTO.CourseEnum;
+import com.khal.intern_survey.DTO.InternshipSectionsEnum;
 import com.khal.intern_survey.DTO.MedicalChamberEnum;
+import com.khal.intern_survey.entity.Course;
+import com.khal.intern_survey.entity.InternshipSection;
 import com.khal.intern_survey.entity.InternshipUnit;
 import com.khal.intern_survey.entity.Questionnaire;
 import com.khal.intern_survey.entity.Questionnaire.Status;
 import com.khal.intern_survey.entity.User;
+import com.khal.intern_survey.service.CourseService;
+import com.khal.intern_survey.service.InternshipSectionService;
 import com.khal.intern_survey.service.InternshipUnitService;
 import com.khal.intern_survey.service.QuestionnaireService;
 import com.khal.intern_survey.service.UserService;
@@ -47,6 +57,9 @@ import com.khal.intern_survey.service.UserService;
 @Controller
 @RequestMapping("/survey")
 public class SurveyController {
+	
+	@Autowired
+	JdbcMutableAclService aclService;
 	
 	@Autowired
 	UserService userService;
@@ -63,8 +76,15 @@ public class SurveyController {
 	@Autowired
 	File fontFile;
 	
+	@Autowired
+	InternshipSectionService sectionService;
+	
+	@Autowired
+	CourseService courseService;
+	
 	@GetMapping("/showQuestListForUser")
 	public String showAllQuestionnaires(Principal principal, Model theModel) {
+		
 		
 		User user = userService.findByEmail(principal.getName());
 		List<Questionnaire> questionnaires = user.getQuestionnaires();
@@ -78,16 +98,21 @@ public class SurveyController {
 	}
 	
 	@GetMapping("/newQuestionnaire")
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public String createNewQuestionnaire(Principal principal) {
 		
 		User user = userService.findByEmail(principal.getName());
 		Questionnaire questionnaire = new Questionnaire();
+		
 		LocalDateTime currentTime = LocalDateTime.now();
 		questionnaire.setCreateTime(currentTime);
 		questionnaire.setUser(user);
 		questionnaireService.saveQuestionnaire(questionnaire);
 		
 		long questId = questionnaire.getId();
+		
+		sectionService.createAllSections(questionnaire);
+		courseService.createAllCourses(questionnaire);
 				
 		return "redirect:/survey/showQuestionnaire/" + questId;
 	}
@@ -119,13 +144,9 @@ public class SurveyController {
 	@GetMapping("/deleteQuestionnaire/{id}")
 	public String deleteQuestionnaire(Principal principal, @PathVariable ("id") long id) {
 		
-		Questionnaire questionnaire = questionnaireService.findById(id);
-		User user = userService.findByEmail(principal.getName());
 		
-		// check if user is authorized to delete questionnaire
-		if(questionnaire.getUser().getId() == user.getId() && questionnaire.getStatus() == Status.DRAFT) {
-			questionnaireService.delete(id);
-		}
+		questionnaireService.delete(id);
+
 	
 		return "redirect:/survey/showQuestListForUser";
 	}
@@ -135,14 +156,16 @@ public class SurveyController {
 			, Principal principal) {
 		
 		setMedicalChamberDependingOnSelectedUnit(questionnaire);
-
+		
 		questionnaireService.saveQuestionnaire(questionnaire);
 		
 		return "redirect:/survey/showQuestListForUser";
 	}
 
+	
 	@PostMapping(value = "/saveQuestionnaire", params = "action=send")
-	public String sendQuestionnaire(@Valid @ModelAttribute ("questionnaire") Questionnaire questionnaire
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public String sendQuestionnaire(Principal principal, @Valid @ModelAttribute ("questionnaire") Questionnaire questionnaire
 			, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
 		if (bindingResult.hasErrors()) {
@@ -239,8 +262,6 @@ public class SurveyController {
 			MedicalChamberEnum chamber = MedicalChamberEnum.valueOf(unit.getMedicalChamber());
 			questionnaire.setMedicalChamber(chamber);
 		}
-	}
-	
-	
+	}	
 	
 }

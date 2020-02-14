@@ -9,7 +9,7 @@ import com.khal.intern_survey.dao.InternshipUnitRepository;
 import com.khal.intern_survey.entity.InternshipUnit;
 
 @Service
-public class InternshipUserServiceImpl implements InternshipUnitService {
+public class InternshipUnitServiceImpl implements InternshipUnitService {
 	
 	@Autowired
 	InternshipUnitRepository internshipUnitRepository;

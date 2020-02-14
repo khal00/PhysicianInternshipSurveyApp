@@ -70,17 +70,20 @@ VALUES
 (1,'xi@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',true),
 (2,'jin@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',true),
 (3,'ping@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',true),
-(4,'krrsssfire@gmail.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',true);
+(4,'ho@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',true),
+(5,'chi@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',true);
 
 INSERT INTO `admin_personal_data`
 VALUES
-(1,'Jin','Jo','987654321','OIL w Szczecinie'),
-(2,'Ping','Po','123456789','OIL w Szczecinie');
+(1,'Ping','Po','123456789','OIL w Szczecinie'),
+(2,'Ho','Li','123456789','OIL w Szczecinie'),
+(3,'Chi','Fu','123456789','OIL w Warszawie');
 
 INSERT INTO `user_admin_data`
 VALUES
-(1,1),
-(3,2);
+(3,1),
+(4,2),
+(5,3);
 
 CREATE TABLE `role` (
 `id` int NOT NULL AUTO_INCREMENT,
@@ -117,9 +120,9 @@ INSERT INTO `users_roles` (user_id,role_id)
 VALUES 
 (1, 1),
 (2, 1),
-(2, 2),
 (3, 2),
-(3, 3);
+(4, 2),
+(5, 2);
 
 
 CREATE TABLE `internship_unit` (
@@ -137,8 +140,8 @@ INSERT INTO `internship_unit` VALUES
 
 
 CREATE TABLE `questionnaires` (
-`id` int NOT NULL AUTO_INCREMENT,
-`status` varchar(15) DEFAULT 'draft',
+`id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+`status` TINYINT DEFAULT 0,
 `medical_chamber` varchar(50),
 `unit_id` int,
 `user_id` int NOT NULL,
@@ -146,6 +149,7 @@ CREATE TABLE `questionnaires` (
 `send_date` date,
 `verification_id` varchar(36),
 `coordinator` varchar(40),
+`coordinator_rating` tinyint unsigned,
 PRIMARY KEY (`id`),
 KEY (`create_time`),
 KEY (`unit_id`),
@@ -159,58 +163,108 @@ CONSTRAINT `user_id_ibfk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
 ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
+/*
+INSERT INTO `questionnaires`(id, status, user_id, create_time, coordinator_rating) VALUES
+(1, 0, 1, '2020-01-30 09:28:57', 6);
+*/
+
+CREATE TABLE `internship_section` (
+id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+name VARCHAR(45),
+tutor_name VARCHAR(40),
+unit_name VARCHAR(40),
+tutor TINYINT DEFAULT 0,
+unit TINYINT DEFAULT 0,
+number_of_procedures TINYINT DEFAULT 0,
+procedures_autonomy TINYINT DEFAULT 0,
+theoretical_knowledge TINYINT DEFAULT 0,
+practical_knowledge TINYINT DEFAULT 0,
+medical_duty TINYINT DEFAULT 0,
+ward TINYINT DEFAULT 0,
+clinic TINYINT DEFAULT 0,
+rating DECIMAL(5,4),
+questionnaire_id BIGINT UNSIGNED NOT NULL,
+PRIMARY KEY (`id`),
+CONSTRAINT `section_quest_id_ibfk` FOREIGN KEY (`questionnaire_id`) REFERENCES `questionnaires`(`id`)
+ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+CREATE TABLE `course` (
+id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+name VARCHAR(30),
+tutor_name VARCHAR(40),
+unit_name VARCHAR(40),
+tutor TINYINT DEFAULT 0,
+unit TINYINT DEFAULT 0,
+theoretical_knowledge TINYINT DEFAULT 0,
+practical_knowledge TINYINT DEFAULT 0,
+rating DECIMAL(5,4),
+questionnaire_id BIGINT UNSIGNED NOT NULL,
+PRIMARY KEY (`id`),
+CONSTRAINT `course_quest_id_ibfk` FOREIGN KEY (`questionnaire_id`) REFERENCES `questionnaires`(`id`)
+ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
 
 /*
 ACL TABLES
 */
 
 CREATE TABLE acl_sid (
-	id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	principal BOOLEAN NOT NULL,
-	sid VARCHAR(100) NOT NULL,
-	UNIQUE KEY unique_acl_sid (sid, principal)
+id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+principal BOOLEAN NOT NULL,
+sid VARCHAR(100) NOT NULL,
+UNIQUE KEY unique_acl_sid (sid, principal)
 ) ENGINE=InnoDB;
 
 CREATE TABLE acl_class (
-	id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	class VARCHAR(100) NOT NULL,
-	UNIQUE KEY uk_acl_class (class)
+id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+class VARCHAR(100) NOT NULL,
+UNIQUE KEY uk_acl_class (class)
 ) ENGINE=InnoDB;
 
 CREATE TABLE acl_object_identity (
-	id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	object_id_class BIGINT UNSIGNED NOT NULL,
-	object_id_identity BIGINT NOT NULL,
-	parent_object BIGINT UNSIGNED,
-	owner_sid BIGINT UNSIGNED,
-	entries_inheriting BOOLEAN NOT NULL,
-	UNIQUE KEY uk_acl_object_identity (object_id_class, object_id_identity),
-	CONSTRAINT fk_acl_object_identity_parent FOREIGN KEY (parent_object) REFERENCES acl_object_identity (id),
-	CONSTRAINT fk_acl_object_identity_class FOREIGN KEY (object_id_class) REFERENCES acl_class (id),
-	CONSTRAINT fk_acl_object_identity_owner FOREIGN KEY (owner_sid) REFERENCES acl_sid (id)
+id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+object_id_class BIGINT UNSIGNED NOT NULL,
+object_id_identity BIGINT NOT NULL,
+parent_object BIGINT UNSIGNED,
+owner_sid BIGINT UNSIGNED,
+entries_inheriting BOOLEAN NOT NULL,
+UNIQUE KEY uk_acl_object_identity (object_id_class, object_id_identity),
+CONSTRAINT fk_acl_object_identity_parent FOREIGN KEY (parent_object) REFERENCES acl_object_identity (id),
+CONSTRAINT fk_acl_object_identity_class FOREIGN KEY (object_id_class) REFERENCES acl_class (id),
+CONSTRAINT fk_acl_object_identity_owner FOREIGN KEY (owner_sid) REFERENCES acl_sid (id)
 ) ENGINE=InnoDB;
 
 CREATE TABLE acl_entry (
-	id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	acl_object_identity BIGINT UNSIGNED NOT NULL,
-	ace_order INTEGER NOT NULL,
-	sid BIGINT UNSIGNED NOT NULL,
-	mask INTEGER UNSIGNED NOT NULL,
-	granting BOOLEAN NOT NULL,
-	audit_success BOOLEAN NOT NULL,
-	audit_failure BOOLEAN NOT NULL,
-	UNIQUE KEY unique_acl_entry (acl_object_identity, ace_order),
-	CONSTRAINT fk_acl_entry_object FOREIGN KEY (acl_object_identity) REFERENCES acl_object_identity (id),
-	CONSTRAINT fk_acl_entry_acl FOREIGN KEY (sid) REFERENCES acl_sid (id)
+id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+acl_object_identity BIGINT UNSIGNED NOT NULL,
+ace_order INTEGER NOT NULL,
+sid BIGINT UNSIGNED NOT NULL,
+mask INTEGER UNSIGNED NOT NULL,
+granting BOOLEAN NOT NULL,
+audit_success BOOLEAN NOT NULL,
+audit_failure BOOLEAN NOT NULL,
+UNIQUE KEY unique_acl_entry (acl_object_identity, ace_order),
+CONSTRAINT fk_acl_entry_object FOREIGN KEY (acl_object_identity) REFERENCES acl_object_identity (id),
+CONSTRAINT fk_acl_entry_acl FOREIGN KEY (sid) REFERENCES acl_sid (id)
 ) ENGINE=InnoDB;
 
+INSERT INTO acl_sid (id, principal, sid) VALUES
+(1, 1, 'xi@g.com');
+
 INSERT INTO acl_class (id, class) VALUES
-  (1, 'com.khal.intern_survey.entity.Questionnaire');
+(1, 'com.khal.intern_survey.entity.Questionnaire');
   
- INSERT INTO acl_object_identity 
-  (id, object_id_class, object_id_identity, 
-  parent_object, owner_sid, entries_inheriting) 
-  VALUES
-  (1, 1, 1, NULL, 3, 0),
-  (2, 1, 2, NULL, 3, 0),
-  (3, 1, 3, NULL, 3, 0);
+INSERT INTO acl_object_identity 
+(id, object_id_class, object_id_identity, 
+parent_object, owner_sid, entries_inheriting) 
+VALUES
+(1, 1, 1, NULL, 1, 0);
+  
+INSERT INTO acl_entry 
+(id, acl_object_identity, ace_order, 
+sid, mask, granting, audit_success, audit_failure) 
+VALUES
+(1, 1, 0, 1, 1, 1, 0, 0);
+  

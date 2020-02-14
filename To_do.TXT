@@ -2,9 +2,7 @@ To do:
 
 survey form (at least part of it)
 
-oiladmin option to add units and coordinators
-
-role admin privileges to accept the survey (change db field to accepted 0/1 value possibly)
+oiladmin option to add units and coordinators maybe wards names
 
 template to show results
 
@@ -12,7 +10,9 @@ Cron operation to delete expired tokens (baeldung)
 
 deal with null pointer ex error when user not logged in
 
-add acl
+remove delete permission for admin after accepting quest?
+
+
 
 
 

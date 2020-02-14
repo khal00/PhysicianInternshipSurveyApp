@@ -3,7 +3,6 @@ package com.khal.intern_survey.config;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.cache.ehcache.EhCacheFactoryBean;
 import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +23,6 @@ import org.springframework.security.acls.model.PermissionGrantingStrategy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Configuration
-@EnableAutoConfiguration
 public class ACLContext {
 
     @Autowired
@@ -74,7 +72,12 @@ public class ACLContext {
 
     @Bean
     public JdbcMutableAclService aclService() {
-        return new JdbcMutableAclService(dataSource, lookupStrategy(), aclCache());
+    	
+    	JdbcMutableAclService jdbcMutableAclService = new JdbcMutableAclService(dataSource, lookupStrategy(), aclCache());
+    	jdbcMutableAclService.setClassIdentityQuery("SELECT @@IDENTITY");
+    	jdbcMutableAclService.setSidIdentityQuery("SELECT @@IDENTITY");
+    	
+        return jdbcMutableAclService;
     }
 
 }
