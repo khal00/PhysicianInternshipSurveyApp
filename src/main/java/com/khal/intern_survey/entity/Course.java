@@ -41,6 +41,8 @@ public class Course {
 	
 	private double rating;
 	
+	private boolean disabled;
+	
 	@ManyToOne
 	@JoinColumn(name = "questionnaire_id")
 	private Questionnaire questionnaire;

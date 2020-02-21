@@ -20,6 +20,7 @@ import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.jpa.repository.Query;
@@ -30,7 +31,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -82,6 +85,13 @@ public class SurveyController {
 	@Autowired
 	CourseService courseService;
 	
+	@InitBinder
+	public void initBinder(WebDataBinder dataBinder) {
+		
+		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+	}
+	
 	@GetMapping("/showQuestListForUser")
 	public String showAllQuestionnaires(Principal principal, Model theModel) {
 		
@@ -89,7 +99,7 @@ public class SurveyController {
 		User user = userService.findByEmail(principal.getName());
 		List<Questionnaire> questionnaires = user.getQuestionnaires();
 		
-		Comparator<Questionnaire> comparator = (quest1, quest2) -> quest1.getCreateTime().compareTo(quest2.getCreateTime());
+		Comparator<Questionnaire> comparator = (quest1, quest2) -> quest1.getId().compareTo(quest2.getId());
 		questionnaires.sort(comparator);
 		
 		theModel.addAttribute("questionnaires", questionnaires);

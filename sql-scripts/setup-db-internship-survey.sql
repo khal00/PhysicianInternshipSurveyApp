@@ -171,8 +171,8 @@ INSERT INTO `questionnaires`(id, status, user_id, create_time, coordinator_ratin
 CREATE TABLE `internship_section` (
 id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
 name VARCHAR(45),
-tutor_name VARCHAR(40),
-unit_name VARCHAR(40),
+tutor_name VARCHAR(40) DEFAULT NULL,
+unit_name VARCHAR(40) DEFAULT NULL,
 tutor TINYINT DEFAULT 0,
 unit TINYINT DEFAULT 0,
 number_of_procedures TINYINT DEFAULT 0,
@@ -184,6 +184,7 @@ ward TINYINT DEFAULT 0,
 clinic TINYINT DEFAULT 0,
 rating DECIMAL(5,4),
 questionnaire_id BIGINT UNSIGNED NOT NULL,
+disabled BOOLEAN DEFAULT FALSE,
 PRIMARY KEY (`id`),
 CONSTRAINT `section_quest_id_ibfk` FOREIGN KEY (`questionnaire_id`) REFERENCES `questionnaires`(`id`)
 ON DELETE CASCADE ON UPDATE CASCADE
@@ -192,14 +193,15 @@ ON DELETE CASCADE ON UPDATE CASCADE
 CREATE TABLE `course` (
 id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
 name VARCHAR(30),
-tutor_name VARCHAR(40),
-unit_name VARCHAR(40),
+tutor_name VARCHAR(40) DEFAULT NULL,
+unit_name VARCHAR(40) DEFAULT NULL,
 tutor TINYINT DEFAULT 0,
 unit TINYINT DEFAULT 0,
 theoretical_knowledge TINYINT DEFAULT 0,
 practical_knowledge TINYINT DEFAULT 0,
 rating DECIMAL(5,4),
 questionnaire_id BIGINT UNSIGNED NOT NULL,
+disabled BOOLEAN DEFAULT FALSE,
 PRIMARY KEY (`id`),
 CONSTRAINT `course_quest_id_ibfk` FOREIGN KEY (`questionnaire_id`) REFERENCES `questionnaires`(`id`)
 ON DELETE CASCADE ON UPDATE CASCADE
