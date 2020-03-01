@@ -1,0 +1,38 @@
+select avg(NULLIF(section_columns,0)) as sec_avg from 
+(select tutor as section_columns from internship_section where name='Psychiatry' 
+union all select unit from internship_section where name='Psychiatry' 
+union all select number_of_procedures from internship_section where name='Psychiatry' 
+union all select procedures_autonomy from internship_section where name='Psychiatry' 
+union all select theoretical_knowledge from internship_section where name='Psychiatry'
+union all select practical_knowledge from internship_section where name='Psychiatry'
+union all select medical_duty from internship_section where name='Psychiatry'
+union all select ward from internship_section where name='Psychiatry'
+union all select clinic from internship_section where name='Psychiatry'
+) quest_avg;
+
+
+		double sum = questionnaire.getCoordinator();
+		int divider = 1;
+		
+		for(InternshipSection section : questionnaire.getSections()) {
+			
+			System.out.print(section.getName().getName() + " rating: ");
+			if (!section.isDisabled()) {
+				
+				double rating = questionnaireService.getSectionRating(section.getName().getName(), questionnaire.getId());
+				sum += rating;
+				divider++;
+				
+				System.out.println(questionnaireService.getSectionRating(section.getName().getName(), questionnaire.getId()));
+				
+			} else {
+				System.out.println(0);
+			}
+		}
+		
+		System.out.println("sum " + sum);
+		System.out.println("divider " + divider);
+		
+		if (divider > 0) {
+			System.out.println("total rating: " + sum / divider);
+		}

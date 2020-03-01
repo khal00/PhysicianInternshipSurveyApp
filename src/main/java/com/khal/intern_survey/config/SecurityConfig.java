@@ -34,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //			.antMatchers("/").anonymous()
 			.antMatchers("/admin/**").hasRole("ADMIN")
 			.antMatchers("/chamber/**").hasRole("MEDICALCHAMBERADMIN")
+			.antMatchers("/showUserPanel/**").hasAnyRole("USER", "MEDICALCHAMBERADMIN", "ADMIN")
 			.antMatchers("/user/**").hasAnyRole("USER", "MEDICALCHAMBERADMIN", "ADMIN")
 			.antMatchers("/survey/**").hasRole("USER")
 			.antMatchers("/updatePassword*").hasAuthority("CHANGE_PASSWORD_PRIVILEGE")

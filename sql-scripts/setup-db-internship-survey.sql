@@ -133,10 +133,10 @@ PRIMARY KEY (`id`)
 ) ENGINE=InnoDB;
 
 INSERT INTO `internship_unit` VALUES
-(1,'Samodzielny Publiczny Szpital Kliniczny Nr 1 w Szczecinie','SZCZECIN'),
-(2,'SPSK Nr 2 w Szczecinie','SZCZECIN'),
-(3,'ZOZ MSWIA w Warszawie','WARSZAWA'),
-(4,'111 Szpital Wojskowy w Poznaniu','POZNAN');
+(1,'Samodzielny Publiczny Szpital Kliniczny Nr 1 w Szczecinie','OIL w Szczecinie'),
+(2,'SPSK Nr 2 w Szczecinie','OIL w Szczecinie'),
+(3,'ZOZ MSWIA w Warszawie','OIL w Warszawie'),
+(4,'111 Szpital Wojskowy w Poznaniu','WIL w Poznaniu');
 
 
 CREATE TABLE `questionnaires` (
@@ -148,8 +148,8 @@ CREATE TABLE `questionnaires` (
 `create_time` timestamp NOT NULL,
 `send_date` date,
 `verification_id` varchar(36),
-`coordinator` varchar(40),
-`coordinator_rating` tinyint unsigned,
+`coordinator_name` varchar(40),
+`coordinator` tinyint unsigned,
 PRIMARY KEY (`id`),
 KEY (`create_time`),
 KEY (`unit_id`),

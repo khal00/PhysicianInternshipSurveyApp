@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.khal.intern_survey.DTO.MedicalChamberEnum;
 import com.khal.intern_survey.dao.InternshipUnitRepository;
 import com.khal.intern_survey.entity.InternshipUnit;
 
@@ -28,7 +29,7 @@ public class InternshipUnitServiceImpl implements InternshipUnitService {
 	}
 
 	@Override
-	public List<InternshipUnit> findByMedicalChamber(String medicalChamber) {
+	public List<InternshipUnit> findByMedicalChamber(MedicalChamberEnum medicalChamber) {
 		
 		List<InternshipUnit> units = internshipUnitRepository.findByMedicalChamberOrderByNameAsc(medicalChamber);
 		return units;

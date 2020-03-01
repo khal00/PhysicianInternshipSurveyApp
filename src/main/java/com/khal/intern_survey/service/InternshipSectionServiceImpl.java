@@ -23,13 +23,19 @@ public class InternshipSectionServiceImpl implements InternshipSectionService {
 	}
 	
 	@Override
-	public void createAllSections(Questionnaire questionnaire) {
+	public void createQuestionnaireSections(Questionnaire questionnaire) {
 		
 		for(InternshipSectionsEnum sectionName : InternshipSectionsEnum.values()) {
 			InternshipSection section = new InternshipSection(sectionName, questionnaire);
 			sectionRepository.save(section);
 		}
 		
+	}
+
+	@Override
+	public double calculateSectionAvg(String sectionName, Long questionnaireId) {
+		
+		return sectionRepository.calculateSectionAvg(sectionName, questionnaireId);
 	}
 
 }

@@ -7,6 +7,8 @@ public interface InternshipSectionService {
 	
 	public void saveSection(InternshipSection section);
 	
-	public void createAllSections(Questionnaire questionnaire);
+	public void createQuestionnaireSections(Questionnaire questionnaire);
+	
+	double calculateSectionAvg(String sectionName, Long questionnaireId);
 
 }

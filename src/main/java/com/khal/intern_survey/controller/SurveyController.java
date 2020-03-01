@@ -121,7 +121,7 @@ public class SurveyController {
 		
 		long questId = questionnaire.getId();
 		
-		sectionService.createAllSections(questionnaire);
+		sectionService.createQuestionnaireSections(questionnaire);
 		courseService.createAllCourses(questionnaire);
 				
 		return "redirect:/survey/showQuestionnaire/" + questId;
@@ -140,7 +140,7 @@ public class SurveyController {
 		if (medicalChamber == null) {
 			units = internshipUnitService.findAll();
 		} else {
-			units = internshipUnitService.findByMedicalChamber(medicalChamber.toString());
+			units = internshipUnitService.findByMedicalChamber(medicalChamber);
 		}
 		
 		if (!theModel.containsAttribute("questionnaire")) {
@@ -164,7 +164,7 @@ public class SurveyController {
 	@PostMapping(value = "/saveQuestionnaire", params = "action=save")
 	public String saveQuestionnaire(@ModelAttribute ("questionnaire") Questionnaire questionnaire
 			, Principal principal) {
-		
+				
 		setMedicalChamberDependingOnSelectedUnit(questionnaire);
 		
 		questionnaireService.saveQuestionnaire(questionnaire);
@@ -252,7 +252,7 @@ public class SurveyController {
 	
 	// Re-send units list if user changed medical chamber
 	@GetMapping("/unitSearch/{id}")
-	public String searchUnitByMedicalChamber(Model theModel, @RequestParam (value = "chamberSelected") String chamberSelected
+	public String searchUnitByMedicalChamber(Model theModel, @RequestParam (value = "chamberSelected") MedicalChamberEnum chamberSelected
 			, @PathVariable ("id") long id) {
 		
 		List<InternshipUnit> units = internshipUnitService.findByMedicalChamber(chamberSelected);
@@ -269,9 +269,9 @@ public class SurveyController {
 		if (questionnaire.getMedicalChamber() == null && questionnaire.getUnit() != null) {
 			
 			InternshipUnit unit = questionnaire.getUnit();
-			MedicalChamberEnum chamber = MedicalChamberEnum.valueOf(unit.getMedicalChamber());
+			MedicalChamberEnum chamber = unit.getMedicalChamber();
 			questionnaire.setMedicalChamber(chamber);
 		}
-	}	
+	}
 	
 }

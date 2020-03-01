@@ -2,6 +2,7 @@ package com.khal.intern_survey.service;
 
 import java.util.List;
 
+import com.khal.intern_survey.DTO.MedicalChamberEnum;
 import com.khal.intern_survey.entity.InternshipUnit;
 
 public interface InternshipUnitService {
@@ -10,6 +11,6 @@ public interface InternshipUnitService {
 	
 	public List<InternshipUnit> findAll();
 	
-	public List<InternshipUnit> findByMedicalChamber(String medicalChamber);
+	public List<InternshipUnit> findByMedicalChamber(MedicalChamberEnum medicalChamber);
 
 }

@@ -1,16 +1,18 @@
 To do:
 
-survey form (at least part of it)
+finish pdf
+
+template to show results (with rest api and microservices)
 
 oiladmin option to add units and coordinators maybe wards names
-
-template to show results
 
 Cron operation to delete expired tokens (baeldung)
 
 deal with null pointer ex error when user not logged in
 
 remove delete permission for admin after accepting quest?
+
+remove rating field in section and course
 
 
 

@@ -14,12 +14,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.khal.intern_survey.DTO.MedicalChamberEnum;
+import com.khal.intern_survey.service.InternshipSectionService;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,7 +34,6 @@ import lombok.Setter;
 @Table(name = "questionnaires")
 public class Questionnaire {
 	
-
 	@Getter @AllArgsConstructor
 	public enum Status{
 		DRAFT("Draft"), SENT("Sent"), ACCEPTED("Accepted");
@@ -67,9 +69,9 @@ public class Questionnaire {
 	
 	private LocalDate sendDate;
 	
-	private String Coordinator;
+	private String coordinatorName;
 	
-	private int coordinatorRating;
+	private int coordinator;
 
 	public Questionnaire(Long id, User user, LocalDateTime createTime) {
 		this.id = id;
@@ -77,4 +79,5 @@ public class Questionnaire {
 		this.user = user;
 		this.createTime = createTime;
 	}
+	
 }

@@ -9,4 +9,6 @@ public interface CourseService {
 
 	public void createAllCourses(Questionnaire questionnaire);
 
+	double calculateCourseAvg(String courseName, Long questionnaireId);
+
 }

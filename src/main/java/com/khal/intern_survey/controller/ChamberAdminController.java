@@ -38,23 +38,49 @@ public class ChamberAdminController {
 		
 		User adminUser = userService.findByEmail(principal.getName());
 		
-		List<Questionnaire> questionnaires = questionnaireService.findByStatusAndMedicalChamber(adminUser);
+		List<Questionnaire> questionnaires = questionnaireService.findAllSentQuestionnairesByMedicalChamber(adminUser);
 		
 		theModel.addAttribute("questionnaires", questionnaires);
 		
-		return "admin_questionnaires_list";
+		return "questionnaires_for_acceptance";
 	}
 	
-	@GetMapping("/searchQuestListByVerificationId")
-	public String searchQuestListByVerificationId(Principal principal, Model theModel, @RequestParam (value = "verId") String verId) {
+	@GetMapping("/showQuestListAccepted")
+	public String showAcceptedQuestionnaires(Principal principal, Model theModel) {
+		
+		User adminUser = userService.findByEmail(principal.getName());
+		MedicalChamberEnum medicalChamber = adminUser.getAdminPersonalData().getMedicalChamber();
+		
+		List<Questionnaire> questionnaires = questionnaireService.findAllAcceptedQuestionnairesByMedicalChamber(medicalChamber);
+		
+		theModel.addAttribute("questionnaires", questionnaires);
+		
+		return "questionnaires_accepted";
+	}
+	
+	@GetMapping(value = "/searchQuestListByVerificationId")
+	public String searchQuestListByVerificationId(Principal principal, Model theModel, @RequestParam (value = "verId") String verId
+			, @RequestParam (value = "returnedQuestStatus") String returnedQuestionnaireStatus) {
 		
 		User adminUser = userService.findByEmail(principal.getName());
 		
-		List<Questionnaire> questionnaires = questionnaireService.searchByVerificationId(adminUser, verId);
+		if(returnedQuestionnaireStatus.equals("sent")) {
+			List<Questionnaire> questionnaires = questionnaireService.searchByVerificationId(adminUser, verId, Status.SENT);
+			
+			theModel.addAttribute("questionnaires", questionnaires);
+			
+			return "questionnaires_for_acceptance";
+		}
 		
-		theModel.addAttribute("questionnaires", questionnaires);
+		else {
+			List<Questionnaire> questionnaires = questionnaireService.searchByVerificationId(adminUser, verId, Status.ACCEPTED);
+			
+			theModel.addAttribute("questionnaires", questionnaires);
+			
+			return "questionnaires_accepted";
+			
+		}
 		
-		return "admin_questionnaires_list";
 	}
 	
 	@GetMapping("/showQuestionnaire/{id}")
@@ -66,7 +92,7 @@ public class ChamberAdminController {
 		
 		MedicalChamberEnum medicalChamber = questionnaire.getMedicalChamber();
 		
-		units = internshipUnitService.findByMedicalChamber(medicalChamber.toString());
+		units = internshipUnitService.findByMedicalChamber(medicalChamber);
 		
 		if (!theModel.containsAttribute("questionnaire")) {
 			theModel.addAttribute("questionnaire", questionnaire);

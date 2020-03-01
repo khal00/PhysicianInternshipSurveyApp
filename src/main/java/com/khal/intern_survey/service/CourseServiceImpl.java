@@ -28,8 +28,13 @@ public class CourseServiceImpl implements CourseService {
 		for(CourseEnum courseName : CourseEnum.values()) {
 			Course course = new Course(courseName, questionnaire);
 			courseRepository.save(course);
-		}
+		}		
+	}
+	
+	@Override
+	public double calculateCourseAvg(String courseName, Long questionnaireId) {
 		
+		return courseRepository.calculateCourseAvg(courseName, questionnaireId);
 	}
 	
 }

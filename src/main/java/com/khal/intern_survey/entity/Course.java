@@ -69,15 +69,16 @@ public class Course {
 	public double calculateRating() {
 		int divider = DIVIDERTOTAL;
 		
-		if (tutor == 0) divider--;
-		if (unit == 0) divider--;
-		if (theoreticalKnowledge == 0) divider--;
-		if (practicalKnowledge == 0) divider--;
+//		Below code is in case rating fields in questionnaire form are not required
+//		if (tutor == 0) divider--;
+//		if (unit == 0) divider--;
+//		if (theoreticalKnowledge == 0) divider--;
+//		if (practicalKnowledge == 0) divider--;
 		
 		int sum = tutor + unit + theoreticalKnowledge
 				+ practicalKnowledge;
 		
-		if(divider > 0) {
+		if(!disabled) {
 			double result = (double) sum / divider;
 			this.rating = result;
 		}

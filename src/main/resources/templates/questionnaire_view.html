@@ -49,199 +49,48 @@
 	
 	<script>
 	    $(document).ready(function(){
-	        $('#InternalMedNotRequired').click(function(){
-	            if($(this).prop("checked") == true){
-	            	$('#InternalMedSection').addClass('d-none');
-	            	$("[type='number'][id*='InternalMed']").prop('required', false);
-	            	$("[type='number'][id*='InternalMed']").prop('min', 0);
-	            	$("[type='number'][id*='InternalMed']").prop('value', 0);
-	            	$("[type='text'][id*='InternalMed']").prop('value', '');
+	    	
+	    	$('input[type=checkbox]').click(function(){
+	    		var sectionName;
+	    		switch(this.id){
+	    		case 'InternalMedNotRequired': sectionName = 'InternalMed';
+	    		break;
+	    		case 'TransfusiologyNotRequired': sectionName = 'Transfusiology';
+	    		break;
+	    		case 'HivNotRequired': sectionName = 'Hiv';
+	    		break;
+	    		case 'PediatricsNotRequired': sectionName = 'Pediatrics';
+	    		break;
+	    		case 'GeneralSurgeryNotRequired': sectionName = 'GeneralSurgery';
+	    		break;
+	    		case 'ObstericsAndGynNotRequired': sectionName = 'ObstericsAndGyn';
+	    		break;
+	    		case 'AnesthesiologyNotRequired': sectionName = 'Anesthesiology';
+	    		break;
+	    		case 'EmergencyNotRequired': sectionName = 'Emergency';
+	    		break;
+	    		case 'PsychiatryNotRequired': sectionName = 'Psychiatry';
+	    		break;
+	    		case 'FamilyMedNotRequired': sectionName = 'FamilyMed';
+	    		break;
+	    		case 'CertificationNotRequired': sectionName = 'Certification';
+	    		break;
+	    		case 'BioethicsNotRequired': sectionName = 'Bioethics';
+	    		break;
+	    		case 'LawNotRequired': sectionName = 'Law';
+	    		}
+	    		if($(this).prop("checked") == true){
+	            	$('#' + sectionName + 'Section').addClass('d-none');
+	            	$("[type='number'][id*=sectionName]").prop('required', false);
+	            	$("[type='number'][id*=sectionName]").prop('min', 0);
+	            	$("[type='number'][id*=sectionName]").prop('value', 0);
+	            	$("[type='text'][id*=sectionName]").prop('value', '');
 	            }
 	            else if($(this).prop("checked") == false){
-	            	$('#InternalMedSection').removeClass('d-none');
-	            	$("[type='number'][id*='InternalMed']").prop('min', 1);
-	            	$("[type='number'][id*='InternalMed']").prop('required', true);	            	
-	            }
-	        });
-	        
-	        $('#TransfusiologyNotRequired').click(function(){
-	            if($(this).prop("checked") == true){
-	            	$('#TransfusiologySection').addClass('d-none');
-	            	$("[type='number'][id*='Transfusiology']").prop('required', false);
-	            	$("[type='number'][id*='Transfusiology']").prop('min', 0);
-	            	$("[type='number'][id*='Transfusiology']").prop('value', 0);
-	            	$("[type='text'][id*='Transfusiology']").prop('value', '');
-	            }
-	            else if($(this).prop("checked") == false){
-	            	$('#TransfusiologySection').removeClass('d-none');
-	            	$("[type='number'][id*='Transfusiology']").prop('min', 1);
-	            	$("[type='number'][id*='Transfusiology']").prop('required', true);
-	            }
-	        });
-	        
-	        $('#HivNotRequired').click(function(){
-	            if($(this).prop("checked") == true){
-	            	$('#HivSection').addClass('d-none');
-	            	$("[type='number'][id*='Hiv']").prop('required', false);
-	            	$("[type='number'][id*='Hiv']").prop('min', 0);
-	            	$("[type='number'][id*='Hiv']").prop('value', 0);
-	            	$("[type='text'][id*='Hiv']").prop('value', '');
-	            }
-	            else if($(this).prop("checked") == false){
-	            	$('#HivSection').removeClass('d-none');
-	            	$("[type='number'][id*='Hiv']").prop('min', 1);
-	            	$("[type='number'][id*='Hiv']").prop('required', true);
-	            }
-	        });
-	        
-	        $('#PediatricsNotRequired').click(function(){
-	            if($(this).prop("checked") == true){
-	            	$('#PediatricsSection').addClass('d-none');
-	            	$("[type='number'][id*='Pediatrics']").prop('required', false);
-	            	$("[type='number'][id*='Pediatrics']").prop('min', 0);
-	            	$("[type='number'][id*='Pediatrics']").prop('value', 0);
-	            	$("[type='text'][id*='Pediatrics']").prop('value', '');
-	            }
-	            else if($(this).prop("checked") == false){
-	            	$('#PediatricsSection').removeClass('d-none');
-	            	$("[type='number'][id*='Pediatrics']").prop('min', 1);
-	            	$("[type='number'][id*='Pediatrics']").prop('required', true);
-	            }
-	        });
-	        
-	        $('#GeneralSurgeryNotRequired').click(function(){
-	            if($(this).prop("checked") == true){
-	            	$('#GeneralSurgerySection').addClass('d-none');
-	            	$("[type='number'][id*='GeneralSurgery']").prop('required', false);
-	            	$("[type='number'][id*='GeneralSurgery']").prop('min', 0);
-	            	$("[type='number'][id*='GeneralSurgery']").prop('value', 0);
-	            	$("[type='text'][id*='GeneralSurgery']").prop('value', '');
-	            }
-	            else if($(this).prop("checked") == false){
-	            	$('#GeneralSurgerySection').removeClass('d-none');
-	            	$("[type='number'][id*='GeneralSurgery']").prop('min', 1);
-	            	$("[type='number'][id*='GeneralSurgery']").prop('required', true);
-	            }
-	        });
-	        
-	        $('#ObstericsAndGynNotRequired').click(function(){
-	            if($(this).prop("checked") == true){
-	            	$('#ObstericsAndGynSection').addClass('d-none');
-	            	$("[type='number'][id*='ObstericsAndGyn']").prop('required', false);
-	            	$("[type='number'][id*='ObstericsAndGyn']").prop('min', 0);
-	            	$("[type='number'][id*='ObstericsAndGyn']").prop('value', 0);
-	            	$("[type='text'][id*='ObstericsAndGyn']").prop('value', '');
-	            }
-	            else if($(this).prop("checked") == false){
-	            	$('#ObstericsAndGynSection').removeClass('d-none');
-	            	$("[type='number'][id*='ObstericsAndGyn']").prop('min', 1);
-	            	$("[type='number'][id*='ObstericsAndGyn']").prop('required', true);
-	            }
-	        });
-	        
-	        $('#AnesthesiologyNotRequired').click(function(){
-	            if($(this).prop("checked") == true){
-	            	$('#AnesthesiologySection').addClass('d-none');
-	            	$("[type='number'][id*='Anesthesiology']").prop('required', false);
-	            	$("[type='number'][id*='Anesthesiology']").prop('min', 0);
-	            	$("[type='number'][id*='Anesthesiology']").prop('value', 0);
-	            	$("[type='text'][id*='Anesthesiology']").prop('value', '');
-	            }
-	            else if($(this).prop("checked") == false){
-	            	$('#AnesthesiologySection').removeClass('d-none');
-	            	$("[type='number'][id*='Anesthesiology']").prop('min', 1);
-	            	$("[type='number'][id*='Anesthesiology']").prop('required', true);
-	            }
-	        });
-	        
-	        $('#EmergencyNotRequired').click(function(){
-	            if($(this).prop("checked") == true){
-	            	$('#EmergencySection').addClass('d-none');
-	            	$("[type='number'][id*='Emergency']").prop('required', false);
-	            	$("[type='number'][id*='Emergency']").prop('min', 0);
-	            	$("[type='number'][id*='Emergency']").prop('value', 0);
-	            	$("[type='text'][id*='Emergency']").prop('value', '');
-	            }
-	            else if($(this).prop("checked") == false){
-	            	$('#EmergencySection').removeClass('d-none');
-	            	$("[type='number'][id*='Emergency']").prop('min', 1);
-	            	$("[type='number'][id*='Emergency']").prop('required', true);
-	            }
-	        });
-	        
-	        $('#PsychiatryNotRequired').click(function(){
-	            if($(this).prop("checked") == true){
-	            	$('#PsychiatrySection').addClass('d-none');
-	            	$("[type='number'][id*='Psychiatry']").prop('required', false);
-	            	$("[type='number'][id*='Psychiatry']").prop('min', 0);
-	            	$("[type='number'][id*='Psychiatry']").prop('value', 0);
-	            	$("[type='text'][id*='Psychiatry']").prop('value', '');
-	            }
-	            else if($(this).prop("checked") == false){
-	            	$('#PsychiatrySection').removeClass('d-none');
-	            	$("[type='number'][id*='Psychiatry']").prop('min', 1);
-	            	$("[type='number'][id*='Psychiatry']").prop('required', true);
-	            }
-	        });
-	        
-	        $('#FamilyMedNotRequired').click(function(){
-	            if($(this).prop("checked") == true){
-	            	$('#FamilyMedSection').addClass('d-none');
-	            	$("[type='number'][id*='FamilyMed']").prop('required', false);
-	            	$("[type='number'][id*='FamilyMed']").prop('min', 0);
-	            	$("[type='number'][id*='FamilyMed']").prop('value', 0);
-	            	$("[type='text'][id*='FamilyMed']").prop('value', '');
-	            }
-	            else if($(this).prop("checked") == false){
-	            	$('#FamilyMedSection').removeClass('d-none');
-	            	$("[type='number'][id*='FamilyMed']").prop('min', 1);
-	            	$("[type='number'][id*='FamilyMed']").prop('required', true);
-	            }
-	        });	        
-	        
-	        $('#CertificationNotRequired').click(function(){
-	            if($(this).prop("checked") == true){
-	            	$('#CertificationSection').addClass('d-none');
-	            	$("[type='number'][id*='Certification']").prop('required', false);
-	            	$("[type='number'][id*='Certification']").prop('min', 0);
-	            	$("[type='number'][id*='Certification']").prop('value', 0);
-	            	$("[type='text'][id*='Certification']").prop('value', '');
-	            }
-	            else if($(this).prop("checked") == false){
-	            	$('#CertificationSection').removeClass('d-none');
-	            	$("[type='number'][id*='Certification']").prop('min', 1);
-	            	$("[type='number'][id*='Certification']").prop('required', true);
-	            }
-	        });
-	        
-	        $('#BioethicsNotRequired').click(function(){
-	            if($(this).prop("checked") == true){
-	            	$('#BioethicsSection').addClass('d-none');
-	            	$("[type='number'][id*='Bioethics']").prop('required', false);
-	            	$("[type='number'][id*='Bioethics']").prop('min', 0);
-	            	$("[type='number'][id*='Bioethics']").prop('value', 0);
-	            	$("[type='text'][id*='Bioethics']").prop('value', '');
-	            }
-	            else if($(this).prop("checked") == false){
-	            	$('#BioethicsSection').removeClass('d-none');
-	            	$("[type='number'][id*='Bioethics']").prop('min', 1);
-	            	$("[type='number'][id*='Bioethics']").prop('required', true);
-	            }
-	        });
-	        
-	        $('#LawNotRequired').click(function(){
-	            if($(this).prop("checked") == true){
-	            	$('#LawSection').addClass('d-none');
-	            	$("[type='number'][id*='Law']").prop('required', false);
-	            	$("[type='number'][id*='Law']").prop('min', 0);
-	            	$("[type='number'][id*='Law']").prop('value', 0);
-	            	$("[type='text'][id*='Law']").prop('value', '');
-	            }
-	            else if($(this).prop("checked") == false){
-	            	$('#LawSection').removeClass('d-none');
-	            	$("[type='number'][id*='Law']").prop('min', 1);
-	            	$("[type='number'][id*='Law']").prop('required', true);
-	            }
+	            	$('#' + sectionName + 'Section').removeClass('d-none');
+	            	$("[type='number'][id*=sectionName]").prop('min', 1);
+	            	$("[type='number'][id*=sectionName]").prop('required', true);	            	
+	            }	    		
 	        });
 	        
 	    });
@@ -283,6 +132,7 @@
 					<input type="hidden" th:field="*{courses}"/>
 					
 					<div class="rounded mx-auto px-4 py-3 trans-container">
+					
 					<!-- Medical Chamber -->
 						<div class="form-group">
 							<label for="medicalChamberSelect"
@@ -317,7 +167,7 @@
 						<div class="form-row">			
 							<div class="form-group col-sm-8 col-xl-10">
 								<label for="CoordinatorInput" th:text="#{questionnaire.coordinator}"></label>
-								<input type="text" id="CoordinatorInput" th:field="*{coordinator}" placeholder="coordinator name"
+								<input type="text" id="CoordinatorInput" th:field="*{coordinatorName}" placeholder="coordinator name"
 								th:attr="placeholder=#{questionnaire.coordinatorAndTutorName}" class="form-control" 
 								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
 								<div class="invalid-feedback" th:text="#{questionnaire.required}"></div>	
@@ -331,7 +181,7 @@
 									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107; font-size: 0.9rem"></i>
 								</a>
 								
-								<input type="number" min="1" max="6" step="1" value="0" id="coordinatorRatingInput" th:field="*{coordinatorRating}" class="form-control rate-input"
+								<input type="number" min="1" max="6" step="1" value="0" id="coordinatorRatingInput" th:field="*{coordinator}" class="form-control rate-input"
 								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}" required>
 								<div class="invalid-feedback" th:text="#{questionnaire.requiredRange}"></div>
 							</div>

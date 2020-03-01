@@ -10,11 +10,13 @@
 <style>
 
 .panel-button {
-	min-width: 150px !important;
+	font-size: 0.8rem;
+	min-width: 100px !important;
 }
 
 @media (min-width: 576px) {
 	.panel-button{
+		font-size: 1rem;
 		min-width: 350px !important;
 	}
 }
@@ -42,11 +44,11 @@
 		</section>
 
 		<div class="row">
-			<div class="mx-auto rounded p-3 trans-container">
+			<div class="mx-auto rounded p-0 py-3 p-sm-4 trans-container">
 				<div class="mx-auto text-center text-light mb-3">
 					<h1 class="h5" th:text="#{userPanel.actions}">Available actions:</h1>
 				</div>
-				<section sec:authorize="hasRole('ROLE_USER')" class="mx-auto m-2">
+				<section sec:authorize="hasRole('ROLE_USER')" class="mx-auto m-3">
 					<div class="col-9 col-sm-7 col-md-10 col-lg-8 col-xl-6">
 						<form th:action="@{/survey/showQuestListForUser}">
 							<button type="submit" class="btn btn-outline-light btn-lg panel-button" th:text="#{userPanel.showQuestForUserBtn}"></button>
@@ -55,9 +57,16 @@
 				</section>
 				
 				<section sec:authorize="hasRole('ROLE_MEDICALCHAMBERADMIN')" class="mx-auto m-3">
-					<div class="col-9 col-sm-7 col-md-10 col-lg-8 col-xl-6">
+				
+					<div class="col-9 col-sm-7 col-md-10 col-lg-8 col-xl-6 my-3">
 						<form th:action="@{/chamber/showQuestListForAcceptance}">
 							<button type="submit" class="btn btn-outline-light btn-lg panel-button" th:text="#{userPanel.showQuestListForAcceptanceBtn}"></button>
+						</form>
+					</div>
+					
+					<div class="col-9 col-sm-7 col-md-10 col-lg-8 col-xl-6 my-3">
+						<form th:action="@{/chamber/showQuestListAccepted}">
+							<button type="submit" class="btn btn-outline-light btn-lg panel-button" th:text="#{userPanel.showQuestListAcceptedBtn}"></button>
 						</form>
 					</div>
 				</section>

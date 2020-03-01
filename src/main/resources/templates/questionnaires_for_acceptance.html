@@ -107,7 +107,7 @@ td {
 							<form class="form-inline text-warning" th:action="@{/chamber/searchQuestListByVerificationId}" method="get">
 								<label for="SearchByVerId" th:text="#{sentQuest.searchLabel}" class="mr-1"></label>
 								<input type="text" id="SearchByVerId" name="verId" class="form-control mx-1">
-								<button class="btn btn-outline-warning ml-1" type="submit" 
+								<button name="returnedQuestStatus" value="sent" class="btn btn-outline-warning ml-1" type="submit" 
 								th:text="#{sentQuest.searchButton}">Search</button>
 							</form>
 						</div>
