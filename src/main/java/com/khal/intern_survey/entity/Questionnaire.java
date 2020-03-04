@@ -21,7 +21,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.khal.intern_survey.DTO.MedicalChamberEnum;
+import com.khal.intern_survey.dto.MedicalChamberEnum;
 import com.khal.intern_survey.service.InternshipSectionService;
 
 import lombok.AllArgsConstructor;

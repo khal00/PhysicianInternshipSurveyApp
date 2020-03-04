@@ -1,4 +1,4 @@
-package com.khal.intern_survey.DTO;
+package com.khal.intern_survey.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

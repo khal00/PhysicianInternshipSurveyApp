@@ -141,7 +141,7 @@
 							<select name="medicalChamber" id="medicalChamberSelect" class="custom-select" onchange="loadUnitSearchResult()"
 							th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}">
 								<option value="" th:selected="selected" th:disabled="disabled" th:text="#{questionnaire.chooseChamber}"></option>
-								<option th:each="chamber : ${T(com.khal.intern_survey.DTO.MedicalChamberEnum).values()}" th:value="${chamber}" th:text="${chamber.name}"
+								<option th:each="chamber : ${T(com.khal.intern_survey.dto.MedicalChamberEnum).values()}" th:value="${chamber}" th:text="${chamber.name}"
 								th:selected="${chamber.name.contains(questionnaire.medicalChamber != null ? questionnaire.medicalChamber.name : 'null')}"></option>
 							</select>
 						</div>

@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.khal.intern_survey.DTO.MedicalChamberEnum;
+import com.khal.intern_survey.dto.MedicalChamberEnum;
 import com.khal.intern_survey.validation.ContactNumberConstraint;
 
 import lombok.AllArgsConstructor;

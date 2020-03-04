@@ -1,4 +1,4 @@
-package com.khal.intern_survey.DTO;
+package com.khal.intern_survey.dto;
 
 import javax.validation.constraints.NotBlank;
 import com.khal.intern_survey.validation.ValidEmail;

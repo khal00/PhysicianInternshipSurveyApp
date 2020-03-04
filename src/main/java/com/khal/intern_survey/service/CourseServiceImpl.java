@@ -1,11 +1,12 @@
 package com.khal.intern_survey.service;
 
+import org.springframework.aop.AopInvocationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.khal.intern_survey.DTO.CourseEnum;
-import com.khal.intern_survey.DTO.InternshipSectionsEnum;
 import com.khal.intern_survey.dao.CourseRepository;
+import com.khal.intern_survey.dto.CourseEnum;
+import com.khal.intern_survey.dto.InternshipSectionsEnum;
 import com.khal.intern_survey.entity.Course;
 import com.khal.intern_survey.entity.InternshipSection;
 import com.khal.intern_survey.entity.Questionnaire;
@@ -34,7 +35,11 @@ public class CourseServiceImpl implements CourseService {
 	@Override
 	public double calculateCourseAvg(String courseName, Long questionnaireId) {
 		
-		return courseRepository.calculateCourseAvg(courseName, questionnaireId);
+		try {
+			return courseRepository.calculateCourseAvg(courseName, questionnaireId);
+		} catch (AopInvocationException e) {
+			return 0;
+		}
 	}
 	
 }

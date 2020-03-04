@@ -7,7 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.khal.intern_survey.DTO.MedicalChamberEnum;
+import com.khal.intern_survey.dto.MedicalChamberEnum;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

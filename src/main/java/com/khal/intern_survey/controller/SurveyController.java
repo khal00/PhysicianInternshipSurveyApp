@@ -42,9 +42,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.khal.intern_survey.DTO.CourseEnum;
-import com.khal.intern_survey.DTO.InternshipSectionsEnum;
-import com.khal.intern_survey.DTO.MedicalChamberEnum;
+import com.khal.intern_survey.dto.CourseEnum;
+import com.khal.intern_survey.dto.InternshipSectionsEnum;
+import com.khal.intern_survey.dto.MedicalChamberEnum;
 import com.khal.intern_survey.entity.Course;
 import com.khal.intern_survey.entity.InternshipSection;
 import com.khal.intern_survey.entity.InternshipUnit;

@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.khal.intern_survey.DTO.InternshipSectionsEnum;
+import com.khal.intern_survey.dto.InternshipSectionsEnum;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

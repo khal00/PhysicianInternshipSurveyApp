@@ -8,7 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
-import com.khal.intern_survey.DTO.CourseEnum;
+import com.khal.intern_survey.dto.CourseEnum;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -3,7 +3,8 @@ package com.khal.intern_survey.dao;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.khal.intern_survey.DTO.MedicalChamberEnum;
+
+import com.khal.intern_survey.dto.MedicalChamberEnum;
 import com.khal.intern_survey.entity.InternshipUnit;
 import com.khal.intern_survey.entity.Questionnaire;
 

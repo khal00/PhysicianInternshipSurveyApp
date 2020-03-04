@@ -9,6 +9,9 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import com.khal.intern_survey.rest.CourseRating;
+import com.khal.intern_survey.rest.SectionRating;
+import com.khal.intern_survey.rest.UnitRating;
 
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 
@@ -44,5 +47,22 @@ public class MvcConfig implements WebMvcConfigurer {
 		return new File("src/main/resources/static/font/AbhayaLibre-Regular.ttf");
 	}
 	
+	@Bean
+	UnitRating unitRating() {
+		UnitRating unitRating = new UnitRating();
+		return unitRating;
+	}
+	
+	@Bean
+	CourseRating coursesRating() {
+		CourseRating coursesRating = new CourseRating();
+		return coursesRating;
+	}
+	
+	@Bean
+	SectionRating sectionRating() {
+		SectionRating coursesRating = new SectionRating();
+		return coursesRating;
+	}
 
 }

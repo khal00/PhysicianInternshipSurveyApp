@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}" class="h-100"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+<title th:text="#{ratingsPanel.title}"></title>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<style>
+.yellow-text{
+color: #ffc107}
+</style>
+
+<script th:inline="javascript">		
+
+		function loadUnitSearchResult()
+		{
+			
+			var chamberSelect = document.getElementById('medicalChamberSelect');
+			var chamber = chamberSelect.value;
+			$.ajax({
+			  type: 'get',
+			  url: /*[[ @{/ratings/unitSearch/}]]*/,
+			  data: {
+				  "chamberSelected":chamber
+			  },
+			  
+			  success: function(data){
+					
+				  /*<![CDATA[*/
+				  $('.ratings_lists').html(data);				  
+				  /*]]>*/
+				},
+			})			
+		}
+	</script>
+	
+</head>
+
+<body>
+
+	<div layout:fragment="header_login_content">
+		<div th:replace="fragments/header_login_section :: header_login_section"></div>
+	</div>
+
+	<div layout:fragment="main_content">
+
+		<!-- Place for messages -->
+
+		<section class="row">
+
+			<!-- Check for information message -->
+			<div th:if="${message}"
+				class="alert alert-warning text-center mx-auto mb-5"
+				th:text="${message}"></div>
+
+		</section>
+
+		<div class="row">
+			<div class="mx-auto rounded my-3 py-3 py-sm-5 px-3 p-sm-5 trans-container text-light col-11 col-lg-10">
+				<div class="mx-auto text-center text-light mb-3">
+					<h1 class="h5" th:text="#{ratingsPanel.title}">Internship Ratings</h1>
+				</div>
+				
+				<div>
+					<div class="col-md-6 col-xl-4 mt-4">
+						<label for="medicalChamberSelect" class="yellow-text"
+							th:text="#{ratingsPanel.medicalChamber}"></label>
+								
+						<select name="medicalChamber" id="medicalChamberSelect" class="custom-select" onchange="loadUnitSearchResult()">
+							<option value="" th:selected="selected" th:disabled="disabled" th:text="#{ratingsPanel.chooseChamber}"></option>
+							<option th:each="chamber : ${T(com.khal.intern_survey.dto.MedicalChamberEnum).values()}" th:value="${chamber}" th:text="${chamber.name}"></option>
+						</select>
+					</div>
+				</div>
+				
+				<div class="ratings_lists" th:fragment="ratings_lists">
+					
+					<div th:if="${unitsRatings==null and coursesRatings==null}" th:text="#{ratingsPanel.noSurveys}" class="text-center m-3 yellow-text"></div>
+					<div th:if="${unitsRatings!=null}" class="mt-4 table-responsive-sm">
+						<table class="table table-borderless text-light text-center">
+							<thead>
+								<tr class="yellow-text">
+									<th class="col-8" th:text="#{ratingsPanel.th.unitName}">
+									<th class="col-2" th:text="#{ratingsPanel.th.rating}">
+									<th class="col-2" th:text="#{ratingsPanel.th.numberOfInterns}">
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="unit : ${unitsRatings}">
+									<td th:text="${unit.name}">
+									<td th:text="${#numbers.formatDecimal(unit.rating, 1, 2)}">
+									<td th:text="${unit.numberOfInterns}">
+								</tr>
+							</tbody>
+						</table>	
+					</div>
+					
+					<div th:if=${coursesRatings!=null} class="mt-4 table-responsive-sm">
+						<table class="table table-borderless text-light text-center">
+							<thead>
+								<tr class="yellow-text">
+									<th class="col-8" th:text="#{ratingsPanel.th.courseName}">
+									<th class="col-2" th:text="#{ratingsPanel.th.rating}">
+									<th class="col-2" th:text="#{ratingsPanel.th.numberOfInterns}">
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="course : ${coursesRatings}">
+									<td th:text="${course.name.name}">
+									<td th:text="${#numbers.formatDecimal(course.rating, 1, 2)}">
+									<td th:text="${course.numberOfInterns}">
+								</tr>
+							</tbody>
+						</table>	
+					</div>
+				</div>
+				
+			</div>
+		</div>
+
+	</div>
+
+</body>
+
+
+</html>

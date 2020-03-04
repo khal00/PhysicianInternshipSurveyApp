@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import com.khal.intern_survey.DTO.UserDTO;
+import com.khal.intern_survey.dto.UserDTO;
 import com.khal.intern_survey.entity.AdminPersonalData;
 import com.khal.intern_survey.entity.EmailUpdateToken;
 import com.khal.intern_survey.entity.Role;

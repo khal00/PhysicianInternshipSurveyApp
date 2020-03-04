@@ -1,14 +1,15 @@
-package com.khal.intern_survey.DTO;
+package com.khal.intern_survey.dto;
+
+import java.util.stream.Stream;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
-import java.util.stream.*;
 
 @Converter(autoApply = true)
-public class MedicalChamberConverter implements AttributeConverter<MedicalChamberEnum, String> {
-
+public class CourseEnumConverter implements AttributeConverter<CourseEnum, String> {
+	
 	@Override
-	public String convertToDatabaseColumn(MedicalChamberEnum attribute) {
+	public String convertToDatabaseColumn(CourseEnum attribute) {
 		if (attribute == null) {
 			return null;
 		}
@@ -17,15 +18,14 @@ public class MedicalChamberConverter implements AttributeConverter<MedicalChambe
 	}
 
 	@Override
-	public MedicalChamberEnum convertToEntityAttribute(String dbData) {
+	public CourseEnum convertToEntityAttribute(String dbData) {
 		if (dbData == null) {
 			return null;
 		}
 		
-		return Stream.of(MedicalChamberEnum.values())
+		return Stream.of(CourseEnum.values())
 				.filter(c -> c.getName().equals(dbData))
 				.findFirst()
 				.orElseThrow(IllegalArgumentException::new);
 	}
-
 }

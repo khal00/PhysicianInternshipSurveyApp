@@ -6,18 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter @AllArgsConstructor @NoArgsConstructor
-public class UnitRating implements Comparable<UnitRating> {
+public class SectionRating {
 	
 	private String name;
+	private String unit;
 	private double rating;
 	private int numberOfInterns;
-	
-	
-	@Override
-	public int compareTo(UnitRating o) {
-		if(rating < o.getRating()) return 1;
-		if(rating > o.getRating()) return -1;
-		else return 0;
-	}
 	
 }

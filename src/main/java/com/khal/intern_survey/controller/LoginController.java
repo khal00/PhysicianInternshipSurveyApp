@@ -29,8 +29,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.khal.intern_survey.DTO.PasswordDTO;
 import com.khal.intern_survey.dao.PasswordResetTokenRepository;
+import com.khal.intern_survey.dto.PasswordDTO;
 import com.khal.intern_survey.entity.PasswordResetToken;
 import com.khal.intern_survey.entity.User;
 import com.khal.intern_survey.service.EmailService;

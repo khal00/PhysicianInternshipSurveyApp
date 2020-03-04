@@ -8,7 +8,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
-import com.khal.intern_survey.DTO.UserDTO;
+import com.khal.intern_survey.dto.UserDTO;
 import com.khal.intern_survey.entity.User;
 
 @Component

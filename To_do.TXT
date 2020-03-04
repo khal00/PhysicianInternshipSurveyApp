@@ -2,8 +2,6 @@ To do:
 
 finish pdf
 
-template to show results (with rest api and microservices)
-
 oiladmin option to add units and coordinators maybe wards names
 
 Cron operation to delete expired tokens (baeldung)
@@ -13,6 +11,10 @@ deal with null pointer ex error when user not logged in
 remove delete permission for admin after accepting quest?
 
 remove rating field in section and course
+
+change dividers for atomicInteger
+
+microservices?
 
 
 

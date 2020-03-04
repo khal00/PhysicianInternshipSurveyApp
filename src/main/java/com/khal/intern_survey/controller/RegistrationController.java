@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.khal.intern_survey.DTO.UserDTO;
+import com.khal.intern_survey.dto.UserDTO;
 import com.khal.intern_survey.entity.AdminPersonalData;
 import com.khal.intern_survey.entity.User;
 import com.khal.intern_survey.entity.VerificationToken;

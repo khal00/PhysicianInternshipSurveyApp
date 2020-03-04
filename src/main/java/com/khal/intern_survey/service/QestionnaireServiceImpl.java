@@ -8,8 +8,10 @@ import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
-import com.khal.intern_survey.DTO.MedicalChamberEnum;
 import com.khal.intern_survey.dao.QuestionnaireRepository;
+import com.khal.intern_survey.dto.CourseEnum;
+import com.khal.intern_survey.dto.InternshipSectionsEnum;
+import com.khal.intern_survey.dto.MedicalChamberEnum;
 import com.khal.intern_survey.entity.Course;
 import com.khal.intern_survey.entity.InternshipSection;
 import com.khal.intern_survey.entity.InternshipUnit;
@@ -88,7 +90,7 @@ public class QestionnaireServiceImpl implements QuestionnaireService {
 	}
 	
 	@Override
-	public double calculateSingleQuestionnaireSectionsAvg(Questionnaire questionnaire) {
+	public double calculateQuestionnaireAvg(Questionnaire questionnaire) {
 		
 		double sum = questionnaire.getCoordinator();
 		
@@ -112,7 +114,7 @@ public class QestionnaireServiceImpl implements QuestionnaireService {
 	}
 	
 	@Override
-	public double calculateMultipleQuestionnairesSectionsAvg(List<Questionnaire> questionnaires) {
+	public double calculateQuestionnairesAvg(List<Questionnaire> questionnaires) {
 		
 		double sum = 0;
 		int divider = 0;
@@ -121,7 +123,7 @@ public class QestionnaireServiceImpl implements QuestionnaireService {
 		if (!questionnaires.isEmpty()) {
 			for(Questionnaire questionnaire : questionnaires) {
 				
-				sum += calculateSingleQuestionnaireSectionsAvg(questionnaire);
+				sum += calculateQuestionnaireAvg(questionnaire);
 				divider++;				
 			}
 			
@@ -132,29 +134,13 @@ public class QestionnaireServiceImpl implements QuestionnaireService {
 	}
 	
 	@Override
-	public double calculateSingleQuestionnaireCoursesAvg(Questionnaire questionnaire) {
-		
-		double sum = 0;
-		int divider = 0;
-		double result = 0;
-		
-		for(Course course : questionnaire.getCourses()) {
-
-			if (!course.isDisabled()) {
-				
-				double rating = courseService.calculateCourseAvg(course.getName().getName(), questionnaire.getId());
-				sum += rating;
-				divider++;
-			}
-		
-			result = sum / divider;
-		}
-		
-		return result;
+	public double calculateCourseAvg(CourseEnum course, Questionnaire questionnaire) {
+		double result = courseService.calculateCourseAvg(course.getName(), questionnaire.getId());
+		return result;	
 	}
 	
 	@Override
-	public double calculateMultipleQuestionnairesCoursesAvg(List<Questionnaire> questionnaires) {
+	public double calculateCourseAvg(CourseEnum course, List<Questionnaire> questionnaires) {
 		
 		double sum = 0;
 		int divider = 0;
@@ -163,16 +149,71 @@ public class QestionnaireServiceImpl implements QuestionnaireService {
 		if (!questionnaires.isEmpty()) {
 			for(Questionnaire questionnaire : questionnaires) {
 				
-				sum += calculateSingleQuestionnaireCoursesAvg(questionnaire);
-				divider++;				
+				double avg = calculateCourseAvg(course, questionnaire);
+				sum += avg;
+				if (avg > 0) divider++;
 			}
 			
-			if(sum > 0) {
-				result = sum / divider;
-			}
+			if (sum > 0) result = sum / divider;			
 		}
 		
 		return result;
 	}
 	
+	@Override
+	public double calculateSectionAvg(InternshipSectionsEnum section, Questionnaire questionnaire) {
+		double result = internshipSectionService.calculateSectionAvg(section.getName(), questionnaire.getId());
+		return result;	
+	}
+	
+	@Override
+	public double calculateSectionAvg(InternshipSectionsEnum section, List<Questionnaire> questionnaires) {
+		
+		double sum = 0;
+		int divider = 0;
+		double result = 0;
+		
+		if (!questionnaires.isEmpty()) {
+			for(Questionnaire questionnaire : questionnaires) {
+				
+				double avg = calculateSectionAvg(section, questionnaire);
+				sum += avg;
+				if (avg > 0) divider++;
+			}
+			
+			if (sum > 0) result = sum / divider;			
+		}
+		
+		return result;
+	}
+	
+	@Override
+	public int getSectionNumberOfInterns(InternshipSectionsEnum section, List<Questionnaire> questionnaires) {
+		
+		int result = 0;
+		
+		if (!questionnaires.isEmpty()) {
+			for(Questionnaire questionnaire : questionnaires) {
+				if (calculateSectionAvg(section, questionnaire) > 0) {
+					result++;
+				}
+			}
+		}
+		return result;
+	}
+	
+	@Override
+	public int getCourseNumberOfInterns(CourseEnum course, List<Questionnaire> questionnaires) {
+		
+		int result = 0;
+		
+		if (!questionnaires.isEmpty()) {
+			for(Questionnaire questionnaire : questionnaires) {
+				if (calculateCourseAvg(course, questionnaire) > 0) {
+					result++;
+				}
+			}
+		}
+		return result;
+	}
 }
