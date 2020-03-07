@@ -16,7 +16,7 @@ public interface QuestionnaireService {
 
 	public Questionnaire findById(Long id);
 
-	public void delete(Long id);
+	public Questionnaire delete(Long id);
 
 	public List<Questionnaire> findAllSentQuestionnairesByMedicalChamber(User adminUser);
 

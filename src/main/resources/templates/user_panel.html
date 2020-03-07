@@ -11,7 +11,7 @@
 
 .panel-button {
 	font-size: 0.8rem;
-	min-width: 100px !important;
+	min-width: 200px !important;
 }
 
 @media (min-width: 576px) {
@@ -67,6 +67,12 @@
 					<div class="col-9 col-sm-7 col-md-10 col-lg-8 col-xl-6 my-3">
 						<form th:action="@{/chamber/showQuestListAccepted}">
 							<button type="submit" class="btn btn-outline-light btn-lg panel-button" th:text="#{userPanel.showQuestListAcceptedBtn}"></button>
+						</form>
+					</div>
+					
+					<div class="col-9 col-sm-7 col-md-10 col-lg-8 col-xl-6 my-3">
+						<form th:action="@{/chamber/manageUnits}">
+							<button type="submit" class="btn btn-outline-light btn-lg panel-button" th:text="#{userPanel.manageUnits}"></button>
 						</form>
 					</div>
 				</section>

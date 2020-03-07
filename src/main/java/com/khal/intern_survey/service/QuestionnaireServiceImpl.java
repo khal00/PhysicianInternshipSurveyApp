@@ -20,7 +20,7 @@ import com.khal.intern_survey.entity.Questionnaire.Status;
 import com.khal.intern_survey.entity.User;
 
 @Service
-public class QestionnaireServiceImpl implements QuestionnaireService {
+public class QuestionnaireServiceImpl implements QuestionnaireService {
 	
 	@Autowired
 	QuestionnaireRepository questionnaireRepository;
@@ -48,9 +48,11 @@ public class QestionnaireServiceImpl implements QuestionnaireService {
 	
 	@PreAuthorize(value = "hasPermission(#id, 'com.khal.intern_survey.entity.Questionnaire', 'DELETE')")
 	@Override
-	public void delete(Long id) {
-		questionnaireRepository.deleteById(id);
+	public Questionnaire delete(Long id) {
 		
+		Questionnaire questionnaire = this.findById(id);
+		questionnaireRepository.deleteById(id);
+		return questionnaire;
 	}
 
 	@Override

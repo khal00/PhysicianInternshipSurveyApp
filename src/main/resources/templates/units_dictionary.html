@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html layout:decorate="~{layout}" xmlns:th="https://www.thymeleaf.org">
+<head>
+<title th:text="#{units.title}"></title>
+	
+<style>
+
+.action-btn{
+	min-width: 80px;
+}
+
+@media (min-width: 576px) {
+	.action-btn{
+		min-width: 80px;
+	}
+}
+
+
+table {
+  font-size: 0.8rem;
+}
+
+@media (min-width: 576px) {
+	table {
+		font-size: 1rem;
+	}
+}
+
+td {
+	vertical-align: middle !important;
+}
+
+</style>
+
+</head>
+<body>
+
+	<div layout:fragment="header_login_content">
+		<div
+			th:replace="fragments/header_login_section :: header_login_section"></div>
+	</div>
+
+	
+	<div layout:fragment="main_content">
+		
+		<div class="row">
+			<div class="col-12 col-sm-11 col-md-11 col-lg-10 col-xl-9 mx-auto my-sm-3 rounded px-4 pt-4 pb-4 trans-container">
+				<div class="row mb-2">
+					<h1 class="mx-auto h5 text-light" th:text="#{units.title}"></h1>
+				</div>
+				<div class="text-warning text-center mb-3" th:if="${units?.empty}" th:text="#{units.noUnits}"></div>
+				<div class="table-responsive-sm">
+					<table th:if="${!units?.empty}" class="table table-borderless text-light text-center ">
+					<caption class="d-none" th:text="#{units.title}"></caption>
+						<thead>
+							<tr>
+								<th th:text="#{units.th.name}">
+								<th colspan="2" th:text="#{units.th.action}">
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="unit : ${units}">
+							    <td th:text="${unit.name}">
+							    <td>
+							    	<a class="btn btn-sm btn-outline-info action-btn m-1 text-light" data-toggle="modal" data-target="#editUnitModal" th:attrappend="data-target=${unit.id}" th:text="#{units.edit}"></a>
+							    	<a class="btn btn-sm btn-outline-danger action-btn m-1 text-light" data-toggle="modal" data-target="#deleteUnitModal" th:attrappend="data-target=${unit.id}" th:text="#{units.delete}"></a>
+							    
+							    	<!-- Modal for updating unit -->
+									<div class="modal fade" id="editUnitModal" tabindex="-1"
+										role="dialog" aria-labelledby="editUnitModalLabel"
+										aria-hidden="true" style="color: black"
+										th:attrappend="id=${unit.id}">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<form th:action="@{/chamber/editUnit/{id}(id=${unit.id})}" method="GET">
+													<div class="modal-header">
+														<h5 class="modal-title" id="editUnitModalLabel" th:text="#{units.modal.editTitle}"></h5>
+														<button type="button" class="close" data-dismiss="modal"
+															aria-label="Close">
+															<span aria-hidden="true">&times;</span>
+														</button>
+													</div>
+													<div class="modal-body" th:text="#{units.modal.editText}"></div>
+													
+													<input type="text" th:name="newUnitName" th:attr="value=${unit.name}" class="form-control col-11 mx-auto mb-4">
+													
+													<div class="modal-footer">
+														<button type="button" class="btn btn-secondary"
+															data-dismiss="modal" th:text="#{units.modal.close}"></button>
+														
+														<button type="submit" class="btn btn-success" th:text="#{units.modal.confirm}"></button>
+													</div>
+												</form>
+											</div>
+										</div>
+									</div>
+							    
+							    
+							    	<!-- Modal for deleting unit -->
+									<div class="modal fade" id="deleteUnitModal" tabindex="-1"
+										role="dialog" aria-labelledby="deleteUnitModalLabel"
+										aria-hidden="true" style="color: black"
+										th:attrappend="id=${unit.id}">
+										<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="deleteUnitModalLabel" th:text="#{units.modal.deleteTitle}"></h5>
+													<button type="button" class="close" data-dismiss="modal"
+														aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body" th:text="#{units.modal.deleteText}"></div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary"
+														data-dismiss="modal" th:text="#{units.modal.close}"></button>
+													<form th:action="@{/chamber/deleteUnit/{id}(id=${unit.id})}" method="GET">
+														<button type="submit" class="btn btn-danger" th:text="#{units.modal.confirm}"></button>
+													</form>
+													
+												</div>
+											</div>
+										</div>
+									</div>
+							    
+							    </td>
+							</tr>
+						</tbody>
+					</table>
+					
+					<div class="row">
+						<div class="mx-auto mb-2">
+							<form class="form-inline text-warning" th:action="@{/chamber/searchUnitByName}" method="get">
+								<input type="text" id="SearchByName" name="unitName" class="form-control ml-auto col-6 col-sm-8"
+								th:attr="placeholder=#{units.searchLabel}">
+								<button class="btn btn-outline-warning ml-1 mr-auto" type="submit" 
+								th:text="#{units.searchButton}">Search</button>
+							</form>
+						</div>
+					</div>
+					
+										
+					<div class="row mt-4 mb-3">
+						<a class="btn btn-outline-light text-light mx-auto" data-toggle="modal" data-target="#addUnitModal" 
+						th:text="#{units.newUnitBtn}"></a>
+					</div>
+					
+					<!-- Modal for deleting unit -->
+					<div class="modal fade" id="addUnitModal" tabindex="-1"
+						role="dialog" aria-labelledby="addUnitModalLabel"
+						aria-hidden="true" style="color: black">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<form th:action="@{/chamber/addUnit}" method="POST">
+									<div class="modal-header">
+										<h5 class="modal-title" id="addUnitModalLabel" th:text="#{units.modal.addTitle}"></h5>
+										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+									</div>
+									<div class="modal-body" th:text="#{units.modal.addText}"></div>
+									<div class="form-group">											
+										<label for="addUnitNameInput" th:text="#{units.modal.addUnitName}" class="sr-only"></label>
+										<input id="addUnitNameInput" type="text" th:name="unitName" class="form-control col-11 mx-auto mb-4" 
+										th:attr="placeholder=#{units.modal.addEnterUnitName}" autocomplete="off">
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+										data-dismiss="modal" th:text="#{units.modal.close}"></button>					
+										<button type="submit" class="btn btn-success" th:text="#{units.modal.confirm}"></button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>					
+
+				</div>
+			</div>
+		</div>
+
+	</div>
+	
+</body>
+</html>

@@ -1,0 +1,36 @@
+To do:
+
+finish pdf
+
+notauthorized error
+
+deal with null pointer ex error when user not logged in
+
+remove rating field in section and course
+
+change dividers for atomicInteger
+
+
+
+Later:
+
+oiladmin option to add coordinators maybe wards names
+
+Cron operation to delete expired tokens (baeldung)
+
+remove delete permission for admin after accepting quest?
+
+microservices?
+
+
+
+
+
+
+
+
+
+
+
+
+

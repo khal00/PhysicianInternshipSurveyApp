@@ -134,9 +134,11 @@ PRIMARY KEY (`id`)
 
 INSERT INTO `internship_unit` VALUES
 (1,'Samodzielny Publiczny Szpital Kliniczny Nr 1 w Szczecinie','OIL w Szczecinie'),
-(2,'SPSK Nr 2 w Szczecinie','OIL w Szczecinie'),
+(2,'SPSK Nr 2 w Szczecinie','OIL w Szczecinie');
+/*
 (3,'ZOZ MSWIA w Warszawie','OIL w Warszawie'),
 (4,'111 Szpital Wojskowy w Poznaniu','WIL w Poznaniu');
+*/
 
 
 CREATE TABLE `questionnaires` (
@@ -157,14 +159,14 @@ KEY (`user_id`),
 KEY (`verification_id`),
 
 CONSTRAINT `unit_id_ibfk` FOREIGN KEY (`unit_id`) REFERENCES `internship_unit`(`id`)
-ON DELETE NO ACTION ON UPDATE NO ACTION,
+ON DELETE CASCADE ON UPDATE CASCADE,
 
 CONSTRAINT `user_id_ibfk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
 ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 /*
-INSERT INTO `questionnaires`(id, status, user_id, create_time, coordinator_rating) VALUES
+INSERT INTO `questionnaires`(id, status, user_id, create_time, coordinator) VALUES
 (1, 0, 1, '2020-01-30 09:28:57', 6);
 */
 
@@ -253,20 +255,34 @@ CONSTRAINT fk_acl_entry_acl FOREIGN KEY (sid) REFERENCES acl_sid (id)
 ) ENGINE=InnoDB;
 
 INSERT INTO acl_sid (id, principal, sid) VALUES
-(1, 1, 'xi@g.com');
+(1, 1, 'ping@g.com'),
+(2, 1, 'ho@g.com');
 
 INSERT INTO acl_class (id, class) VALUES
-(1, 'com.khal.intern_survey.entity.Questionnaire');
+(1, 'com.khal.intern_survey.entity.Questionnaire'),
+(2, 'com.khal.intern_survey.entity.InternshipUnit');
   
 INSERT INTO acl_object_identity 
 (id, object_id_class, object_id_identity, 
 parent_object, owner_sid, entries_inheriting) 
 VALUES
-(1, 1, 1, NULL, 1, 0);
-  
+(1, 2, 1, NULL, 1, 0),
+(2, 2, 2, NULL, 1, 0);
+
 INSERT INTO acl_entry 
 (id, acl_object_identity, ace_order, 
 sid, mask, granting, audit_success, audit_failure) 
 VALUES
-(1, 1, 0, 1, 1, 1, 0, 0);
+(1, 1, 0, 1, 1, 1, 0, 0),
+(2, 1, 1, 1, 2, 1, 0, 0),
+(3, 1, 2, 1, 8, 1, 0, 0),
+(4, 2, 0, 1, 1, 1, 0, 0),
+(5, 2, 1, 1, 2, 1, 0, 0),
+(6, 2, 2, 1, 8, 1, 0, 0),
+(7, 1, 3, 2, 1, 1, 0, 0),
+(8, 1, 4, 2, 2, 1, 0, 0),
+(9, 1, 5, 2, 8, 1, 0, 0),
+(10, 2, 3, 2, 1, 1, 0, 0),
+(11, 2, 4, 2, 2, 1, 0, 0),
+(12, 2, 5, 2, 8, 1, 0, 0);
   

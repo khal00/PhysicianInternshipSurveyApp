@@ -7,6 +7,7 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
@@ -172,7 +173,7 @@ public class SurveyController {
 		return "redirect:/survey/showQuestListForUser";
 	}
 
-	
+	// New transaction is required for acl to work
 	@PostMapping(value = "/saveQuestionnaire", params = "action=send")
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	public String sendQuestionnaire(Principal principal, @Valid @ModelAttribute ("questionnaire") Questionnaire questionnaire
@@ -205,9 +206,8 @@ public class SurveyController {
 		Locale locale = LocaleContextHolder.getLocale();
 		Questionnaire questionnaire = questionnaireService.findById(id);
 		
-		String pdfTitle = messages.getMessage("questList.pdfTitle", null, locale);
-		
-		
+		String pdfTitle = messages.getMessage("pdf.title", null, locale);
+			
 		PDDocument document = new PDDocument();
 			
 		PDPage page = new PDPage();
@@ -215,20 +215,21 @@ public class SurveyController {
 		PDType0Font font = PDType0Font.load(document, fontFile);
 		PDDocumentInformation info = document.getDocumentInformation();
 		info.setTitle(pdfTitle);
-				
+		
 		PDPageContentStream cs = new PDPageContentStream(document, page);
 		cs.beginText();
 		cs.setLeading(20);
 		cs.setFont(font, 14);
 		cs.newLineAtOffset(25, 750);
-		cs.showText(questionnaire.getVerificationId().toString());
+		cs.showText(messages.getMessage("pdf.number", null, locale) + questionnaire.getVerificationId().toString());
 		cs.newLine();
-		cs.showText(messages.getMessage("questPdf.title", null, locale));	
+		cs.showText(messages.getMessage("pdf.title", null, locale));	
 		cs.newLine();
-		cs.showText(questionnaire.getUnit().getName());
+		cs.showText(messages.getMessage("questionnaire.internPlace", null, locale) + ": " + questionnaire.getUnit().getName());
 		cs.setFont(font, 12);
 		cs.newLine();
-		cs.showText(messages.getMessage("questPdf.coordinator", null, locale) + ": " + questionnaire.getCoordinator());
+		cs.showText(messages.getMessage("pdf.coordinator", null, locale) + ": " + questionnaire.getCoordinator());
+		
 		cs.endText();
 		cs.close();
 		
@@ -250,7 +251,6 @@ public class SurveyController {
 
 	}
 	
-	// Re-send units list if user changed medical chamber
 	@GetMapping("/unitSearch/{id}")
 	public String searchUnitByMedicalChamber(Model theModel, @RequestParam (value = "chamberSelected") MedicalChamberEnum chamberSelected
 			, @PathVariable ("id") long id) {

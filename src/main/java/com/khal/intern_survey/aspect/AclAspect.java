@@ -1,8 +1,8 @@
 package com.khal.intern_survey.aspect;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -22,10 +22,10 @@ import org.springframework.stereotype.Component;
 
 import com.khal.intern_survey.dto.MedicalChamberEnum;
 import com.khal.intern_survey.entity.AdminPersonalData;
+import com.khal.intern_survey.entity.InternshipUnit;
 import com.khal.intern_survey.entity.Questionnaire;
 import com.khal.intern_survey.entity.User;
 import com.khal.intern_survey.service.AdminPersonalDataService;
-import com.khal.intern_survey.service.QuestionnaireService;
 
 @Aspect
 @Component
@@ -33,17 +33,14 @@ public class AclAspect {
 	
 	@Autowired
 	AdminPersonalDataService adminPersonalDataService;
-	
-	@Autowired
-	QuestionnaireService questionnaireService;
 
 	@Autowired
 	JdbcMutableAclService aclService;
 
 	@AfterReturning(value = "execution(public com.khal.intern_survey.entity.Questionnaire com.khal.intern_survey.service."
-			+ "QestionnaireServiceImpl.saveQuestionnaire(com.khal.intern_survey.entity.Questionnaire))"
+			+ "QuestionnaireServiceImpl.saveQuestionnaire(com.khal.intern_survey.entity.Questionnaire))"
 			, returning = "questionnaire")
-	public void addPermissionsToNewQuest(Questionnaire questionnaire) {
+	public void addPermissionsForUserOnNewQuest(Questionnaire questionnaire) {
 		
 		User user = questionnaire.getUser();
 	
@@ -52,7 +49,7 @@ public class AclAspect {
 
 		MutableAcl acl = null;
 
-		// add read, write, delete permissions if questionnaire was saved for the first
+		// add read, write, delete permissions if questionnaire was saved for the first time
 		try {
 		acl = (MutableAcl) aclService.readAclById(oi);
 		} catch (NotFoundException nfe) {
@@ -67,27 +64,25 @@ public class AclAspect {
 			acl.insertAce(acl.getEntries().size(), pDelete, sid, true);
 			aclService.updateAcl(acl);		
 		}
-
 	}
 	
 	
-	// Remove user write and delete permission, add read and delete permission for admin of appropriate medical chamber
 	@After(value = "execution(public String com.khal.intern_survey.controller.SurveyController"
 			+ ".sendQuestionnaire(..)) && args(principal,questionnaire,..)")
-	public void removeDeleteAndWritePermissionAfterQuestIsSent(Principal principal
+	public void removeDeleteAndWritePermissionAndAddReadAndDeletePermissionsForAdminAfterQuestIsSent(Principal principal
 			, Questionnaire questionnaire) {
 
 		ObjectIdentity oi = new ObjectIdentityImpl(questionnaire);
 		MutableAcl acl = (MutableAcl) aclService.readAclById(oi, null);
 		
-		// acl.getEntries list changes order every time an entry is deleted
-		int aceIndex = 0;
+		// acl.getEntries changes order every time an entry is deleted
+		AtomicInteger aceIndex = new AtomicInteger(0);
 		for(AccessControlEntry ace : acl.getEntries()) {
 			
 			if (ace.getPermission() == BasePermission.WRITE || ace.getPermission() == BasePermission.DELETE) {
-				acl.deleteAce(aceIndex);			
+				acl.deleteAce(aceIndex.get());			
 			} else {
-				aceIndex++;
+				aceIndex.incrementAndGet();
 			}
 		}
 		
@@ -103,4 +98,66 @@ public class AclAspect {
 		aclService.updateAcl(acl);
 	}
 	
+	
+	@AfterReturning(value = "execution(public com.khal.intern_survey.entity.Questionnaire com.khal.intern_survey.service."
+			+ "QuestionnaireServiceImpl.delete(java.lang.Long))"
+			, returning = "questionnaire")
+	public void deleteObjectIdentityIfQuestIsDeleted(Questionnaire questionnaire) {
+
+	    try{
+	    	ObjectIdentity oi = new ObjectIdentityImpl(questionnaire);
+	        MutableAcl acl = (MutableAcl) aclService.readAclById(oi);
+	        aclService.deleteAcl(acl.getObjectIdentity(), true);
+	    } catch (NotFoundException e){
+	        System.out.println("Could not find ACL");
+	    }
+	}
+	
+	@AfterReturning(value = "execution(public com.khal.intern_survey.entity.InternshipUnit com.khal.intern_survey.service."
+			+ "InternshipUnitServiceImpl.addUnit(com.khal.intern_survey.entity.InternshipUnit))"
+			, returning = "unit")
+	public void addPermissionsForAdminsOnAddedUnit(InternshipUnit unit) {
+	
+		ObjectIdentity oi = new ObjectIdentityImpl(unit);
+		
+		MedicalChamberEnum medicalChamber = unit.getMedicalChamber();
+		List<AdminPersonalData> admins = adminPersonalDataService.findByMedicalChamber(medicalChamber);
+
+		MutableAcl acl = null;
+
+		// add read, write, delete permissions if internship unit was saved for the first time
+		try {
+		acl = (MutableAcl) aclService.readAclById(oi);
+		} catch (NotFoundException nfe) {
+			
+			acl = aclService.createAcl(oi);
+			
+			Permission pRead = BasePermission.READ;
+			Permission pWrite = BasePermission.WRITE;
+			Permission pDelete = BasePermission.DELETE;		
+			
+			for(AdminPersonalData apd : admins) {
+				Sid sid = new PrincipalSid(apd.getUser().getEmail());
+				acl.insertAce(acl.getEntries().size(), pRead, sid, true);
+				acl.insertAce(acl.getEntries().size(), pWrite, sid, true);
+				acl.insertAce(acl.getEntries().size(), pDelete, sid, true);
+			}
+
+			aclService.updateAcl(acl);		
+		}
+	}
+	
+	@AfterReturning(value = "execution(public com.khal.intern_survey.entity.InternshipUnit com.khal.intern_survey.service."
+			+ "InternshipUnitServiceImpl.delete(java.lang.Long))"
+			, returning = "unit")
+	public void deleteObjectIdentityIfUnitIsDeleted(InternshipUnit unit) {
+
+	    try{
+	    	ObjectIdentity oi = new ObjectIdentityImpl(unit);
+	        MutableAcl acl = (MutableAcl) aclService.readAclById(oi);
+	        aclService.deleteAcl(acl.getObjectIdentity(), true);
+	    } catch (NotFoundException e){
+	        System.out.println("Could not find ACL");
+	    }
+	}
 }

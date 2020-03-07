@@ -44,7 +44,7 @@ public class RatingsController {
 		
 		List<UnitRating> unitsRatings = units
 				.stream()
-				.filter(u -> u.getQuestionnaires().size() > 0)
+				.filter(u -> questionnaireService.findAllAcceptedQuestionnairesByUnit(u).size() > 0)
 				.map(u -> convertUnitToUnitRating(u))
 				.sorted()
 				.collect(Collectors.toList());

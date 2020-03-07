@@ -22,7 +22,7 @@ import com.khal.intern_survey.service.UserService;
 
 @Controller
 @RequestMapping("/chamber")
-public class ChamberAdminController {
+public class AdminController {
 	
 	@Autowired
 	QuestionnaireService questionnaireService;
@@ -114,16 +114,9 @@ public class ChamberAdminController {
 	}
 	
 	@GetMapping("/deleteQuest/{id}")
-	public String deleteQuestionnaire(Principal principal, @PathVariable ("id") long id) {
+	public String deleteQuestionnaire(@PathVariable ("id") long id) {
 		
-		Questionnaire questionnaire = questionnaireService.findById(id);
-		User user = userService.findByEmail(principal.getName());
-		
-//		check if admin is authorized to delete specific questionnaire
-		if (questionnaire.getMedicalChamber() == user.getAdminPersonalData().getMedicalChamber()
-				&& questionnaire.getStatus() == Status.SENT) {
-			questionnaireService.delete(id);
-		}
+		questionnaireService.delete(id);
 		
 		return "redirect:/chamber/showQuestListForAcceptance";
 	}

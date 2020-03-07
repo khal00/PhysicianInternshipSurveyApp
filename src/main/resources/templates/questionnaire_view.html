@@ -81,15 +81,15 @@
 	    		}
 	    		if($(this).prop("checked") == true){
 	            	$('#' + sectionName + 'Section').addClass('d-none');
-	            	$("[type='number'][id*=sectionName]").prop('required', false);
-	            	$("[type='number'][id*=sectionName]").prop('min', 0);
-	            	$("[type='number'][id*=sectionName]").prop('value', 0);
-	            	$("[type='text'][id*=sectionName]").prop('value', '');
+	            	$("[type='number'][id*=" + sectionName).prop('required', false);
+	            	$("[type='number'][id*=" + sectionName).prop('min', 0);
+	            	$("[type='number'][id*=" + sectionName).prop('value', 0);
+	            	$("[type='text'][id*=" + sectionName).prop('value', '');
 	            }
 	            else if($(this).prop("checked") == false){
 	            	$('#' + sectionName + 'Section').removeClass('d-none');
-	            	$("[type='number'][id*=sectionName]").prop('min', 1);
-	            	$("[type='number'][id*=sectionName]").prop('required', true);	            	
+	            	$("[type='number'][id*=" + sectionName).prop('min', 1);
+	            	$("[type='number'][id*=" + sectionName).prop('required', true);	            	
 	            }	    		
 	        });
 	        

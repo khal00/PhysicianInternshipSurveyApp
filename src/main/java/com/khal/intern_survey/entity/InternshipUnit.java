@@ -13,17 +13,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter @Setter @NoArgsConstructor(force = true)
+@Getter @Setter @NoArgsConstructor
 @Entity
 public class InternshipUnit {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private final Long id;
+	private Long id;
 	
-	private final String name;
+	private String name;
 	
-	private final MedicalChamberEnum medicalChamber;
+	private MedicalChamberEnum medicalChamber;
 	
 	@OneToMany(mappedBy = "unit")
 	private List<Questionnaire> questionnaires;

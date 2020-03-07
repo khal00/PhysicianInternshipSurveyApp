@@ -13,4 +13,12 @@ public interface InternshipUnitService {
 	
 	public List<InternshipUnit> findByMedicalChamber(MedicalChamberEnum medicalChamber);
 
+	InternshipUnit findById(Long id);
+
+	public void editUnit(InternshipUnit unit, String newName);
+
+	public InternshipUnit delete(Long id);
+
+	InternshipUnit addUnit(InternshipUnit unit);
+
 }
