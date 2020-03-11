@@ -17,9 +17,6 @@ import lombok.Setter;
 @Getter @Setter @NoArgsConstructor
 @Entity
 public class Course {
-	
-	@Transient
-	private static final int DIVIDERTOTAL = 4;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,8 +35,6 @@ public class Course {
 	private int theoreticalKnowledge;
 	
 	private int practicalKnowledge;
-	
-	private double rating;
 	
 	private boolean disabled;
 	
@@ -64,26 +59,6 @@ public class Course {
 		super();
 		this.name = courseName;
 		this.questionnaire = questionnaire;
-	}
-	
-	public double calculateRating() {
-		int divider = DIVIDERTOTAL;
-		
-//		Below code is in case rating fields in questionnaire form are not required
-//		if (tutor == 0) divider--;
-//		if (unit == 0) divider--;
-//		if (theoreticalKnowledge == 0) divider--;
-//		if (practicalKnowledge == 0) divider--;
-		
-		int sum = tutor + unit + theoreticalKnowledge
-				+ practicalKnowledge;
-		
-		if(!disabled) {
-			double result = (double) sum / divider;
-			this.rating = result;
-		}
-		
-		return 0;
 	}
 
 }

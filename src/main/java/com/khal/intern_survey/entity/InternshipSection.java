@@ -19,9 +19,6 @@ import lombok.Setter;
 @Entity
 public class InternshipSection {
 	
-	@Transient
-	private static final int DIVIDERTOTAL = 9;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -49,8 +46,6 @@ public class InternshipSection {
 	private int ward;
 	
 	private int clinic;
-	
-	private double rating;
 	
 	private boolean disabled;
 	
@@ -81,33 +76,6 @@ public class InternshipSection {
 		this.ward = ward;
 		this.clinic = clinic;
 		this.questionnaire = questionnaire;
-	}
-	
-	
-	
-	public double calculateRating() {
-		int divider = DIVIDERTOTAL;
-
-//		Below code is in case rating fields in questionnaire form are not required
-//		if (tutor == 0) divider--;
-//		if (unit == 0) divider--;
-//		if (numberOfProcedures == 0) divider--;
-//		if (proceduresAutonomy == 0) divider--;
-//		if (theoreticalKnowledge == 0) divider--;
-//		if (practicalKnowledge == 0) divider--;
-//		if (medicalDuty == 0) divider--;
-//		if (ward == 0) divider--;
-//		if (clinic == 0) divider--;
-		
-		int sum = tutor + unit + numberOfProcedures + proceduresAutonomy + theoreticalKnowledge
-				+ practicalKnowledge + medicalDuty + ward + clinic;
-		
-		if(!disabled) {
-			double result = (double) sum / divider;
-			this.rating = result;
-		}
-		
-		return 0;
 	}
 
 }

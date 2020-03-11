@@ -7,16 +7,17 @@ import java.security.Principal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import javax.validation.Valid;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.PDPageContentStream.AppendMode;
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
@@ -24,7 +25,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.MediaType;
 import org.springframework.security.acls.jdbc.JdbcMutableAclService;
 import org.springframework.stereotype.Controller;
@@ -43,7 +43,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.khal.intern_survey.dto.CourseEnum;
 import com.khal.intern_survey.dto.InternshipSectionsEnum;
 import com.khal.intern_survey.dto.MedicalChamberEnum;
 import com.khal.intern_survey.entity.Course;
@@ -61,9 +60,6 @@ import com.khal.intern_survey.service.UserService;
 @Controller
 @RequestMapping("/survey")
 public class SurveyController {
-	
-	@Autowired
-	JdbcMutableAclService aclService;
 	
 	@Autowired
 	UserService userService;
@@ -209,29 +205,202 @@ public class SurveyController {
 		String pdfTitle = messages.getMessage("pdf.title", null, locale);
 			
 		PDDocument document = new PDDocument();
-			
-		PDPage page = new PDPage();
-		document.addPage(page);
 		PDType0Font font = PDType0Font.load(document, fontFile);
 		PDDocumentInformation info = document.getDocumentInformation();
 		info.setTitle(pdfTitle);
 		
+		PDPage page = new PDPage();
+		document.addPage(page);
+		
 		PDPageContentStream cs = new PDPageContentStream(document, page);
 		cs.beginText();
-		cs.setLeading(20);
+		cs.setLeading(27);
 		cs.setFont(font, 14);
 		cs.newLineAtOffset(25, 750);
-		cs.showText(messages.getMessage("pdf.number", null, locale) + questionnaire.getVerificationId().toString());
+		cs.showText(messages.getMessage("pdf.verId", null, locale) + questionnaire.getVerificationId().toString());
 		cs.newLine();
 		cs.showText(messages.getMessage("pdf.title", null, locale));	
 		cs.newLine();
-		cs.showText(messages.getMessage("questionnaire.internPlace", null, locale) + ": " + questionnaire.getUnit().getName());
+		cs.showText(messages.getMessage("pdf.place", null, locale) + questionnaire.getUnit().getName());
 		cs.setFont(font, 12);
 		cs.newLine();
-		cs.showText(messages.getMessage("pdf.coordinator", null, locale) + ": " + questionnaire.getCoordinator());
+		cs.showText(messages.getMessage("pdf.coordinator", null, locale) + questionnaire.getCoordinatorName());
+		cs.newLine();
+		cs.showText(messages.getMessage("pdf.rating", null, locale) + questionnaire.getCoordinator());
+		cs.newLine();
+		cs.newLine();
+		cs.setFont(font, 14);
+		cs.showText(messages.getMessage("pdf.sections", null, locale));
+		cs.newLine();
+		cs.newLine();
+				
+		AtomicInteger linesCounter = new AtomicInteger(12);
 		
+		for(InternshipSection section : questionnaire.getSections()) {
+			
+			// anesthesiology and family medicine sections don't have clinic and ward rating so they take less lines
+			boolean sectionIsNotAnesthesiologyOrFamilyMed = section.getName() != InternshipSectionsEnum.ANESTHESIOLOGY_INTENSIVE_CARE
+					&& section.getName() != InternshipSectionsEnum.FAMILY_MEDICINE;
+			
+			int linesRequired;
+					
+			if(section.isDisabled()) {
+				linesRequired = 3;
+				if(newPageIsRequired(linesCounter, linesRequired)) {
+					cs = getNewPageContentStream(document, cs);
+					linesCounter.set(0);	
+				}
+				
+				linesCounter.addAndGet(linesRequired);
+				
+				cs.setLeading(18);
+				cs.setFont(font, 14);
+				String sectionTitle = messages.getMessage("pdf."
+						+ section.getName(), null, locale);
+				
+				cs.showText(sectionTitle);
+				cs.newLine();
+				cs.showText(messages.getMessage("pdf.disabled", null, locale));
+			} else {
+				linesRequired = sectionIsNotAnesthesiologyOrFamilyMed ? 20 : 15;
+				if(newPageIsRequired(linesCounter, linesRequired)) {
+					cs = getNewPageContentStream(document, cs);
+					linesCounter.set(0);	
+				}
+				
+				linesCounter.addAndGet(linesRequired);
+				
+				cs.setLeading(18);
+				cs.setFont(font, 14);
+				String sectionTitle = messages.getMessage("pdf."
+						+ section.getName(), null, locale);
+				
+				cs.showText(sectionTitle);
+				cs.newLine();
+				cs.setFont(font, 12);
+				cs.showText(messages.getMessage("pdf.tutor", null, locale));
+				if (section.getTutorName() == null) {
+					cs.showText(messages.getMessage("pdf.unknown", null, locale));
+				} else {
+					cs.showText(section.getTutorName());
+				}
+				cs.newLine();
+				cs.showText(messages.getMessage("pdf.rating", null, locale) + section.getTutor());
+				cs.newLine();
+				cs.showText(messages.getMessage("pdf.place", null, locale));
+				if (section.getUnitName() == null) {
+					cs.showText(messages.getMessage("pdf.unknown", null, locale));
+				} else {
+					cs.showText(section.getUnitName());
+				}
+				cs.newLine();
+				cs.showText(messages.getMessage("pdf.rating", null, locale) + section.getUnit());
+				cs.newLine();
+				if (sectionIsNotAnesthesiologyOrFamilyMed) {
+					
+					cs.showText(messages.getMessage("pdf.ward", null, locale));
+					cs.newLine();
+					cs.showText(messages.getMessage("pdf.rating", null, locale) + section.getWard());
+					cs.newLine();
+					cs.showText(messages.getMessage("pdf.clinic", null, locale));
+					cs.newLine();
+					cs.showText(messages.getMessage("pdf.rating", null, locale) + section.getClinic());
+					cs.newLine();
+				}
+				cs.showText(messages.getMessage("pdf.number", null, locale));
+				cs.newLine();
+				cs.showText(messages.getMessage("pdf.rating", null, locale) + section.getNumberOfProcedures());
+				cs.newLine();
+				cs.showText(messages.getMessage("pdf.autonomy", null, locale));
+				cs.newLine();
+				cs.showText(messages.getMessage("pdf.rating", null, locale) + section.getProceduresAutonomy());
+				cs.newLine();
+				cs.showText(messages.getMessage("pdf.theoretical", null, locale));
+				cs.newLine();
+				cs.showText(messages.getMessage("pdf.rating", null, locale) + section.getTheoreticalKnowledge());
+				cs.newLine();
+				cs.showText(messages.getMessage("pdf.practical", null, locale));
+				cs.newLine();
+				cs.showText(messages.getMessage("pdf.rating", null, locale) + section.getPracticalKnowledge());
+				cs.newLine();
+				cs.showText(messages.getMessage("pdf.duty", null, locale));
+				cs.newLine();
+				cs.showText(messages.getMessage("pdf.rating", null, locale) + section.getMedicalDuty());
+			}
+			cs.newLine();
+			cs.newLine();
+		}
+		
+		for(Course course : questionnaire.getCourses()) {
+			int linesRequired;
+			
+			if(course.isDisabled()) {
+				linesRequired = 3;
+				if(newPageIsRequired(linesCounter, linesRequired)) {
+					cs = getNewPageContentStream(document, cs);
+					linesCounter.set(0);	
+				}
+				
+				linesCounter.addAndGet(linesRequired);
+				
+				cs.setLeading(18);
+				cs.setFont(font, 14);
+				String courseTitle = messages.getMessage("pdf."
+						+ course.getName(), null, locale);
+				
+				cs.showText(courseTitle);
+				cs.newLine();
+				cs.showText(messages.getMessage("pdf.disabled", null, locale));
+			} else {
+				linesRequired = 10;
+				if(newPageIsRequired(linesCounter, linesRequired)) {
+					cs = getNewPageContentStream(document, cs);
+					linesCounter.set(0);	
+				}
+				
+				linesCounter.addAndGet(10);
+				
+				cs.setLeading(18);
+				cs.setFont(font, 14);
+				String courseTitle = messages.getMessage("pdf."
+						+ course.getName(), null, locale);
+				
+				cs.showText(courseTitle);
+				cs.newLine();
+				cs.setFont(font, 12);
+				cs.showText(messages.getMessage("pdf.tutor", null, locale));
+				if (course.getTutorName() == null) {
+					cs.showText(messages.getMessage("pdf.unknown", null, locale));
+				} else {
+					cs.showText(course.getTutorName());
+				}
+				cs.newLine();
+				cs.showText(messages.getMessage("pdf.rating", null, locale) + course.getTutor());
+				cs.newLine();
+				cs.showText(messages.getMessage("pdf.place", null, locale));
+				if (course.getUnitName() == null) {
+					cs.showText(messages.getMessage("pdf.unknown", null, locale));
+				} else {
+					cs.showText(course.getUnitName());
+				}
+				cs.newLine();
+				cs.showText(messages.getMessage("pdf.rating", null, locale) + course.getUnit());
+				cs.newLine();
+				cs.showText(messages.getMessage("pdf.theoretical", null, locale));
+				cs.newLine();
+				cs.showText(messages.getMessage("pdf.rating", null, locale) + course.getTheoreticalKnowledge());
+				cs.newLine();
+				cs.showText(messages.getMessage("pdf.practical", null, locale));
+				cs.newLine();
+				cs.showText(messages.getMessage("pdf.rating", null, locale) + course.getPracticalKnowledge());
+
+			}
+			cs.newLine();
+			cs.newLine();
+		}
+	
 		cs.endText();
-		cs.close();
+		cs.close();		
 		
 		AccessPermission ap = new AccessPermission();
 		ap.setReadOnly();
@@ -248,7 +417,24 @@ public class SurveyController {
 		document.close();
 			
 		return outputStream.toByteArray();
-
+	}
+	
+	private boolean newPageIsRequired(AtomicInteger counter, int linesRequired) throws IOException {
+		if(counter.get() + linesRequired > 40) {
+				return true;	
+		} else return false;
+	}
+	
+	private PDPageContentStream getNewPageContentStream(PDDocument document, PDPageContentStream cs) throws IOException {
+		cs.endText();
+		cs.close();
+		PDPage newPage = new PDPage();
+		document.addPage(newPage);
+		cs = new PDPageContentStream(document, newPage);
+		cs.beginText();
+		cs.setLeading(18);
+		cs.newLineAtOffset(25, 750);
+		return cs;
 	}
 	
 	@GetMapping("/unitSearch/{id}")

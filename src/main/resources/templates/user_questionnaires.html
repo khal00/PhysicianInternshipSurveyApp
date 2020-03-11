@@ -80,10 +80,10 @@ td {
 							    	<span th:case="'2'" th:text="#{questList.statusAccepted}"></span>
 							    </td>
 							    <td>
-							    	<a th:if="${quest.status.name == 'Draft'}" class="btn btn-sm btn-outline-warning action-btn m-1" th:href="@{/survey/showQuestionnaire/{id}(id=${quest.id})}" th:text="#{questList.edit}"></a>
-							    	<a th:unless="${quest.status.name == 'Draft'}" class="btn btn-sm btn-outline-info action-btn m-1" th:href="@{/survey/showQuestionnaire/{id}(id=${quest.id})}" th:text="#{questList.view}"></a>
-							    	<a th:if="${quest.status.name == 'Draft'}" class="btn btn-sm btn-outline-danger action-btn m-1 text-danger" data-toggle="modal" data-target="#deleteQuestModal" th:attrappend="data-target=${quest.id}" th:text="#{questList.delete}"></a>
-							    	<a th:unless="${quest.status.name == 'Draft'}" class="btn btn-sm btn-outline-success action-btn m-1" th:href="@{/survey/sendQuestPDF/{id}(id=${quest.id})}" th:text="#{questList.download}"></a>
+							    	<a th:if="${quest.status.name == 'Draft'}" class="btn btn-sm btn-outline-warning text-light action-btn m-1" th:href="@{/survey/showQuestionnaire/{id}(id=${quest.id})}" th:text="#{questList.edit}"></a>
+							    	<a th:unless="${quest.status.name == 'Draft'}" class="btn btn-sm btn-outline-info text-light action-btn m-1" th:href="@{/survey/showQuestionnaire/{id}(id=${quest.id})}" th:text="#{questList.view}"></a>
+							    	<a th:if="${quest.status.name == 'Draft'}" class="btn btn-sm btn-outline-danger text-light action-btn m-1 text-danger" data-toggle="modal" data-target="#deleteQuestModal" th:attrappend="data-target=${quest.id}" th:text="#{questList.delete}"></a>
+							    	<a th:unless="${quest.status.name == 'Draft'}" class="btn btn-sm btn-outline-success text-light action-btn m-1" th:href="@{/survey/sendQuestPDF/{id}(id=${quest.id})}" th:text="#{questList.download}"></a>
 							    	
 									<!-- Modal for deleting questionnaire -->
 									<div class="modal fade" id="deleteQuestModal" tabindex="-1"

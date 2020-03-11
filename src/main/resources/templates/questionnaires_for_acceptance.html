@@ -66,9 +66,9 @@ td {
 							    <td th:text="${quest.verificationId}">
 							    </td>
 							    <td>
-							    	<a class="btn btn-sm btn-outline-info action-btn m-1" th:href="@{/chamber/showQuestionnaire/{id}(id=${quest.id})}" th:text="#{sentQuest.view}"></a>
-							    	<a class="btn btn-sm btn-outline-success action-btn m-1" th:href="@{/chamber/acceptQuest/{id}(id=${quest.id})}" th:text="#{sentQuest.accept}"></a>
-							    	<a class="btn btn-sm btn-outline-danger action-btn m-1 text-danger" data-toggle="modal" data-target="#deleteQuestModal" th:attrappend="data-target=${quest.id}" th:text="#{sentQuest.delete}"></a>
+							    	<a class="btn btn-sm btn-outline-info action-btn m-1 text-light" th:href="@{/chamber/showQuestionnaire/{id}(id=${quest.id})}" th:text="#{sentQuest.view}"></a>
+							    	<a class="btn btn-sm btn-outline-success action-btn m-1 text-light" th:href="@{/chamber/acceptQuest/{id}(id=${quest.id})}" th:text="#{sentQuest.accept}"></a>
+							    	<a class="btn btn-sm btn-outline-danger action-btn m-1 text-light" data-toggle="modal" data-target="#deleteQuestModal" th:attrappend="data-target=${quest.id}" th:text="#{sentQuest.delete}"></a>
 							    
 							    	<!-- Modal for deleting questionnaire -->
 									<div class="modal fade" id="deleteQuestModal" tabindex="-1"

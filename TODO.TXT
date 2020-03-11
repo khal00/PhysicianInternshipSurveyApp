@@ -1,15 +1,8 @@
 To do:
 
-finish pdf
-
-notauthorized error
-
-deal with null pointer ex error when user not logged in
-
-remove rating field in section and course
-
 change dividers for atomicInteger
 
+Oauth
 
 
 Later:

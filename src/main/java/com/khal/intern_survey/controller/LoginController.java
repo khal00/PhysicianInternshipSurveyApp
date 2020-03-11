@@ -156,9 +156,11 @@ public class LoginController {
 	
 
 	@RequestMapping(value = "/access-denied", method = { RequestMethod.GET, RequestMethod.POST })
-	public String showAccessDenied() {
-
-		return "access-denied";
+	public String showAccessDenied(RedirectAttributes redirectAttributes) {
+		
+		Locale locale = LocaleContextHolder.getLocale();
+		redirectAttributes.addFlashAttribute("message", messages.getMessage("login.notauthorized", null, locale));
+		return "redirect:/showUserPanel";
 
 	}
 	
