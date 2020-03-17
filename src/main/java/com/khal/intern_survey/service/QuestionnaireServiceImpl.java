@@ -2,6 +2,7 @@ package com.khal.intern_survey.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
@@ -96,7 +97,7 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 		
 		double sum = questionnaire.getCoordinator();
 		
-		int divider = 1;
+		AtomicInteger divider = new AtomicInteger(1);
 		double result = 0;
 		
 		for(InternshipSection section : questionnaire.getSections()) {
@@ -105,11 +106,11 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 				
 				double rating = internshipSectionService.calculateSectionAvg(section.getName().getName(), questionnaire.getId());
 				sum += rating;
-				divider++;
+				divider.incrementAndGet();
 				
 			}
 		
-			result = sum / divider;
+			result = sum / divider.get();
 		}
 		
 		return result;
@@ -118,18 +119,18 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 	@Override
 	public double calculateQuestionnairesAvg(List<Questionnaire> questionnaires) {
 		
+		AtomicInteger divider = new AtomicInteger(0);
 		double sum = 0;
-		int divider = 0;
 		double result = 0;
 		
 		if (!questionnaires.isEmpty()) {
 			for(Questionnaire questionnaire : questionnaires) {
 				
 				sum += calculateQuestionnaireAvg(questionnaire);
-				divider++;				
+				divider.incrementAndGet();				
 			}
 			
-			result = sum / divider;			
+			result = sum / divider.get();			
 		}
 		
 		return result;
@@ -144,8 +145,8 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 	@Override
 	public double calculateCourseAvg(CourseEnum course, List<Questionnaire> questionnaires) {
 		
+		AtomicInteger divider = new AtomicInteger(0);
 		double sum = 0;
-		int divider = 0;
 		double result = 0;
 		
 		if (!questionnaires.isEmpty()) {
@@ -153,10 +154,10 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 				
 				double avg = calculateCourseAvg(course, questionnaire);
 				sum += avg;
-				if (avg > 0) divider++;
+				if (avg > 0) divider.incrementAndGet();
 			}
 			
-			if (sum > 0) result = sum / divider;			
+			if (sum > 0) result = sum / divider.get();			
 		}
 		
 		return result;
@@ -171,8 +172,8 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 	@Override
 	public double calculateSectionAvg(InternshipSectionsEnum section, List<Questionnaire> questionnaires) {
 		
+		AtomicInteger divider = new AtomicInteger(0);
 		double sum = 0;
-		int divider = 0;
 		double result = 0;
 		
 		if (!questionnaires.isEmpty()) {
@@ -180,10 +181,10 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 				
 				double avg = calculateSectionAvg(section, questionnaire);
 				sum += avg;
-				if (avg > 0) divider++;
+				if (avg > 0) divider.incrementAndGet();
 			}
 			
-			if (sum > 0) result = sum / divider;			
+			if (sum > 0) result = sum / divider.get();			
 		}
 		
 		return result;
@@ -192,30 +193,30 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 	@Override
 	public int getSectionNumberOfInterns(InternshipSectionsEnum section, List<Questionnaire> questionnaires) {
 		
-		int result = 0;
+		AtomicInteger result = new AtomicInteger(0);
 		
 		if (!questionnaires.isEmpty()) {
 			for(Questionnaire questionnaire : questionnaires) {
 				if (calculateSectionAvg(section, questionnaire) > 0) {
-					result++;
+					result.incrementAndGet();
 				}
 			}
 		}
-		return result;
+		return result.get();
 	}
 	
 	@Override
 	public int getCourseNumberOfInterns(CourseEnum course, List<Questionnaire> questionnaires) {
 		
-		int result = 0;
+		AtomicInteger result = new AtomicInteger(0);
 		
 		if (!questionnaires.isEmpty()) {
 			for(Questionnaire questionnaire : questionnaires) {
 				if (calculateCourseAvg(course, questionnaire) > 0) {
-					result++;
+					result.incrementAndGet();
 				}
 			}
 		}
-		return result;
+		return result.get();
 	}
 }
