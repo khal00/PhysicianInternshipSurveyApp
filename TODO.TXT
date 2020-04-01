@@ -1,7 +1,8 @@
 To do:
 
-Oauth
+add tests
 
+put on web
 
 Later:
 

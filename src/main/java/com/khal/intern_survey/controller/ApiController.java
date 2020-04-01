@@ -25,9 +25,6 @@ import com.khal.intern_survey.service.QuestionnaireService;
 public class ApiController {
 	
 	@Autowired
-	InternshipSectionService internshipSectionService;
-	
-	@Autowired
 	QuestionnaireService questionnaireService;
 	
 	@Autowired
@@ -42,7 +39,7 @@ public class ApiController {
 	@Autowired
 	SectionRating sectionRating;
 	
-	@GetMapping("course/{courseName}/chamber/{medicalChamber}")
+	@GetMapping("/course/{courseName}/chamber/{medicalChamber}")
 	public CourseRating showCourseRatingByChamber(@PathVariable ("courseName") String courseName 
 			,@PathVariable ("medicalChamber") String medicalChamber) {
 		
