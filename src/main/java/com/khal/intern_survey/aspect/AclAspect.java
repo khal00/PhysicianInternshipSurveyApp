@@ -20,11 +20,11 @@ import org.springframework.security.acls.model.Permission;
 import org.springframework.security.acls.model.Sid;
 import org.springframework.stereotype.Component;
 
-import com.khal.intern_survey.dto.MedicalChamberEnum;
 import com.khal.intern_survey.entity.AdminPersonalData;
 import com.khal.intern_survey.entity.InternshipUnit;
 import com.khal.intern_survey.entity.Questionnaire;
 import com.khal.intern_survey.entity.User;
+import com.khal.intern_survey.enums.MedicalChamberEnum;
 import com.khal.intern_survey.service.AdminPersonalDataService;
 
 @Aspect

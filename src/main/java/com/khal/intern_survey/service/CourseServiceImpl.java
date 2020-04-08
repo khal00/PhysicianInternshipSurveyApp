@@ -5,11 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.khal.intern_survey.dao.CourseRepository;
-import com.khal.intern_survey.dto.CourseEnum;
-import com.khal.intern_survey.dto.InternshipSectionsEnum;
 import com.khal.intern_survey.entity.Course;
 import com.khal.intern_survey.entity.InternshipSection;
 import com.khal.intern_survey.entity.Questionnaire;
+import com.khal.intern_survey.enums.CourseEnum;
+import com.khal.intern_survey.enums.InternshipSectionsEnum;
 
 @Service
 public class CourseServiceImpl implements CourseService {

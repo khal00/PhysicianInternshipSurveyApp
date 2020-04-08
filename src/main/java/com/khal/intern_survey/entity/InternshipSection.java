@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.khal.intern_survey.dto.InternshipSectionsEnum;
+import com.khal.intern_survey.enums.InternshipSectionsEnum;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -76,6 +76,10 @@ public class InternshipSection {
 		this.ward = ward;
 		this.clinic = clinic;
 		this.questionnaire = questionnaire;
+	}
+
+	public InternshipSection(InternshipSectionsEnum sectionName) {
+		this.name = sectionName;
 	}
 
 }

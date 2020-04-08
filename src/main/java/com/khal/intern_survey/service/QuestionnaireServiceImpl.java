@@ -10,14 +10,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.khal.intern_survey.dao.QuestionnaireRepository;
-import com.khal.intern_survey.dto.CourseEnum;
-import com.khal.intern_survey.dto.InternshipSectionsEnum;
-import com.khal.intern_survey.dto.MedicalChamberEnum;
 import com.khal.intern_survey.entity.Course;
 import com.khal.intern_survey.entity.InternshipSection;
 import com.khal.intern_survey.entity.InternshipUnit;
 import com.khal.intern_survey.entity.Questionnaire;
 import com.khal.intern_survey.entity.Questionnaire.Status;
+import com.khal.intern_survey.enums.CourseEnum;
+import com.khal.intern_survey.enums.InternshipSectionsEnum;
+import com.khal.intern_survey.enums.MedicalChamberEnum;
 import com.khal.intern_survey.entity.User;
 
 @Service
@@ -94,16 +94,13 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 	
 	@Override
 	public double calculateQuestionnaireAvg(Questionnaire questionnaire) {
-		
 		double sum = questionnaire.getCoordinator();
 		
 		AtomicInteger divider = new AtomicInteger(1);
 		double result = 0;
 		
 		for(InternshipSection section : questionnaire.getSections()) {
-
 			if (!section.isDisabled()) {
-				
 				double rating = internshipSectionService.calculateSectionAvg(section.getName().getName(), questionnaire.getId());
 				sum += rating;
 				divider.incrementAndGet();

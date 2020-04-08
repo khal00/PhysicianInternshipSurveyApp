@@ -1,4 +1,4 @@
-package com.khal.intern_survey.dto;
+package com.khal.intern_survey.enums;
 
 import java.util.stream.Stream;
 
@@ -6,10 +6,10 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 @Converter(autoApply = true)
-public class InternshipSectionsEnumConverter implements AttributeConverter<InternshipSectionsEnum, String> {
+public class CourseEnumConverter implements AttributeConverter<CourseEnum, String> {
 	
 	@Override
-	public String convertToDatabaseColumn(InternshipSectionsEnum attribute) {
+	public String convertToDatabaseColumn(CourseEnum attribute) {
 		if (attribute == null) {
 			return null;
 		}
@@ -18,12 +18,12 @@ public class InternshipSectionsEnumConverter implements AttributeConverter<Inter
 	}
 
 	@Override
-	public InternshipSectionsEnum convertToEntityAttribute(String dbData) {
+	public CourseEnum convertToEntityAttribute(String dbData) {
 		if (dbData == null) {
 			return null;
 		}
 		
-		return Stream.of(InternshipSectionsEnum.values())
+		return Stream.of(CourseEnum.values())
 				.filter(c -> c.getName().equals(dbData))
 				.findFirst()
 				.orElseThrow(IllegalArgumentException::new);

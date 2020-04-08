@@ -1,8 +1,3 @@
-DROP DATABASE IF EXISTS `internship_survey`;
-
-CREATE DATABASE `internship_survey` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-USE `internship_survey`;
-
 CREATE TABLE `users` (
 `id` int NOT NULL AUTO_INCREMENT,
 `email` varchar(50) NOT NULL,
@@ -102,7 +97,6 @@ CREATE TABLE `users_roles` (
 `role_id` int NOT NULL,
   
 PRIMARY KEY (`user_id`,`role_id`),
-KEY (`role_id`),
   
 CONSTRAINT `users_roles_user_ibfk` FOREIGN KEY (`user_id`) 
 REFERENCES `users` (`id`) 
@@ -153,7 +147,7 @@ CREATE TABLE `questionnaires` (
 `coordinator_name` varchar(40),
 `coordinator` tinyint unsigned,
 PRIMARY KEY (`id`),
-KEY (`verification_id`),
+
 
 CONSTRAINT `unit_id_ibfk` FOREIGN KEY (`unit_id`) REFERENCES `internship_unit`(`id`)
 ON DELETE CASCADE ON UPDATE CASCADE,
@@ -162,10 +156,9 @@ CONSTRAINT `user_id_ibfk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`)
 ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
-/*
-INSERT INTO `questionnaires`(id, status, user_id, create_time, coordinator) VALUES
-(1, 0, 1, '2020-01-30 09:28:57', 6);
-*/
+INSERT INTO `questionnaires`(id, status, medical_chamber, user_id, create_time, verification_id, coordinator) VALUES
+(1, 0, 'OIL w Szczecinie', 1, '2020-01-30 09:28:57', 1111, 6);
+
 
 CREATE TABLE `internship_section` (
 id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,

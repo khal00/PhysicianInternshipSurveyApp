@@ -1,7 +1,7 @@
 package com.khal.intern_survey.rest;
 
-import com.khal.intern_survey.dto.CourseEnum;
-import com.khal.intern_survey.dto.MedicalChamberEnum;
+import com.khal.intern_survey.enums.CourseEnum;
+import com.khal.intern_survey.enums.MedicalChamberEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

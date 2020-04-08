@@ -238,7 +238,7 @@
 									<select th:name="medicalChamber" id="ChamberSelect"
 									class="form-control" th:errorclass="is-invalid">
 									<option value="" th:selected="selected" th:disabled="disabled" th:text="#{questionnaire.chooseChamber}"></option>
-									<option th:each="chamber : ${T(com.khal.intern_survey.dto.MedicalChamberEnum).values()}" th:value="${chamber}" th:text="${chamber.name}"></option>
+									<option th:each="chamber : ${T(com.khal.intern_survey.enums.MedicalChamberEnum).values()}" th:value="${chamber}" th:text="${chamber.name}"></option>
 								</select>
 							</div>
 

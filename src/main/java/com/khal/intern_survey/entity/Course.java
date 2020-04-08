@@ -8,7 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
-import com.khal.intern_survey.dto.CourseEnum;
+import com.khal.intern_survey.enums.CourseEnum;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -59,6 +59,10 @@ public class Course {
 		super();
 		this.name = courseName;
 		this.questionnaire = questionnaire;
+	}
+
+	public Course(CourseEnum courseName) {
+		this.name = courseName;
 	}
 
 }

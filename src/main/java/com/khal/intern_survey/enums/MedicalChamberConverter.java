@@ -1,7 +1,8 @@
-package com.khal.intern_survey.dto;
+package com.khal.intern_survey.enums;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
+
 import java.util.stream.*;
 
 @Converter(autoApply = true)

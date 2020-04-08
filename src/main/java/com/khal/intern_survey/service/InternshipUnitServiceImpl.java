@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.khal.intern_survey.dao.InternshipUnitRepository;
-import com.khal.intern_survey.dto.MedicalChamberEnum;
 import com.khal.intern_survey.entity.InternshipUnit;
+import com.khal.intern_survey.enums.MedicalChamberEnum;
 
 @Service
 public class InternshipUnitServiceImpl implements InternshipUnitService {

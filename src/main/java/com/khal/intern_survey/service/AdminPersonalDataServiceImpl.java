@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.khal.intern_survey.dao.AdminPersonalDataRepository;
-import com.khal.intern_survey.dto.MedicalChamberEnum;
 import com.khal.intern_survey.entity.AdminPersonalData;
+import com.khal.intern_survey.enums.MedicalChamberEnum;
 
 @Service
 public class AdminPersonalDataServiceImpl implements AdminPersonalDataService {

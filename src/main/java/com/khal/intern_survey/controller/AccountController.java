@@ -23,6 +23,7 @@ import org.springframework.security.web.authentication.preauth.PreAuthenticatedA
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -95,6 +96,10 @@ public class AccountController {
 			, BindingResult bindingResult
 			, Principal principal
 			, RedirectAttributes redirectAttributes) {
+		
+		for(ObjectError e : bindingResult.getAllErrors()) {
+			logger.info(e.toString());
+		}
 		
 		if(bindingResult.hasErrors()) {
 			redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.emailDTO", bindingResult);
@@ -212,12 +217,6 @@ public class AccountController {
 		String message = messages.getMessage("account.accountDeletedMessage", null, locale);
 		redirectAttributes.addFlashAttribute("message", message);
 		return "redirect:/";
-	}
-	
-	@PostMapping("/postMethodTest")
-	public String post() {
-		logger.info("postMethod started");
-		return "index";
 	}
 	
 }

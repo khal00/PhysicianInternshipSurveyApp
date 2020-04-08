@@ -5,9 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.khal.intern_survey.dao.InternshipSectionRepository;
-import com.khal.intern_survey.dto.InternshipSectionsEnum;
 import com.khal.intern_survey.entity.InternshipSection;
 import com.khal.intern_survey.entity.Questionnaire;
+import com.khal.intern_survey.enums.InternshipSectionsEnum;
 import com.khal.intern_survey.entity.InternshipSection;
 
 @Service

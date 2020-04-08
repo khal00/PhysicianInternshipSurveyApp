@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.validation.BindingResult;
 
@@ -41,8 +42,8 @@ class AccountControllerTest {
 	@MockBean
 	private EmailService emailService;
 	
-	@BeforeAll
-	private void initialize() {
+	@BeforeEach
+	void initialize() {
 		user = new User(1L, "myemail@mail.com", "secretPassword", null, Arrays.asList(new Role(1, "ROLE_USER")), true, null);
 	}
 	
@@ -91,8 +92,9 @@ class AccountControllerTest {
 				.contentType(MediaType.APPLICATION_FORM_URLENCODED)
 				.flashAttr("emailDTO", emailDto)
 				).andExpect(ResultMatcher.matchAll(
+						flash().attributeExists("org.springframework.validation.BindingResult.emailDTO"),
 						redirectedUrl("/user/accountSettings")
-						));		
+						));
 	}
 
 

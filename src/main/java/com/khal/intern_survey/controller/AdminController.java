@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.khal.intern_survey.dto.MedicalChamberEnum;
 import com.khal.intern_survey.entity.InternshipUnit;
 import com.khal.intern_survey.entity.Questionnaire;
 import com.khal.intern_survey.entity.Questionnaire.Status;
+import com.khal.intern_survey.enums.MedicalChamberEnum;
 import com.khal.intern_survey.entity.User;
 import com.khal.intern_survey.service.InternshipUnitService;
 import com.khal.intern_survey.service.QuestionnaireService;

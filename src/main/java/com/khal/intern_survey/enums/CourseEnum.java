@@ -1,4 +1,4 @@
-package com.khal.intern_survey.dto;
+package com.khal.intern_survey.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
