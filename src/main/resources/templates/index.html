@@ -91,12 +91,14 @@
 		</section>
 
 		<div class="row">
-			<div class="d-flex flex-column col-12 col-md-6 mb-3 mb-md-0 mt-3 mt-md-1 text-light">
+			<div class="d-flex flex-column col-12 col-md-6 mb-3 mb-md-0 mt-4 mt-md-1 text-light">
 				<h1 class="h1 mt-auto mx-auto mr-md-2 text-center text-md-right"
 					th:text="#{index.h1}"></h1>
-				<p class="mr-md-2 mt-1 mb-auto mx-auto text-center text-md-right lead"
-					th:text="#{index.instructions}"
-					sec:authorize="isAnonymous()"></p>
+				<p class="mr-md-2 mt-1 mb-auto mx-auto text-center text-md-right lead" sec:authorize="isAnonymous()">
+					<a th:href="@{/showLoginForm}" class="text-warning" th:text="#{index.instructionpt1}"
+					style="text-decoration: none"></a>
+					<span th:text="#{index.instructionpt2}"></span>
+				</p>
 			</div>
 			<section class="col-12 col-md-6" sec:authorize="isAnonymous()">
 				<div class="col-9 col-sm-7 col-md-10 col-lg-8 col-xl-6 rounded px-4 pt-3 pb-2 mx-auto mb-3 ml-md-2 form-container trans-container">

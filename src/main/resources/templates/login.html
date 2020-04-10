@@ -18,14 +18,14 @@
 
 			<!-- Check for password changed message -->
 			<div th:if="${password_changed_message}"
-				class="alert alert-success text-center mx-auto mb-5"
+				class="alert alert-success text-center mx-auto mt-5 mb-3 mb-md-5"
 				th:text="${password_changed_message}"></div>
 
 		</section>
 		<section class="row my-auto">
 
 			<div
-				class="d-flex flex-column col-12 col-md-6 mb-3 mb-md-0 text-white">
+				class="d-flex flex-column col-12 col-md-6 mb-3 mb-md-0 mt-4 mt-md-1 text-white">
 				<h1 class="h1 my-auto mx-auto mr-md-2 text-right"
 					th:text="#{login.signin}"></h1>
 			</div>
