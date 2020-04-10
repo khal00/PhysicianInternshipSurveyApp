@@ -10,12 +10,19 @@
 <style>
 
 .panel-button {
-	font-size: 0.8rem;
-	min-width: 200px !important;
+	font-size: 0.6rem;
+	min-width: 150px !important;
 }
 
 .trans-container {
 	background: rgba(230,230,230,0.0);
+}
+
+@media (min-width: 230px) {
+	.panel-button{
+		font-size: 0.8rem;
+		min-width: 200px !important;
+	}
 }
 
 @media (min-width: 280px) {
@@ -66,7 +73,7 @@
 				<section sec:authorize="hasRole('ROLE_USER')" class="mx-auto m-3">
 					<div class="col-9 col-sm-7 col-md-10 col-lg-8 col-xl-6">
 						<form th:action="@{/survey/showQuestListForUser}">
-							<button type="submit" class="btn btn-outline-light btn-lg panel-button" th:text="#{userPanel.showQuestForUserBtn}"></button>
+							<button type="submit" class="btn btn-outline-info text-light btn-lg panel-button" th:text="#{userPanel.showQuestForUserBtn}"></button>
 						</form>
 					</div>
 				</section>
@@ -75,22 +82,34 @@
 				
 					<div class="col-9 col-sm-7 col-md-10 col-lg-8 col-xl-6 my-3">
 						<form th:action="@{/chamber/showQuestListForAcceptance}">
-							<button type="submit" class="btn btn-outline-light btn-lg panel-button" th:text="#{userPanel.showQuestListForAcceptanceBtn}"></button>
+							<button type="submit" class="btn btn-outline-info text-light btn-lg panel-button" th:text="#{userPanel.showQuestListForAcceptanceBtn}"></button>
 						</form>
 					</div>
 					
 					<div class="col-9 col-sm-7 col-md-10 col-lg-8 col-xl-6 my-3">
 						<form th:action="@{/chamber/showQuestListAccepted}">
-							<button type="submit" class="btn btn-outline-light btn-lg panel-button" th:text="#{userPanel.showQuestListAcceptedBtn}"></button>
+							<button type="submit" class="btn btn-outline-info text-light btn-lg panel-button" th:text="#{userPanel.showQuestListAcceptedBtn}"></button>
 						</form>
 					</div>
 					
 					<div class="col-9 col-sm-7 col-md-10 col-lg-8 col-xl-6 my-3">
 						<form th:action="@{/chamber/manageUnits}">
-							<button type="submit" class="btn btn-outline-light btn-lg panel-button" th:text="#{userPanel.manageUnits}"></button>
+							<button type="submit" class="btn btn-outline-warning text-light btn-lg panel-button" th:text="#{userPanel.manageUnits}"></button>
 						</form>
 					</div>
 				</section>
+				
+				<section class="mx-auto m-3">
+				
+					<div class="col-9 col-sm-7 col-md-10 col-lg-8 col-xl-6 my-3">
+						<form th:action="@{/ratings/panel}">
+							<button type="submit" class="btn btn-outline-success text-light btn-lg panel-button" th:text="#{userPanel.showRatings}"></button>
+						</form>
+					</div>
+
+				</section>
+				
+				
 			</div>
 		</div>
 
