@@ -45,9 +45,11 @@ max-width: 350px;
 }
 
 .trans-container{
-	background: rgba(230,230,230,0.1);
+	background: rgba(230,230,230,0.08);
 }
 
 .invalid-feedback{
 	color: #ffc107 !important;
 }
+
+

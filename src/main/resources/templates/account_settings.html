@@ -5,7 +5,7 @@
 
 <style>
 
-button {
+.settings-button {
 	min-width: 100px
 }
 
@@ -37,7 +37,7 @@ button {
 		</section>
 
 		<div class="row">
-			<div class="text-light rounded mx-auto mb-5 px-4 pb-2 pt-3 trans-container">
+			<div class="text-light rounded mx-auto mb-5 px-3 pb-2 pt-3 trans-container">
 				<h1 class="h5 mb-3" th:text="#{account.title}"></h1>
 				<form th:action="@{/user/updateEmail}" method="POST" class="mb-4"
 					th:object="${emailDTO}">
@@ -58,7 +58,7 @@ button {
 							th:text="${errorMessage}"></div>
 
 						<div class="form-group mt-2">
-							<button class="btn btn-warning btn-sm"
+							<button class="btn btn-warning btn-sm settings-button"
 								th:text="#{account.updatebutton}"></button>
 						</div>
 					</div>
@@ -110,7 +110,7 @@ button {
 						</div>
 
 						<div class="form-group mt-2">
-							<button class="btn btn-warning btn-sm"
+							<button class="btn btn-warning btn-sm settings-button"
 								th:text="#{account.updatebutton}"></button>
 						</div>
 					</div>
@@ -121,7 +121,7 @@ button {
 					<div class="form-group rounded px-3 pt-3 pb-1 text-center trans-container">
 						<h2 class="h6" th:text="#{account.deleteSection}"></h2>
 						<div class="form-group">
-							<button class="btn btn-danger btn-sm" data-toggle="modal"
+							<button class="btn btn-danger btn-sm settings-button" data-toggle="modal"
 								data-target="#deleteModal" th:text="#{account.deleteButton}"
 								style="min-width: 100px"></button>
 						</div>

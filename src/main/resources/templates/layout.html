@@ -60,13 +60,13 @@ body {
 	<header>
 		<nav class="navbar navbar-dark navbar-expand-lg"
 			style="min-height: 64px; background: #1f252b">
-			<a th:href="@{/}" class="d-block mr-3 mt-2"
+			<a th:href="@{/}" class="d-block mr-3 my-2"
 				style="text-decoration: none;"> <span
 				th:text="#{index.headline}" class="text-white"></span>
 			</a>
 
 
-			<button class="navbar-dark navbar-toggler my-2" type="button"
+			<button class="navbar-dark navbar-toggler" type="button"
 				data-toggle="collapse" data-target="#mainmenu"
 				aria-controls="mainmenu" aria-expanded="false"
 				aria-label="navigation switch"
@@ -79,15 +79,15 @@ body {
 
 				<ul class="navbar-nav mr-auto">
 
-					<li class="nav-item"><a class="nav-link mt-2" th:href="@{/}"
+					<li class="nav-item"><a class="nav-link" th:href="@{/}"
 						th:text="#{index.home}"></a></li>
 						
-					<li class="nav-item"><a class="nav-link mt-2" th:href="@{/ratings/panel}"
+					<li class="nav-item"><a class="nav-link" th:href="@{/ratings/panel}"
 						th:text="#{index.ratings}"></a></li>
 
 				</ul>
 				
-				<div layout:fragment="header_login_content"></div>
+				<div class="my-2" layout:fragment="header_login_content"></div>
 
 			</div>
 

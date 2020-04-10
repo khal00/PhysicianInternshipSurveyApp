@@ -118,10 +118,10 @@
 	<div layout:fragment="main_content">
 		
 		<div class="row">
-			<h1 class="mx-auto h3 my-3 my-sm-5 text-white" th:text="#{questionnaire.title}"></h1>
+			<h1 class="mx-auto h3 my-4 my-sm-5 text-white" th:text="#{questionnaire.title}"></h1>
 		</div>
 		<div class="row">
-			<div class="mx-auto mb-5 rounded py-2 px-2 py-sm-4 px-sm-4 col-11 col-sm-11 col-md-10 col-lg-11 col-xl-10 text-light trans-container">
+			<div class="mx-auto mb-5 rounded py-2 px-3 py-sm-4 px-sm-5 col-12 col-sm-11 col-md-10 col-lg-11 col-xl-10 text-light">
 				<form id="questForm" th:action="@{/survey/saveQuestionnaire}" method="POST" th:object="${questionnaire}"
 				class="needs-validation" novalidate>
 					
