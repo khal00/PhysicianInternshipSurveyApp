@@ -1,14 +1,12 @@
 To do:
 
-add tests
+Cron operation to delete expired tokens (baeldung)
 
-put on web
+add more tests
 
 Later:
 
 oiladmin option to add coordinators maybe wards names
-
-Cron operation to delete expired tokens (baeldung)
 
 remove delete permission for admin after accepting quest?
 
