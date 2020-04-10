@@ -13,12 +13,10 @@
 	<artifactId>PhysicianInternshipSurveyApp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>PhysicianInternshipSurveysApp</name>
-	<description>Application to collect data from surveys of physicians and dentists internship</description>
+	<description>Application to collect data from surveys of physician and dentist internship</description>
 
 	<properties>
 		<java.version>11</java.version>
-		<!-- Downgrade Maven jar plugin to resolve unknown pom error -->
-		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
 	</properties>
 
 	<dependencies>
@@ -145,11 +143,6 @@
 		    <groupId>org.projectlombok</groupId>
 		    <artifactId>lombok</artifactId>
 		    <scope>provided</scope>
-		</dependency>
-		
-		<dependency>
-		    <groupId>org.flywaydb</groupId>
-		    <artifactId>flyway-core</artifactId>
 		</dependency>
 
 	</dependencies>
