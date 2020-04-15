@@ -17,7 +17,6 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.PDPageContentStream.AppendMode;
 import org.apache.pdfbox.pdmodel.encryption.AccessPermission;
 import org.apache.pdfbox.pdmodel.encryption.StandardProtectionPolicy;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
@@ -26,7 +25,6 @@ import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.MediaType;
-import org.springframework.security.acls.jdbc.JdbcMutableAclService;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -243,6 +241,8 @@ public class SurveyController {
 					&& section.getName() != InternshipSectionsEnum.FAMILY_MEDICINE;
 			
 			int linesRequired;
+			String sectionTitle = messages.getMessage("sections."
+					+ section.getName(), null, locale);
 					
 			if(section.isDisabled()) {
 				linesRequired = 3;
@@ -254,10 +254,7 @@ public class SurveyController {
 				linesCounter.addAndGet(linesRequired);
 				
 				cs.setLeading(18);
-				cs.setFont(font, 14);
-				String sectionTitle = messages.getMessage("pdf."
-						+ section.getName(), null, locale);
-				
+				cs.setFont(font, 14);			
 				cs.showText(sectionTitle);
 				cs.newLine();
 				cs.showText(messages.getMessage("pdf.disabled", null, locale));
@@ -271,10 +268,7 @@ public class SurveyController {
 				linesCounter.addAndGet(linesRequired);
 				
 				cs.setLeading(18);
-				cs.setFont(font, 14);
-				String sectionTitle = messages.getMessage("pdf."
-						+ section.getName(), null, locale);
-				
+				cs.setFont(font, 14);		
 				cs.showText(sectionTitle);
 				cs.newLine();
 				cs.setFont(font, 12);
@@ -333,6 +327,8 @@ public class SurveyController {
 		
 		for(Course course : questionnaire.getCourses()) {
 			int linesRequired;
+			String courseTitle = messages.getMessage("courses."
+					+ course.getName(), null, locale);
 			
 			if(course.isDisabled()) {
 				linesRequired = 3;
@@ -344,10 +340,7 @@ public class SurveyController {
 				linesCounter.addAndGet(linesRequired);
 				
 				cs.setLeading(18);
-				cs.setFont(font, 14);
-				String courseTitle = messages.getMessage("pdf."
-						+ course.getName(), null, locale);
-				
+				cs.setFont(font, 14);				
 				cs.showText(courseTitle);
 				cs.newLine();
 				cs.showText(messages.getMessage("pdf.disabled", null, locale));
@@ -361,10 +354,7 @@ public class SurveyController {
 				linesCounter.addAndGet(10);
 				
 				cs.setLeading(18);
-				cs.setFont(font, 14);
-				String courseTitle = messages.getMessage("pdf."
-						+ course.getName(), null, locale);
-				
+				cs.setFont(font, 14);				
 				cs.showText(courseTitle);
 				cs.newLine();
 				cs.setFont(font, 12);
