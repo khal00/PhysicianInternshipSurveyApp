@@ -18,7 +18,7 @@ class LoginControllerTest {
 	
 	@Test
 	void testLoginForm() throws Exception {
-		mockMvc.perform(formLogin("/authenticateTheUser").user("xi@g.com").password("x")).andExpect(redirectedUrl("/showUserPanel"));
+		mockMvc.perform(formLogin("/authenticateTheUser").user("xi@m.com").password("x")).andExpect(redirectedUrl("/showUserPanel"));
 	}
 
 }

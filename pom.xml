@@ -144,11 +144,6 @@
 		    <artifactId>lombok</artifactId>
 		    <scope>provided</scope>
 		</dependency>
-		<dependency>
-		    <groupId>org.apache.cayenne</groupId>
-		    <artifactId>cayenne-java8</artifactId>
-		    <version>4.0.2</version>
-		</dependency>
 
 	</dependencies>
 
