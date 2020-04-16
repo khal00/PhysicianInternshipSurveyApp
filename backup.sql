@@ -14,6 +14,7 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
 --
 -- Table structure for table `acl_class`
 --
@@ -60,7 +61,7 @@ CREATE TABLE `acl_entry` (
   KEY `fk_acl_entry_acl` (`sid`),
   CONSTRAINT `fk_acl_entry_acl` FOREIGN KEY (`sid`) REFERENCES `acl_sid` (`id`),
   CONSTRAINT `fk_acl_entry_object` FOREIGN KEY (`acl_object_identity`) REFERENCES `acl_object_identity` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +70,7 @@ CREATE TABLE `acl_entry` (
 
 LOCK TABLES `acl_entry` WRITE;
 /*!40000 ALTER TABLE `acl_entry` DISABLE KEYS */;
-INSERT INTO `acl_entry` VALUES (1,1,0,1,1,1,0,0),(2,1,1,1,2,1,0,0),(3,1,2,1,8,1,0,0),(4,2,0,1,1,1,0,0),(5,2,1,1,2,1,0,0),(6,2,2,1,8,1,0,0),(7,1,3,2,1,1,0,0),(8,1,4,2,2,1,0,0),(9,1,5,2,8,1,0,0),(10,2,3,2,1,1,0,0),(11,2,4,2,2,1,0,0),(12,2,5,2,8,1,0,0),(16,3,0,3,1,1,0,0),(17,3,1,1,1,1,0,0),(18,3,2,1,8,1,0,0),(19,3,3,2,1,1,0,0),(20,3,4,2,8,1,0,0),(21,4,0,3,1,1,0,0),(22,4,1,3,2,1,0,0),(23,4,2,3,8,1,0,0),(24,5,0,4,1,1,0,0),(25,5,1,4,2,1,0,0),(26,5,2,4,8,1,0,0),(27,6,0,3,1,1,0,0),(28,6,1,3,2,1,0,0),(29,6,2,3,8,1,0,0),(30,7,0,3,1,1,0,0),(31,7,1,3,2,1,0,0),(32,7,2,3,8,1,0,0),(33,8,0,3,1,1,0,0),(34,8,1,3,2,1,0,0),(35,8,2,3,8,1,0,0);
+INSERT INTO `acl_entry` VALUES (1,1,0,1,1,1,0,0),(2,1,1,1,2,1,0,0),(3,1,2,1,8,1,0,0),(4,2,0,1,1,1,0,0),(5,2,1,1,2,1,0,0),(6,2,2,1,8,1,0,0),(7,1,3,2,1,1,0,0),(8,1,4,2,2,1,0,0),(9,1,5,2,8,1,0,0),(10,2,3,2,1,1,0,0),(11,2,4,2,2,1,0,0),(12,2,5,2,8,1,0,0),(16,3,0,3,1,1,0,0),(17,3,1,1,1,1,0,0),(18,3,2,1,8,1,0,0),(19,3,3,2,1,1,0,0),(20,3,4,2,8,1,0,0),(21,4,0,3,1,1,0,0),(22,4,1,3,2,1,0,0),(23,4,2,3,8,1,0,0),(24,5,0,4,1,1,0,0),(25,5,1,4,2,1,0,0),(26,5,2,4,8,1,0,0),(27,6,0,3,1,1,0,0),(28,6,1,3,2,1,0,0),(29,6,2,3,8,1,0,0),(30,7,0,3,1,1,0,0),(31,7,1,3,2,1,0,0),(32,7,2,3,8,1,0,0),(33,8,0,3,1,1,0,0),(34,8,1,3,2,1,0,0),(35,8,2,3,8,1,0,0),(36,9,0,3,1,1,0,0),(37,9,1,3,2,1,0,0),(38,9,2,3,8,1,0,0);
 /*!40000 ALTER TABLE `acl_entry` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,7 +95,7 @@ CREATE TABLE `acl_object_identity` (
   CONSTRAINT `fk_acl_object_identity_class` FOREIGN KEY (`object_id_class`) REFERENCES `acl_class` (`id`),
   CONSTRAINT `fk_acl_object_identity_owner` FOREIGN KEY (`owner_sid`) REFERENCES `acl_sid` (`id`),
   CONSTRAINT `fk_acl_object_identity_parent` FOREIGN KEY (`parent_object`) REFERENCES `acl_object_identity` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,7 +104,7 @@ CREATE TABLE `acl_object_identity` (
 
 LOCK TABLES `acl_object_identity` WRITE;
 /*!40000 ALTER TABLE `acl_object_identity` DISABLE KEYS */;
-INSERT INTO `acl_object_identity` VALUES (1,2,1,NULL,1,0),(2,2,2,NULL,1,0),(3,1,1,NULL,3,1),(4,1,2,NULL,3,1),(5,1,3,NULL,4,1),(6,1,4,NULL,3,1),(7,1,5,NULL,3,1),(8,1,6,NULL,3,1);
+INSERT INTO `acl_object_identity` VALUES (1,2,1,NULL,1,0),(2,2,2,NULL,1,0),(3,1,1,NULL,3,1),(4,1,2,NULL,3,1),(5,1,3,NULL,4,1),(6,1,4,NULL,3,1),(7,1,5,NULL,3,1),(8,1,6,NULL,3,1),(9,1,7,NULL,3,1);
 /*!40000 ALTER TABLE `acl_object_identity` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -147,7 +148,7 @@ CREATE TABLE `admin_personal_data` (
   `phone_number` varchar(15) COLLATE utf8_unicode_ci NOT NULL,
   `medical_chamber` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -156,7 +157,7 @@ CREATE TABLE `admin_personal_data` (
 
 LOCK TABLES `admin_personal_data` WRITE;
 /*!40000 ALTER TABLE `admin_personal_data` DISABLE KEYS */;
-INSERT INTO `admin_personal_data` VALUES (1,'Ping','Po','123456789','OIL w Szczecinie'),(2,'Ho','Li','123456789','OIL w Szczecinie'),(3,'Chi','Fu','123456789','OIL w Warszawie');
+INSERT INTO `admin_personal_data` VALUES (1,'Ping','Po','123456789','OIL w Szczecinie'),(2,'Ho','Li','123456789','OIL w Szczecinie'),(3,'Chi','Fu','123456789','OIL w Warszawie'),(4,'Krzysztof','Halewski','505416261','OIL w Szczecinie');
 /*!40000 ALTER TABLE `admin_personal_data` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,7 +182,7 @@ CREATE TABLE `course` (
   PRIMARY KEY (`id`),
   KEY `course_quest_id_ibfk` (`questionnaire_id`),
   CONSTRAINT `course_quest_id_ibfk` FOREIGN KEY (`questionnaire_id`) REFERENCES `questionnaires` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -190,7 +191,7 @@ CREATE TABLE `course` (
 
 LOCK TABLES `course` WRITE;
 /*!40000 ALTER TABLE `course` DISABLE KEYS */;
-INSERT INTO `course` VALUES (1,'Clinical Transfusiology','opiekun trans','miejsce trans',4,4,4,4,1,0),(2,'Prevention of HIV infection',NULL,NULL,0,0,0,0,1,1),(3,'Emergency Medicine','op ratun',NULL,4,4,4,4,1,0),(4,'Medical Certification',NULL,NULL,0,0,0,0,1,1),(5,'Bioethics',NULL,NULL,0,0,0,0,1,1),(6,'Medical Law',NULL,NULL,0,0,0,0,1,1),(7,'Clinical Transfusiology',NULL,NULL,0,0,0,0,2,0),(8,'Prevention of HIV infection',NULL,NULL,0,0,0,0,2,0),(9,'Emergency Medicine',NULL,NULL,0,0,0,0,2,0),(10,'Medical Certification',NULL,NULL,0,0,0,0,2,0),(11,'Bioethics',NULL,NULL,0,0,0,0,2,0),(12,'Medical Law',NULL,NULL,0,0,0,0,2,0),(13,'Clinical Transfusiology',NULL,NULL,0,0,0,0,3,0),(14,'Prevention of HIV infection',NULL,NULL,0,0,0,0,3,0),(15,'Emergency Medicine',NULL,NULL,0,0,0,0,3,0),(16,'Medical Certification',NULL,NULL,0,0,0,0,3,0),(17,'Bioethics',NULL,NULL,0,0,0,0,3,0),(18,'Medical Law',NULL,NULL,0,0,0,0,3,0),(19,'Clinical Transfusiology',NULL,NULL,0,0,0,0,4,0),(20,'Prevention of HIV infection',NULL,NULL,0,0,0,0,4,0),(21,'Emergency Medicine',NULL,NULL,0,0,0,0,4,0),(22,'Medical Certification',NULL,NULL,0,0,0,0,4,0),(23,'Bioethics',NULL,NULL,0,0,0,0,4,0),(24,'Medical Law',NULL,NULL,0,0,0,0,4,0),(25,'Clinical Transfusiology',NULL,NULL,0,0,0,0,5,0),(26,'Prevention of HIV infection',NULL,NULL,0,0,0,0,5,0),(27,'Emergency Medicine',NULL,NULL,0,0,0,0,5,0),(28,'Medical Certification',NULL,NULL,0,0,0,0,5,0),(29,'Bioethics',NULL,NULL,0,0,0,0,5,0),(30,'Medical Law',NULL,NULL,0,0,0,0,5,0),(31,'Clinical Transfusiology',NULL,NULL,0,0,0,0,6,0),(32,'Prevention of HIV infection',NULL,NULL,0,0,0,0,6,0),(33,'Emergency Medicine',NULL,NULL,0,0,0,0,6,0),(34,'Medical Certification',NULL,NULL,0,0,0,0,6,0),(35,'Bioethics',NULL,NULL,0,0,0,0,6,0),(36,'Medical Law',NULL,NULL,0,0,0,0,6,0);
+INSERT INTO `course` VALUES (1,'Clinical Transfusiology','opiekun trans','miejsce trans',4,4,4,4,1,0),(2,'Prevention of HIV infection',NULL,NULL,0,0,0,0,1,1),(3,'Emergency Medicine','op ratun',NULL,4,4,4,4,1,0),(4,'Medical Certification',NULL,NULL,0,0,0,0,1,1),(5,'Bioethics',NULL,NULL,0,0,0,0,1,1),(6,'Medical Law',NULL,NULL,0,0,0,0,1,1),(7,'Clinical Transfusiology',NULL,NULL,0,0,0,0,2,0),(8,'Prevention of HIV infection',NULL,NULL,0,0,0,0,2,0),(9,'Emergency Medicine',NULL,NULL,0,0,0,0,2,0),(10,'Medical Certification',NULL,NULL,0,0,0,0,2,0),(11,'Bioethics',NULL,NULL,0,0,0,0,2,0),(12,'Medical Law',NULL,NULL,0,0,0,0,2,0),(13,'Clinical Transfusiology',NULL,NULL,0,0,0,0,3,0),(14,'Prevention of HIV infection',NULL,NULL,0,0,0,0,3,0),(15,'Emergency Medicine',NULL,NULL,0,0,0,0,3,0),(16,'Medical Certification',NULL,NULL,0,0,0,0,3,0),(17,'Bioethics',NULL,NULL,0,0,0,0,3,0),(18,'Medical Law',NULL,NULL,0,0,0,0,3,0),(19,'Clinical Transfusiology',NULL,NULL,0,0,0,0,4,0),(20,'Prevention of HIV infection',NULL,NULL,0,0,0,0,4,0),(21,'Emergency Medicine',NULL,NULL,0,0,0,0,4,0),(22,'Medical Certification',NULL,NULL,0,0,0,0,4,0),(23,'Bioethics',NULL,NULL,0,0,0,0,4,0),(24,'Medical Law',NULL,NULL,0,0,0,0,4,0),(25,'Clinical Transfusiology',NULL,NULL,0,0,0,0,5,0),(26,'Prevention of HIV infection',NULL,NULL,0,0,0,0,5,0),(27,'Emergency Medicine',NULL,NULL,0,0,0,0,5,0),(28,'Medical Certification',NULL,NULL,0,0,0,0,5,0),(29,'Bioethics',NULL,NULL,0,0,0,0,5,0),(30,'Medical Law',NULL,NULL,0,0,0,0,5,0),(31,'Clinical Transfusiology',NULL,NULL,0,0,0,0,6,0),(32,'Prevention of HIV infection',NULL,NULL,0,0,0,0,6,0),(33,'Emergency Medicine',NULL,NULL,0,0,0,0,6,0),(34,'Medical Certification',NULL,NULL,0,0,0,0,6,0),(35,'Bioethics',NULL,NULL,0,0,0,0,6,0),(36,'Medical Law',NULL,NULL,0,0,0,0,6,0),(37,'Clinical Transfusiology',NULL,NULL,0,0,0,0,7,0),(38,'Prevention of HIV infection',NULL,NULL,0,0,0,0,7,0),(39,'Emergency Medicine',NULL,NULL,0,0,0,0,7,0),(40,'Medical Certification',NULL,NULL,0,0,0,0,7,0),(41,'Bioethics',NULL,NULL,0,0,0,0,7,0),(42,'Medical Law',NULL,NULL,0,0,0,0,7,0);
 /*!40000 ALTER TABLE `course` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -249,7 +250,7 @@ CREATE TABLE `internship_section` (
   PRIMARY KEY (`id`),
   KEY `section_quest_id_ibfk` (`questionnaire_id`),
   CONSTRAINT `section_quest_id_ibfk` FOREIGN KEY (`questionnaire_id`) REFERENCES `questionnaires` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -258,7 +259,7 @@ CREATE TABLE `internship_section` (
 
 LOCK TABLES `internship_section` WRITE;
 /*!40000 ALTER TABLE `internship_section` DISABLE KEYS */;
-INSERT INTO `internship_section` VALUES (1,'Internal Medicine','opiek ch.w','oddział ch wew',3,3,3,3,3,3,3,3,3,1,0),(2,'Pediatrics',NULL,NULL,0,0,0,0,0,0,0,0,0,1,1),(3,'General Surgery',NULL,NULL,0,0,0,0,0,0,0,0,0,1,1),(4,'Obsterics and Gynecology',NULL,NULL,0,0,0,0,0,0,0,0,0,1,1),(5,'Anesthesiology and Intensive Care','op anest','miej anes',3,3,3,3,3,3,3,0,0,1,0),(6,'Psychiatry',NULL,NULL,0,0,0,0,0,0,0,0,0,1,1),(7,'Family Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,1,1),(8,'Internal Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,2,0),(9,'Pediatrics',NULL,NULL,0,0,0,0,0,0,0,0,0,2,0),(10,'General Surgery',NULL,NULL,0,0,0,0,0,0,0,0,0,2,0),(11,'Obsterics and Gynecology',NULL,NULL,0,0,0,0,0,0,0,0,0,2,0),(12,'Anesthesiology and Intensive Care',NULL,NULL,0,0,0,0,0,0,0,0,0,2,0),(13,'Psychiatry',NULL,NULL,0,0,0,0,0,0,0,0,0,2,0),(14,'Family Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,2,0),(15,'Internal Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,3,0),(16,'Pediatrics',NULL,NULL,0,0,0,0,0,0,0,0,0,3,0),(17,'General Surgery',NULL,NULL,0,0,0,0,0,0,0,0,0,3,0),(18,'Obsterics and Gynecology',NULL,NULL,0,0,0,0,0,0,0,0,0,3,0),(19,'Anesthesiology and Intensive Care',NULL,NULL,0,0,0,0,0,0,0,0,0,3,0),(20,'Psychiatry',NULL,NULL,0,0,0,0,0,0,0,0,0,3,0),(21,'Family Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,3,0),(22,'Internal Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,4,0),(23,'Pediatrics',NULL,NULL,0,0,0,0,0,0,0,0,0,4,0),(24,'General Surgery',NULL,NULL,0,0,0,0,0,0,0,0,0,4,0),(25,'Obsterics and Gynecology',NULL,NULL,0,0,0,0,0,0,0,0,0,4,0),(26,'Anesthesiology and Intensive Care',NULL,NULL,0,0,0,0,0,0,0,0,0,4,0),(27,'Psychiatry',NULL,NULL,0,0,0,0,0,0,0,0,0,4,0),(28,'Family Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,4,0),(29,'Internal Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,5,0),(30,'Pediatrics',NULL,NULL,0,0,0,0,0,0,0,0,0,5,0),(31,'General Surgery',NULL,NULL,0,0,0,0,0,0,0,0,0,5,0),(32,'Obsterics and Gynecology',NULL,NULL,0,0,0,0,0,0,0,0,0,5,0),(33,'Anesthesiology and Intensive Care',NULL,NULL,0,0,0,0,0,0,0,0,0,5,0),(34,'Psychiatry',NULL,NULL,0,0,0,0,0,0,0,0,0,5,0),(35,'Family Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,5,0),(36,'Internal Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,6,0),(37,'Pediatrics',NULL,NULL,0,0,0,0,0,0,0,0,0,6,0),(38,'General Surgery',NULL,NULL,0,0,0,0,0,0,0,0,0,6,0),(39,'Obsterics and Gynecology',NULL,NULL,0,0,0,0,0,0,0,0,0,6,0),(40,'Anesthesiology and Intensive Care',NULL,NULL,0,0,0,0,0,0,0,0,0,6,0),(41,'Psychiatry',NULL,NULL,0,0,0,0,0,0,0,0,0,6,0),(42,'Family Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,6,0);
+INSERT INTO `internship_section` VALUES (1,'Internal Medicine','opiek ch.w','oddział ch wew',3,3,3,3,3,3,3,3,3,1,0),(2,'Pediatrics',NULL,NULL,0,0,0,0,0,0,0,0,0,1,1),(3,'General Surgery',NULL,NULL,0,0,0,0,0,0,0,0,0,1,1),(4,'Obsterics and Gynecology',NULL,NULL,0,0,0,0,0,0,0,0,0,1,1),(5,'Anesthesiology and Intensive Care','op anest','miej anes',3,3,3,3,3,3,3,0,0,1,0),(6,'Psychiatry',NULL,NULL,0,0,0,0,0,0,0,0,0,1,1),(7,'Family Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,1,1),(8,'Internal Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,2,0),(9,'Pediatrics',NULL,NULL,0,0,0,0,0,0,0,0,0,2,0),(10,'General Surgery',NULL,NULL,0,0,0,0,0,0,0,0,0,2,0),(11,'Obsterics and Gynecology',NULL,NULL,0,0,0,0,0,0,0,0,0,2,0),(12,'Anesthesiology and Intensive Care',NULL,NULL,0,0,0,0,0,0,0,0,0,2,0),(13,'Psychiatry',NULL,NULL,0,0,0,0,0,0,0,0,0,2,0),(14,'Family Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,2,0),(15,'Internal Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,3,0),(16,'Pediatrics',NULL,NULL,0,0,0,0,0,0,0,0,0,3,0),(17,'General Surgery',NULL,NULL,0,0,0,0,0,0,0,0,0,3,0),(18,'Obsterics and Gynecology',NULL,NULL,0,0,0,0,0,0,0,0,0,3,0),(19,'Anesthesiology and Intensive Care',NULL,NULL,0,0,0,0,0,0,0,0,0,3,0),(20,'Psychiatry',NULL,NULL,0,0,0,0,0,0,0,0,0,3,0),(21,'Family Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,3,0),(22,'Internal Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,4,0),(23,'Pediatrics',NULL,NULL,0,0,0,0,0,0,0,0,0,4,0),(24,'General Surgery',NULL,NULL,0,0,0,0,0,0,0,0,0,4,0),(25,'Obsterics and Gynecology',NULL,NULL,0,0,0,0,0,0,0,0,0,4,0),(26,'Anesthesiology and Intensive Care',NULL,NULL,0,0,0,0,0,0,0,0,0,4,0),(27,'Psychiatry',NULL,NULL,0,0,0,0,0,0,0,0,0,4,0),(28,'Family Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,4,0),(29,'Internal Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,5,0),(30,'Pediatrics',NULL,NULL,0,0,0,0,0,0,0,0,0,5,0),(31,'General Surgery',NULL,NULL,0,0,0,0,0,0,0,0,0,5,0),(32,'Obsterics and Gynecology',NULL,NULL,0,0,0,0,0,0,0,0,0,5,0),(33,'Anesthesiology and Intensive Care',NULL,NULL,0,0,0,0,0,0,0,0,0,5,0),(34,'Psychiatry',NULL,NULL,0,0,0,0,0,0,0,0,0,5,0),(35,'Family Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,5,0),(36,'Internal Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,6,0),(37,'Pediatrics',NULL,NULL,0,0,0,0,0,0,0,0,0,6,0),(38,'General Surgery',NULL,NULL,0,0,0,0,0,0,0,0,0,6,0),(39,'Obsterics and Gynecology',NULL,NULL,0,0,0,0,0,0,0,0,0,6,0),(40,'Anesthesiology and Intensive Care',NULL,NULL,0,0,0,0,0,0,0,0,0,6,0),(41,'Psychiatry',NULL,NULL,0,0,0,0,0,0,0,0,0,6,0),(42,'Family Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,6,0),(43,'Internal Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,7,0),(44,'Pediatrics',NULL,NULL,0,0,0,0,0,0,0,0,0,7,0),(45,'General Surgery',NULL,NULL,0,0,0,0,0,0,0,0,0,7,0),(46,'Obsterics and Gynecology',NULL,NULL,0,0,0,0,0,0,0,0,0,7,0),(47,'Anesthesiology and Intensive Care',NULL,NULL,0,0,0,0,0,0,0,0,0,7,0),(48,'Psychiatry',NULL,NULL,0,0,0,0,0,0,0,0,0,7,0),(49,'Family Medicine',NULL,NULL,0,0,0,0,0,0,0,0,0,7,0);
 /*!40000 ALTER TABLE `internship_section` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -283,7 +284,7 @@ CREATE TABLE `internship_unit` (
 
 LOCK TABLES `internship_unit` WRITE;
 /*!40000 ALTER TABLE `internship_unit` DISABLE KEYS */;
-INSERT INTO `internship_unit` VALUES (1,'Samodzielny Publiczny Szpital Kliniczny Nr 1 w Szczecinie','OIL w Szczecinie'),(2,'SPSK Nr 2 w Szczecinie','OIL w Szczecinie');
+INSERT INTO `internship_unit` VALUES (1,'Samodzielny Publiczny Szpital Kliniczny Nr 1 w Szczecinie','Okręgowa Izba Lekarska w Szczecinie'),(2,'SPSK Nr 2 w Szczecinie','Okręgowa Izba Lekarska w Szczecinie');
 /*!40000 ALTER TABLE `internship_unit` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -339,7 +340,7 @@ CREATE TABLE `questionnaires` (
   KEY `verification_id` (`verification_id`),
   CONSTRAINT `unit_id_ibfk` FOREIGN KEY (`unit_id`) REFERENCES `internship_unit` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `user_id_ibfk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -348,7 +349,7 @@ CREATE TABLE `questionnaires` (
 
 LOCK TABLES `questionnaires` WRITE;
 /*!40000 ALTER TABLE `questionnaires` DISABLE KEYS */;
-INSERT INTO `questionnaires` VALUES (1,2,'OIL w Szczecinie',1,1,'2020-03-11 13:19:32','2020-03-11','d39b9b99-2273-4912-9864-044ba5577187','Jan Nowak',6),(2,0,NULL,NULL,1,'2020-03-12 11:02:55',NULL,NULL,NULL,0),(3,0,NULL,NULL,6,'2020-03-28 21:58:07',NULL,NULL,NULL,0),(4,0,NULL,NULL,1,'2020-04-02 10:19:23',NULL,NULL,NULL,0),(5,0,NULL,NULL,1,'2020-04-05 09:51:34',NULL,NULL,NULL,0),(6,0,NULL,NULL,1,'2020-04-05 09:51:40',NULL,NULL,NULL,0);
+INSERT INTO `questionnaires` VALUES (1,2,'Okręgowa Izba Lekarska w Szczecinie',1,1,'2020-04-14 10:25:21','2020-03-11','d39b9b99-2273-4912-9864-044ba5577187','Jan Nowak',6),(2,0,NULL,NULL,1,'2020-03-12 11:02:55',NULL,NULL,NULL,0),(3,0,NULL,NULL,6,'2020-03-28 21:58:07',NULL,NULL,NULL,0),(4,0,NULL,NULL,1,'2020-04-02 10:19:23',NULL,NULL,NULL,0),(5,0,NULL,NULL,1,'2020-04-05 09:51:34',NULL,NULL,NULL,0),(6,0,NULL,NULL,1,'2020-04-10 17:40:20',NULL,NULL,NULL,0),(7,0,NULL,NULL,1,'2020-04-14 09:31:23',NULL,NULL,NULL,0);
 /*!40000 ALTER TABLE `questionnaires` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -399,7 +400,7 @@ CREATE TABLE `user_admin_data` (
 
 LOCK TABLES `user_admin_data` WRITE;
 /*!40000 ALTER TABLE `user_admin_data` DISABLE KEYS */;
-INSERT INTO `user_admin_data` VALUES (3,1),(4,2),(5,3);
+INSERT INTO `user_admin_data` VALUES (3,1),(4,2),(5,3),(7,4);
 /*!40000 ALTER TABLE `user_admin_data` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -417,7 +418,7 @@ CREATE TABLE `users` (
   `enabled` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -426,7 +427,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'xi@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',1),(2,'jin@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',1),(3,'ping@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',1),(4,'ho@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',1),(5,'chi@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',1),(6,'krzhalewski@gmail.com','{bcrypt}$2a$10$JehsCuLQSEvtqN1flPvL/eQ9HCS9Dt51Y1TP7dFe6zuJCwl2eU2Yu',1);
+INSERT INTO `users` VALUES (1,'xi@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',1),(2,'jin@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',1),(3,'ping@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',1),(4,'ho@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',1),(5,'chi@g.com','{bcrypt}$2a$10$BSEX1pxjulNZcFCbsxb5mufJUhW1bQ8Yw5Tulyp7gjR1LhnkpWu8S',1),(6,'krzhalewski@gmail.com','{bcrypt}$2a$10$JehsCuLQSEvtqN1flPvL/eQ9HCS9Dt51Y1TP7dFe6zuJCwl2eU2Yu',1),(7,'krrsssfire@gmail.com','{bcrypt}$2a$10$5JOxlMc9FFzR0T2z11YqleD6ADHd7QkTWRN.c8r7RT.99tVQlXbOm',0);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -472,7 +473,7 @@ CREATE TABLE `verification_token` (
   PRIMARY KEY (`id`),
   KEY `verification_token_ibfk` (`user_id`),
   CONSTRAINT `verification_token_ibfk` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -481,7 +482,7 @@ CREATE TABLE `verification_token` (
 
 LOCK TABLES `verification_token` WRITE;
 /*!40000 ALTER TABLE `verification_token` DISABLE KEYS */;
-INSERT INTO `verification_token` VALUES (1,6,'2020-03-31','8268dcab-263e-4527-86e8-8aa5cecd3e54');
+INSERT INTO `verification_token` VALUES (1,6,'2020-03-31','8268dcab-263e-4527-86e8-8aa5cecd3e54'),(2,7,'2020-04-13','066363a5-daca-441b-847f-efb3843c42b5');
 /*!40000 ALTER TABLE `verification_token` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -494,4 +495,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2020-04-09 20:23:33
+-- Dump completed on 2020-04-15  8:12:24

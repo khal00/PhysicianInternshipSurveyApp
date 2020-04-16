@@ -1,9 +1,4 @@
-DROP DATABASE IF EXISTS `internship_survey`;
-
-CREATE DATABASE `internship_survey` DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;
-USE `internship_survey`;
-
-CREATE TABLE `users` (
+CREATE TABLE `users` if not exists (
 `id` int NOT NULL AUTO_INCREMENT,
 `email` varchar(50) NOT NULL,
 `password` char(68) NOT NULL,
