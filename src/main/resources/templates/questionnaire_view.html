@@ -35,19 +35,15 @@
 	</script>
 	
 	<script>
-	function validateForm(){
-		var form = document.getElementById('questForm');
-		if (!form.checkValidity()) {
-	          event.preventDefault();
-	          event.stopPropagation();
-	        }
-		form.classList.add('was-validated');
-	
-	}
-	
-	</script>
-	
-	<script>
+		function validateForm(){
+			var form = document.getElementById('questForm');
+			if (!form.checkValidity()) {
+		          event.preventDefault();
+		          event.stopPropagation();
+		        }
+			form.classList.add('was-validated');	
+		}
+
 	    $(document).ready(function(){
 	    	
 	    	$('input[type=checkbox]').click(function(){
@@ -96,15 +92,6 @@
 	    });
 	   
 	</script>
-	
-	
-	<style>
-	.rate-input{
-		width: 80px;
-	}
-	</style>
-	
-
 
 </head>
 <body>

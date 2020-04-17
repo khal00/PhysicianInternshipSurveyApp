@@ -1,5 +1,15 @@
 To do:
 
+validation: add general info that not all fields are filled and add script to scroll to unfilled field
+
+language button in header
+
+add to footer: contact, terms of service
+
+all styles tag in one file
+
+all scripts in one script tag (and minify them for performance)
+
 Cron operation to delete expired tokens (baeldung)
 
 add more tests
