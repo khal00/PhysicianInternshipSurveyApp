@@ -1,3 +1,20 @@
+body {
+	font-family: 'Roboto', sans-serif;
+}
+
+table {
+  font-size: 0.8rem;
+}
+
+td {
+	vertical-align: middle !important;
+}
+
+.main-container{
+	min-height: 300px;
+	background: linear-gradient(0deg, rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url(/images/Medical-Services.jpg) no-repeat center fixed;	
+}
+
 .dropdown-item:active {
 border-style: none !important;
 background-color: grey !important;
@@ -48,6 +65,10 @@ max-width: 350px;
 	background: rgba(230,230,230,0.08);
 }
 
+.user-panel-trans-container {
+	background: rgba(230,230,230,0.0);
+}
+
 .invalid-feedback{
 	color: #ffc107 !important;
 }
@@ -56,4 +77,60 @@ max-width: 350px;
 	width: 80px;
 }
 
+.settings-button {
+	min-width: 100px
+}
+
+
+.action-btn{
+	min-width: 80px;
+}
+
+.user-panel-button {
+	font-size: 0.6rem;
+	min-width: 150px !important;
+}
+
+@media (min-width: 230px) {
+	.user-panel-button{
+		font-size: 0.8rem;
+		min-width: 200px !important;
+	}
+}
+
+@media (min-width: 280px) {
+	.user-panel-button{
+		font-size: 1rem;
+		min-width: 250px !important;
+	}
+}
+
+@media (min-width: 576px) {
+	table {
+		font-size: 1rem;
+	}
+	
+	.user-panel-button{
+		font-size: 1rem;
+		min-width: 350px !important;
+	}
+	
+	.action-btn{
+		min-width: 90px;
+	}
+		
+	.user-panel-trans-container {
+	background: rgba(230,230,230,0.08);
+	}
+	
+	.main-container{
+		min-height: 700px;
+	}
+}
+
+@media (min-width: 768px) {
+	.main-container{
+		min-height: 700px;
+	}	
+}
 

@@ -34,13 +34,20 @@
 		}
 	</script>
 	
-	<script>
+	<script>	
 		function validateForm(){
 			var form = document.getElementById('questForm');
 			if (!form.checkValidity()) {
 		          event.preventDefault();
 		          event.stopPropagation();
 		        }
+			
+			var errorElements = document.querySelectorAll(
+	            "select.custom-select:invalid, input.form-control:invalid");
+			$('html, body').animate({
+	            scrollTop: $(errorElements[0]).offset().top - 50
+	          }, 2000);
+	          
 			form.classList.add('was-validated');	
 		}
 
