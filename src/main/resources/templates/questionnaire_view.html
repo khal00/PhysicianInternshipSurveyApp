@@ -173,8 +173,8 @@
 								<label for="coordinatorRatingInput" th:text="#{questionnaire.rating}"></label>
 								
 								<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-								, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-									<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107; font-size: 0.9rem"></i>
+								, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+									<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon questionnaire-help-icon"></i>
 								</a>
 								
 								<input type="number" min="1" max="6" step="1" value="0" id="coordinatorRatingInput" th:field="*{coordinator}" class="form-control rate-input"
@@ -195,11 +195,11 @@
 								th:field="*{sections[0].disabled}"
 								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}"
 								th:checked="*{sections[0].disabled}">
-								<label style="font-size: 0.8rem" for="InternalMedNotRequired" th:text="#{questionnaire.notRequired}"></label>
+								<label class="questionnaire-not-required-label" for="InternalMedNotRequired" th:text="#{questionnaire.notRequired}"></label>
 						</div>
 						
-						<div id="InternalMedSection" th:class="*{sections[0].disabled} ? d-none">
-							<div class="form-row" style="font-size:0.9rem">
+						<div id="InternalMedSection" class="section-inner-div" th:classappend="*{sections[0].disabled} ? d-none">
+							<div class="form-row">
 								
 								<div class="form-group col-sm-8 col-xl-4">
 									<label for="InternalMedTutorName" th:text="#{questionnaire.tutor}"></label>
@@ -212,8 +212,8 @@
 									<label for="InternalMedTutorRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="InternalMedTutorRate" th:attr="min=(*{sections[0].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[0].tutor}" class="form-control rate-input" 
@@ -232,8 +232,8 @@
 									<label for="InternalMedUnitRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="InternalMedUnitRate" th:attr="min=(*{sections[0].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[0].unit}" class="form-control rate-input" 
@@ -243,7 +243,7 @@
 							</div>
 							
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="InternalMedWard" th:text="#{questionnaire.ward}"></label>		
@@ -253,8 +253,8 @@
 									<label for="InternalMedWard" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="InternalMedWard" th:attr="min=(*{sections[0].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[0].ward}" class="form-control rate-input" 
@@ -270,8 +270,8 @@
 									<label for="InternalMedClinic" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="InternalMedClinic" th:attr="min=(*{sections[0].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[0].clinic}" class="form-control rate-input" 
@@ -281,7 +281,7 @@
 	
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="InternalMedNumOfProc" th:text="#{questionnaire.numOfProcedures}"></label>		
@@ -291,8 +291,8 @@
 									<label for="InternalMedNumOfProc" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleNumOfProc1} + '<br />' + #{questionnaire.ratingScaleNumOfProc6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleNumOfProc1} + '<br />' + #{questionnaire.ratingScaleNumOfProc6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="InternalMedNumOfProc" th:attr="min=(*{sections[0].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[0].numberOfProcedures}" class="form-control rate-input" 
@@ -308,8 +308,8 @@
 									<label for="InternalMedProcAutonomy" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleProcAuto1} + '<br />' + #{questionnaire.ratingScaleProcAuto6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleProcAuto1} + '<br />' + #{questionnaire.ratingScaleProcAuto6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="InternalMedProcAutonomy" th:attr="min=(*{sections[0].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[0].proceduresAutonomy}" class="form-control rate-input" 
@@ -319,7 +319,7 @@
 	
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="InternalMedTheorKnowledge" th:text="#{questionnaire.theoreticalKnowledge}"></label>		
@@ -329,8 +329,8 @@
 									<label for="InternalMedTheorKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="InternalMedTheorKnowledge" th:attr="min=(*{sections[0].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[0].theoreticalKnowledge}" class="form-control rate-input" 
@@ -346,8 +346,8 @@
 									<label for="InternalMedPractKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>
+										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>
 									</a>
 									
 									<input type="number" id="InternalMedPractKnowledge" th:attr="min=(*{sections[0].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[0].practicalKnowledge}" class="form-control rate-input" 
@@ -357,7 +357,7 @@
 	
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="InternalMedDuty" th:text="#{questionnaire.duty}"></label>		
@@ -367,8 +367,8 @@
 									<label for="InternalMedDuty" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleDuty1} + '<br />' + #{questionnaire.ratingScaleDuty6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleDuty1} + '<br />' + #{questionnaire.ratingScaleDuty6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="InternalMedDuty" th:attr="min=(*{sections[0].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[0].medicalDuty}" class="form-control rate-input" 
@@ -390,11 +390,11 @@
 								th:field="*{courses[0].disabled}"
 								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}"
 								th:checked="*{courses[0].disabled}">
-								<label style="font-size: 0.8rem" for="TransfusiologyNotRequired" th:text="#{questionnaire.notRequired}"></label>
+								<label class="questionnaire-not-required-label" for="TransfusiologyNotRequired" th:text="#{questionnaire.notRequired}"></label>
 						</div>
 						
-						<div id="TransfusiologySection" th:class="*{courses[0].disabled} ? d-none">
-							<div class="form-row" style="font-size:0.9rem">
+						<div id="TransfusiologySection" class="section-inner-div" th:classappend="*{courses[0].disabled} ? d-none">
+							<div class="form-row">
 								
 								<div class="form-group col-sm-8 col-xl-4">
 									<label for="TransfusiologyTutorName" th:text="#{questionnaire.tutor}"></label>
@@ -407,8 +407,8 @@
 									<label for="TransfusiologyTutorRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="TransfusiologyTutorRate" th:attr="min=(*{courses[0].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[0].tutor}" class="form-control rate-input" 
@@ -427,8 +427,8 @@
 									<label for="TransfusiologyUnitRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="TransfusiologyUnitRate" th:attr="min=(*{courses[0].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[0].unit}" class="form-control rate-input" 
@@ -437,7 +437,7 @@
 								</div>
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="TransfusiologyTheorKnowledge" th:text="#{questionnaire.theoreticalKnowledge}"></label>		
@@ -447,8 +447,8 @@
 									<label for="TransfusiologyTheorKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="TransfusiologyTheorKnowledge" th:attr="min=(*{courses[0].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[0].theoreticalKnowledge}" class="form-control rate-input" 
@@ -464,8 +464,8 @@
 									<label for="TransfusiologyPractKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="TransfusiologyPractKnowledge" th:attr="min=(*{courses[0].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[0].practicalKnowledge}" class="form-control rate-input" 
@@ -488,11 +488,11 @@
 								th:field="*{courses[1].disabled}"
 								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}"
 								th:checked="*{courses[1].disabled}">
-								<label style="font-size: 0.8rem" for="HivNotRequired" th:text="#{questionnaire.notRequired}"></label>
+								<label class="questionnaire-not-required-label" for="HivNotRequired" th:text="#{questionnaire.notRequired}"></label>
 						</div>
 						
-						<div id="HivSection" th:class="*{courses[1].disabled} ? d-none">
-							<div class="form-row" style="font-size:0.9rem">
+						<div id="HivSection" class="section-inner-div" th:classappend="*{courses[1].disabled} ? d-none">
+							<div class="form-row">
 								
 								<div class="form-group col-sm-8 col-xl-4">
 									<label for="HivTutorName" th:text="#{questionnaire.tutor}"></label>
@@ -505,8 +505,8 @@
 									<label for="HivTutorRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="HivTutorRate" th:attr="min=(*{courses[1].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[1].tutor}" class="form-control rate-input" 
@@ -525,8 +525,8 @@
 									<label for="HivUnitRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="HivUnitRate" th:attr="min=(*{courses[1].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[1].unit}" class="form-control rate-input" 
@@ -535,7 +535,7 @@
 								</div>
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="HivTheorKnowledge" th:text="#{questionnaire.theoreticalKnowledge}"></label>		
@@ -545,8 +545,8 @@
 									<label for="HivTheorKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="HivTheorKnowledge" th:attr="min=(*{courses[1].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[1].theoreticalKnowledge}" class="form-control rate-input" 
@@ -562,8 +562,8 @@
 									<label for="HivPractKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="HivPractKnowledge" th:attr="min=(*{courses[1].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[1].practicalKnowledge}" class="form-control rate-input" 
@@ -584,11 +584,11 @@
 								th:field="*{sections[1].disabled}"
 								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}"
 								th:checked="*{sections[1].disabled}">
-								<label style="font-size: 0.8rem" for="PediatricsNotRequired" th:text="#{questionnaire.notRequired}"></label>
+								<label class="questionnaire-not-required-label" for="PediatricsNotRequired" th:text="#{questionnaire.notRequired}"></label>
 						</div>
 						
-						<div id="PediatricsSection" th:class="*{sections[1].disabled} ? d-none">
-							<div class="form-row" style="font-size:0.9rem">
+						<div id="PediatricsSection" class="section-inner-div" th:classappend="*{sections[1].disabled} ? d-none">
+							<div class="form-row">
 								
 								<div class="form-group col-sm-8 col-xl-4">
 									<label for="PediatricsTutorName" th:text="#{questionnaire.tutor}"></label>
@@ -601,8 +601,8 @@
 									<label for="PediatricsTutorRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="PediatricsTutorRate" th:attr="min=(*{sections[1].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[1].tutor}" class="form-control rate-input" 
@@ -621,8 +621,8 @@
 									<label for="PediatricsUnitRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="PediatricsUnitRate" th:attr="min=(*{sections[1].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[1].unit}" class="form-control rate-input" 
@@ -632,7 +632,7 @@
 							</div>
 							
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="PediatricsWard" th:text="#{questionnaire.ward}"></label>		
@@ -642,8 +642,8 @@
 									<label for="PediatricsWard" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="PediatricsWard" th:attr="min=(*{sections[1].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[1].ward}" class="form-control rate-input" 
@@ -659,8 +659,8 @@
 									<label for="PediatricsClinic" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="PediatricsClinic" th:attr="min=(*{sections[1].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[1].clinic}" class="form-control rate-input" 
@@ -670,7 +670,7 @@
 	
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="PediatricsNumOfProc" th:text="#{questionnaire.numOfProcedures}"></label>		
@@ -680,8 +680,8 @@
 									<label for="PediatricsNumOfProc" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleNumOfProc1} + '<br />' + #{questionnaire.ratingScaleNumOfProc6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleNumOfProc1} + '<br />' + #{questionnaire.ratingScaleNumOfProc6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="PediatricsNumOfProc" th:attr="min=(*{sections[1].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[1].numberOfProcedures}" class="form-control rate-input" 
@@ -697,8 +697,8 @@
 									<label for="PediatricsProcAutonomy" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleProcAuto1} + '<br />' + #{questionnaire.ratingScaleProcAuto6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleProcAuto1} + '<br />' + #{questionnaire.ratingScaleProcAuto6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="PediatricsProcAutonomy" th:attr="min=(*{sections[1].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[1].proceduresAutonomy}" class="form-control rate-input" 
@@ -708,7 +708,7 @@
 	
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="PediatricsTheorKnowledge" th:text="#{questionnaire.theoreticalKnowledge}"></label>		
@@ -718,8 +718,8 @@
 									<label for="PediatricsTheorKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="PediatricsTheorKnowledge" th:attr="min=(*{sections[1].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[1].theoreticalKnowledge}" class="form-control rate-input" 
@@ -735,8 +735,8 @@
 									<label for="PediatricsPractKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>
+										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>
 									</a>
 									
 									<input type="number" id="PediatricsPractKnowledge" th:attr="min=(*{sections[1].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[1].practicalKnowledge}" class="form-control rate-input" 
@@ -746,7 +746,7 @@
 	
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="PediatricsDuty" th:text="#{questionnaire.duty}"></label>		
@@ -756,8 +756,8 @@
 									<label for="PediatricsDuty" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleDuty1} + '<br />' + #{questionnaire.ratingScaleDuty6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleDuty1} + '<br />' + #{questionnaire.ratingScaleDuty6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="PediatricsDuty" th:attr="min=(*{sections[1].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[1].medicalDuty}" class="form-control rate-input" 
@@ -778,11 +778,11 @@
 								th:field="*{sections[2].disabled}"
 								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}"
 								th:checked="*{sections[2].disabled}">
-								<label style="font-size: 0.8rem" for="GeneralSurgeryNotRequired" th:text="#{questionnaire.notRequired}"></label>
+								<label class="questionnaire-not-required-label" for="GeneralSurgeryNotRequired" th:text="#{questionnaire.notRequired}"></label>
 						</div>
 						
-						<div id="GeneralSurgerySection" th:class="*{sections[2].disabled} ? d-none">
-							<div class="form-row" style="font-size:0.9rem">
+						<div id="GeneralSurgerySection" class="section-inner-div" th:classappend="*{sections[2].disabled} ? d-none">
+							<div class="form-row">
 								
 								<div class="form-group col-sm-8 col-xl-4">
 									<label for="GeneralSurgeryTutorName" th:text="#{questionnaire.tutor}"></label>
@@ -795,8 +795,8 @@
 									<label for="GeneralSurgeryTutorRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="GeneralSurgeryTutorRate" th:attr="min=(*{sections[2].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[2].tutor}" class="form-control rate-input" 
@@ -815,8 +815,8 @@
 									<label for="GeneralSurgeryUnitRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="GeneralSurgeryUnitRate" th:attr="min=(*{sections[2].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[2].unit}" class="form-control rate-input" 
@@ -826,7 +826,7 @@
 							</div>
 							
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="GeneralSurgeryWard" th:text="#{questionnaire.ward}"></label>		
@@ -836,8 +836,8 @@
 									<label for="GeneralSurgeryWard" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="GeneralSurgeryWard" th:attr="min=(*{sections[2].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[2].ward}" class="form-control rate-input" 
@@ -853,8 +853,8 @@
 									<label for="GeneralSurgeryClinic" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="GeneralSurgeryClinic" th:attr="min=(*{sections[2].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[2].clinic}" class="form-control rate-input" 
@@ -864,7 +864,7 @@
 	
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="GeneralSurgeryNumOfProc" th:text="#{questionnaire.numOfProcedures}"></label>		
@@ -874,8 +874,8 @@
 									<label for="GeneralSurgeryNumOfProc" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleNumOfProc1} + '<br />' + #{questionnaire.ratingScaleNumOfProc6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleNumOfProc1} + '<br />' + #{questionnaire.ratingScaleNumOfProc6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="GeneralSurgeryNumOfProc" th:attr="min=(*{sections[2].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[2].numberOfProcedures}" class="form-control rate-input" 
@@ -891,8 +891,8 @@
 									<label for="GeneralSurgeryProcAutonomy" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleProcAuto1} + '<br />' + #{questionnaire.ratingScaleProcAuto6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleProcAuto1} + '<br />' + #{questionnaire.ratingScaleProcAuto6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="GeneralSurgeryProcAutonomy" th:attr="min=(*{sections[2].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[2].proceduresAutonomy}" class="form-control rate-input" 
@@ -902,7 +902,7 @@
 	
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="GeneralSurgeryTheorKnowledge" th:text="#{questionnaire.theoreticalKnowledge}"></label>		
@@ -912,8 +912,8 @@
 									<label for="GeneralSurgeryTheorKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="GeneralSurgeryTheorKnowledge" th:attr="min=(*{sections[2].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[2].theoreticalKnowledge}" class="form-control rate-input" 
@@ -929,8 +929,8 @@
 									<label for="GeneralSurgeryPractKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>
+										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>
 									</a>
 									
 									<input type="number" id="GeneralSurgeryPractKnowledge" th:attr="min=(*{sections[2].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[2].practicalKnowledge}" class="form-control rate-input" 
@@ -940,7 +940,7 @@
 	
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="GeneralSurgeryDuty" th:text="#{questionnaire.duty}"></label>		
@@ -950,8 +950,8 @@
 									<label for="GeneralSurgeryDuty" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleDuty1} + '<br />' + #{questionnaire.ratingScaleDuty6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleDuty1} + '<br />' + #{questionnaire.ratingScaleDuty6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="GeneralSurgeryDuty" th:attr="min=(*{sections[2].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[2].medicalDuty}" class="form-control rate-input" 
@@ -972,11 +972,11 @@
 								th:field="*{sections[3].disabled}"
 								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}"
 								th:checked="*{sections[3].disabled}">
-								<label style="font-size: 0.8rem" for="ObstericsAndGynNotRequired" th:text="#{questionnaire.notRequired}"></label>
+								<label class="questionnaire-not-required-label" for="ObstericsAndGynNotRequired" th:text="#{questionnaire.notRequired}"></label>
 						</div>
 						
-						<div id="ObstericsAndGynSection" th:class="*{sections[3].disabled} ? d-none">
-							<div class="form-row" style="font-size:0.9rem">
+						<div id="ObstericsAndGynSection" class="section-inner-div" th:classappend="*{sections[3].disabled} ? d-none">
+							<div class="form-row">
 								
 								<div class="form-group col-sm-8 col-xl-4">
 									<label for="ObstericsAndGynTutorName" th:text="#{questionnaire.tutor}"></label>
@@ -989,8 +989,8 @@
 									<label for="ObstericsAndGynTutorRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="ObstericsAndGynTutorRate" th:attr="min=(*{sections[3].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[3].tutor}" class="form-control rate-input" 
@@ -1009,8 +1009,8 @@
 									<label for="ObstericsAndGynUnitRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="ObstericsAndGynUnitRate" th:attr="min=(*{sections[3].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[3].unit}" class="form-control rate-input" 
@@ -1020,7 +1020,7 @@
 							</div>
 							
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="ObstericsAndGynWard" th:text="#{questionnaire.ward}"></label>		
@@ -1030,8 +1030,8 @@
 									<label for="ObstericsAndGynWard" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="ObstericsAndGynWard" th:attr="min=(*{sections[3].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[3].ward}" class="form-control rate-input" 
@@ -1047,8 +1047,8 @@
 									<label for="ObstericsAndGynClinic" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="ObstericsAndGynClinic" th:attr="min=(*{sections[3].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[3].clinic}" class="form-control rate-input" 
@@ -1058,7 +1058,7 @@
 	
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="ObstericsAndGynNumOfProc" th:text="#{questionnaire.numOfProcedures}"></label>		
@@ -1068,8 +1068,8 @@
 									<label for="ObstericsAndGynNumOfProc" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleNumOfProc1} + '<br />' + #{questionnaire.ratingScaleNumOfProc6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleNumOfProc1} + '<br />' + #{questionnaire.ratingScaleNumOfProc6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="ObstericsAndGynNumOfProc" th:attr="min=(*{sections[3].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[3].numberOfProcedures}" class="form-control rate-input" 
@@ -1085,8 +1085,8 @@
 									<label for="ObstericsAndGynProcAutonomy" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleProcAuto1} + '<br />' + #{questionnaire.ratingScaleProcAuto6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleProcAuto1} + '<br />' + #{questionnaire.ratingScaleProcAuto6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="ObstericsAndGynProcAutonomy" th:attr="min=(*{sections[3].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[3].proceduresAutonomy}" class="form-control rate-input" 
@@ -1096,7 +1096,7 @@
 	
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="ObstericsAndGynTheorKnowledge" th:text="#{questionnaire.theoreticalKnowledge}"></label>		
@@ -1106,8 +1106,8 @@
 									<label for="ObstericsAndGynTheorKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="ObstericsAndGynTheorKnowledge" th:attr="min=(*{sections[3].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[3].theoreticalKnowledge}" class="form-control rate-input" 
@@ -1123,8 +1123,8 @@
 									<label for="ObstericsAndGynPractKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>
+										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>
 									</a>
 									
 									<input type="number" id="ObstericsAndGynPractKnowledge" th:attr="min=(*{sections[3].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[3].practicalKnowledge}" class="form-control rate-input" 
@@ -1134,7 +1134,7 @@
 	
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="ObstericsAndGynDuty" th:text="#{questionnaire.duty}"></label>		
@@ -1144,8 +1144,8 @@
 									<label for="ObstericsAndGynDuty" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleDuty1} + '<br />' + #{questionnaire.ratingScaleDuty6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleDuty1} + '<br />' + #{questionnaire.ratingScaleDuty6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="ObstericsAndGynDuty" th:attr="min=(*{sections[3].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[3].medicalDuty}" class="form-control rate-input" 
@@ -1166,11 +1166,11 @@
 								th:field="*{sections[4].disabled}"
 								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}"
 								th:checked="*{sections[4].disabled}">
-								<label style="font-size: 0.8rem" for="AnesthesiologyNotRequired" th:text="#{questionnaire.notRequired}"></label>
+								<label class="questionnaire-not-required-label" for="AnesthesiologyNotRequired" th:text="#{questionnaire.notRequired}"></label>
 						</div>
 						
-						<div id="AnesthesiologySection" th:class="*{sections[4].disabled} ? d-none">
-							<div class="form-row" style="font-size:0.9rem">
+						<div id="AnesthesiologySection" class="section-inner-div" th:classappend="*{sections[4].disabled} ? d-none">
+							<div class="form-row">
 								
 								<div class="form-group col-sm-8 col-xl-4">
 									<label for="AnesthesiologyTutorName" th:text="#{questionnaire.tutor}"></label>
@@ -1183,8 +1183,8 @@
 									<label for="AnesthesiologyTutorRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="AnesthesiologyTutorRate" th:attr="min=(*{sections[4].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[4].tutor}" class="form-control rate-input" 
@@ -1203,8 +1203,8 @@
 									<label for="AnesthesiologyUnitRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="AnesthesiologyUnitRate" th:attr="min=(*{sections[4].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[4].unit}" class="form-control rate-input" 
@@ -1213,7 +1213,7 @@
 								</div>
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="AnesthesiologyNumOfProc" th:text="#{questionnaire.numOfProcedures}"></label>		
@@ -1223,8 +1223,8 @@
 									<label for="AnesthesiologyNumOfProc" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleNumOfProc1} + '<br />' + #{questionnaire.ratingScaleNumOfProc6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleNumOfProc1} + '<br />' + #{questionnaire.ratingScaleNumOfProc6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="AnesthesiologyNumOfProc" th:attr="min=(*{sections[4].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[4].numberOfProcedures}" class="form-control rate-input" 
@@ -1240,8 +1240,8 @@
 									<label for="AnesthesiologyProcAutonomy" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleProcAuto1} + '<br />' + #{questionnaire.ratingScaleProcAuto6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleProcAuto1} + '<br />' + #{questionnaire.ratingScaleProcAuto6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="AnesthesiologyProcAutonomy" th:attr="min=(*{sections[4].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[4].proceduresAutonomy}" class="form-control rate-input" 
@@ -1251,7 +1251,7 @@
 	
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="AnesthesiologyTheorKnowledge" th:text="#{questionnaire.theoreticalKnowledge}"></label>		
@@ -1261,8 +1261,8 @@
 									<label for="AnesthesiologyTheorKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="AnesthesiologyTheorKnowledge" th:attr="min=(*{sections[4].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[4].theoreticalKnowledge}" class="form-control rate-input" 
@@ -1278,8 +1278,8 @@
 									<label for="AnesthesiologyPractKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>
+										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>
 									</a>
 									
 									<input type="number" id="AnesthesiologyPractKnowledge" th:attr="min=(*{sections[4].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[4].practicalKnowledge}" class="form-control rate-input" 
@@ -1289,7 +1289,7 @@
 	
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="AnesthesiologyDuty" th:text="#{questionnaire.duty}"></label>		
@@ -1299,8 +1299,8 @@
 									<label for="AnesthesiologyDuty" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleDuty1} + '<br />' + #{questionnaire.ratingScaleDuty6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleDuty1} + '<br />' + #{questionnaire.ratingScaleDuty6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="AnesthesiologyDuty" th:attr="min=(*{sections[4].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[4].medicalDuty}" class="form-control rate-input" 
@@ -1321,11 +1321,11 @@
 								th:field="*{courses[2].disabled}"
 								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}"
 								th:checked="*{courses[2].disabled}">
-								<label style="font-size: 0.8rem" for="EmergencyNotRequired" th:text="#{questionnaire.notRequired}"></label>
+								<label class="questionnaire-not-required-label" for="EmergencyNotRequired" th:text="#{questionnaire.notRequired}"></label>
 						</div>
 						
-						<div id="EmergencySection" th:class="*{courses[2].disabled} ? d-none">
-							<div class="form-row" style="font-size:0.9rem">
+						<div id="EmergencySection" class="section-inner-div" th:classappend="*{courses[2].disabled} ? d-none">
+							<div class="form-row">
 								
 								<div class="form-group col-sm-8 col-xl-4">
 									<label for="EmergencyTutorName" th:text="#{questionnaire.tutor}"></label>
@@ -1338,8 +1338,8 @@
 									<label for="EmergencyTutorRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="EmergencyTutorRate" th:attr="min=(*{courses[2].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[2].tutor}" class="form-control rate-input" 
@@ -1358,8 +1358,8 @@
 									<label for="EmergencyUnitRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="EmergencyUnitRate" th:attr="min=(*{courses[2].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[2].unit}" class="form-control rate-input" 
@@ -1368,7 +1368,7 @@
 								</div>
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="EmergencyTheorKnowledge" th:text="#{questionnaire.theoreticalKnowledge}"></label>		
@@ -1378,8 +1378,8 @@
 									<label for="EmergencyTheorKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="EmergencyTheorKnowledge" th:attr="min=(*{courses[2].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[2].theoreticalKnowledge}" class="form-control rate-input" 
@@ -1395,8 +1395,8 @@
 									<label for="EmergencyPractKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="EmergencyPractKnowledge" th:attr="min=(*{courses[2].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[2].practicalKnowledge}" class="form-control rate-input" 
@@ -1417,11 +1417,11 @@
 								th:field="*{sections[5].disabled}"
 								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}"
 								th:checked="*{sections[5].disabled}">
-								<label style="font-size: 0.8rem" for="PsychiatryNotRequired" th:text="#{questionnaire.notRequired}"></label>
+								<label class="questionnaire-not-required-label" for="PsychiatryNotRequired" th:text="#{questionnaire.notRequired}"></label>
 						</div>
 						
-						<div id="PsychiatrySection" th:class="*{sections[5].disabled} ? d-none">
-							<div class="form-row" style="font-size:0.9rem">
+						<div id="PsychiatrySection" class="section-inner-div" th:classappend="*{sections[5].disabled} ? d-none">
+							<div class="form-row">
 								
 								<div class="form-group col-sm-8 col-xl-4">
 									<label for="PsychiatryTutorName" th:text="#{questionnaire.tutor}"></label>
@@ -1434,8 +1434,8 @@
 									<label for="PsychiatryTutorRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="PsychiatryTutorRate" th:attr="min=(*{sections[5].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[5].tutor}" class="form-control rate-input" 
@@ -1454,8 +1454,8 @@
 									<label for="PsychiatryUnitRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="PsychiatryUnitRate" th:attr="min=(*{sections[5].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[5].unit}" class="form-control rate-input" 
@@ -1465,7 +1465,7 @@
 							</div>
 							
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="PsychiatryWard" th:text="#{questionnaire.ward}"></label>		
@@ -1475,8 +1475,8 @@
 									<label for="PsychiatryWard" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="PsychiatryWard" th:attr="min=(*{sections[5].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[5].ward}" class="form-control rate-input" 
@@ -1492,8 +1492,8 @@
 									<label for="PsychiatryClinic" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="PsychiatryClinic" th:attr="min=(*{sections[5].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[5].clinic}" class="form-control rate-input" 
@@ -1503,7 +1503,7 @@
 	
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="PsychiatryNumOfProc" th:text="#{questionnaire.numOfProcedures}"></label>		
@@ -1513,8 +1513,8 @@
 									<label for="PsychiatryNumOfProc" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleNumOfProc1} + '<br />' + #{questionnaire.ratingScaleNumOfProc6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleNumOfProc1} + '<br />' + #{questionnaire.ratingScaleNumOfProc6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="PsychiatryNumOfProc" th:attr="min=(*{sections[5].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[5].numberOfProcedures}" class="form-control rate-input" 
@@ -1530,8 +1530,8 @@
 									<label for="PsychiatryProcAutonomy" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleProcAuto1} + '<br />' + #{questionnaire.ratingScaleProcAuto6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleProcAuto1} + '<br />' + #{questionnaire.ratingScaleProcAuto6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="PsychiatryProcAutonomy" th:attr="min=(*{sections[5].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[5].proceduresAutonomy}" class="form-control rate-input" 
@@ -1541,7 +1541,7 @@
 	
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="PsychiatryTheorKnowledge" th:text="#{questionnaire.theoreticalKnowledge}"></label>		
@@ -1551,8 +1551,8 @@
 									<label for="PsychiatryTheorKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="PsychiatryTheorKnowledge" th:attr="min=(*{sections[5].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[5].theoreticalKnowledge}" class="form-control rate-input" 
@@ -1568,8 +1568,8 @@
 									<label for="PsychiatryPractKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>
+										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>
 									</a>
 									
 									<input type="number" id="PsychiatryPractKnowledge" th:attr="min=(*{sections[5].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[5].practicalKnowledge}" class="form-control rate-input" 
@@ -1579,7 +1579,7 @@
 	
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="PsychiatryDuty" th:text="#{questionnaire.duty}"></label>		
@@ -1589,8 +1589,8 @@
 									<label for="PsychiatryDuty" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleDuty1} + '<br />' + #{questionnaire.ratingScaleDuty6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleDuty1} + '<br />' + #{questionnaire.ratingScaleDuty6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="PsychiatryDuty" th:attr="min=(*{sections[5].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[5].medicalDuty}" class="form-control rate-input" 
@@ -1611,11 +1611,11 @@
 								th:field="*{sections[6].disabled}"
 								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}"
 								th:checked="*{sections[6].disabled}">
-								<label style="font-size: 0.8rem" for="FamilyMedNotRequired" th:text="#{questionnaire.notRequired}"></label>
+								<label class="questionnaire-not-required-label" for="FamilyMedNotRequired" th:text="#{questionnaire.notRequired}"></label>
 						</div>
 						
-						<div id="FamilyMedSection" th:class="*{sections[6].disabled} ? d-none">
-							<div class="form-row" style="font-size:0.9rem">
+						<div id="FamilyMedSection" class="section-inner-div" th:classappend="*{sections[6].disabled} ? d-none">
+							<div class="form-row">
 								
 								<div class="form-group col-sm-8 col-xl-4">
 									<label for="FamilyMedTutorName" th:text="#{questionnaire.tutor}"></label>
@@ -1628,8 +1628,8 @@
 									<label for="FamilyMedTutorRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="FamilyMedTutorRate" th:attr="min=(*{sections[6].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[6].tutor}" class="form-control rate-input" 
@@ -1648,8 +1648,8 @@
 									<label for="FamilyMedUnitRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="FamilyMedUnitRate" th:attr="min=(*{sections[6].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[6].unit}" class="form-control rate-input" 
@@ -1658,7 +1658,7 @@
 								</div>
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="FamilyMedNumOfProc" th:text="#{questionnaire.numOfProcedures}"></label>		
@@ -1668,8 +1668,8 @@
 									<label for="FamilyMedNumOfProc" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleNumOfProc1} + '<br />' + #{questionnaire.ratingScaleNumOfProc6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleNumOfProc1} + '<br />' + #{questionnaire.ratingScaleNumOfProc6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="FamilyMedNumOfProc" th:attr="min=(*{sections[6].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[6].numberOfProcedures}" class="form-control rate-input" 
@@ -1685,8 +1685,8 @@
 									<label for="FamilyMedProcAutonomy" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleProcAuto1} + '<br />' + #{questionnaire.ratingScaleProcAuto6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleProcAuto1} + '<br />' + #{questionnaire.ratingScaleProcAuto6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="FamilyMedProcAutonomy" th:attr="min=(*{sections[6].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[6].proceduresAutonomy}" class="form-control rate-input" 
@@ -1696,7 +1696,7 @@
 	
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="FamilyMedTheorKnowledge" th:text="#{questionnaire.theoreticalKnowledge}"></label>		
@@ -1706,8 +1706,8 @@
 									<label for="FamilyMedTheorKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="FamilyMedTheorKnowledge" th:attr="min=(*{sections[6].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[6].theoreticalKnowledge}" class="form-control rate-input" 
@@ -1723,8 +1723,8 @@
 									<label for="FamilyMedPractKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>
+										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>
 									</a>
 									
 									<input type="number" id="FamilyMedPractKnowledge" th:attr="min=(*{sections[6].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[6].practicalKnowledge}" class="form-control rate-input" 
@@ -1734,7 +1734,7 @@
 	
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="FamilyMedDuty" th:text="#{questionnaire.duty}"></label>		
@@ -1744,8 +1744,8 @@
 									<label for="FamilyMedDuty" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleDuty1} + '<br />' + #{questionnaire.ratingScaleDuty6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleDuty1} + '<br />' + #{questionnaire.ratingScaleDuty6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="FamilyMedDuty" th:attr="min=(*{sections[6].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{sections[6].medicalDuty}" class="form-control rate-input" 
@@ -1766,11 +1766,11 @@
 								th:field="*{courses[3].disabled}"
 								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}"
 								th:checked="*{courses[3].disabled}">
-								<label style="font-size: 0.8rem" for="CertificationNotRequired" th:text="#{questionnaire.notRequired}"></label>
+								<label class="questionnaire-not-required-label" for="CertificationNotRequired" th:text="#{questionnaire.notRequired}"></label>
 						</div>
 						
-						<div id="CertificationSection" th:class="*{courses[3].disabled} ? d-none">
-							<div class="form-row" style="font-size:0.9rem">
+						<div id="CertificationSection" class="section-inner-div" th:classappend="*{courses[3].disabled} ? d-none">
+							<div class="form-row">
 								
 								<div class="form-group col-sm-8 col-xl-4">
 									<label for="CertificationTutorName" th:text="#{questionnaire.tutor}"></label>
@@ -1783,8 +1783,8 @@
 									<label for="CertificationTutorRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="CertificationTutorRate" th:attr="min=(*{courses[3].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[3].tutor}" class="form-control rate-input" 
@@ -1803,8 +1803,8 @@
 									<label for="CertificationUnitRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="CertificationUnitRate" th:attr="min=(*{courses[3].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[3].unit}" class="form-control rate-input" 
@@ -1813,7 +1813,7 @@
 								</div>
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="CertificationTheorKnowledge" th:text="#{questionnaire.theoreticalKnowledge}"></label>		
@@ -1823,8 +1823,8 @@
 									<label for="CertificationTheorKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="CertificationTheorKnowledge" th:attr="min=(*{courses[3].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[3].theoreticalKnowledge}" class="form-control rate-input" 
@@ -1840,8 +1840,8 @@
 									<label for="CertificationPractKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="CertificationPractKnowledge" th:attr="min=(*{courses[3].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[3].practicalKnowledge}" class="form-control rate-input" 
@@ -1862,11 +1862,11 @@
 								th:field="*{courses[4].disabled}"
 								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}"
 								th:checked="*{courses[4].disabled}">
-								<label style="font-size: 0.8rem" for="BioethicsNotRequired" th:text="#{questionnaire.notRequired}"></label>
+								<label class="questionnaire-not-required-label" for="BioethicsNotRequired" th:text="#{questionnaire.notRequired}"></label>
 						</div>
 						
-						<div id="BioethicsSection" th:class="*{courses[4].disabled} ? d-none">
-							<div class="form-row" style="font-size:0.9rem">
+						<div id="BioethicsSection" class="section-inner-div" th:classappend="*{courses[4].disabled} ? d-none">
+							<div class="form-row">
 								
 								<div class="form-group col-sm-8 col-xl-4">
 									<label for="BioethicsTutorName" th:text="#{questionnaire.tutor}"></label>
@@ -1879,8 +1879,8 @@
 									<label for="BioethicsTutorRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="BioethicsTutorRate" th:attr="min=(*{courses[4].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[4].tutor}" class="form-control rate-input" 
@@ -1899,8 +1899,8 @@
 									<label for="BioethicsUnitRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="BioethicsUnitRate" th:attr="min=(*{courses[4].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[4].unit}" class="form-control rate-input" 
@@ -1909,7 +1909,7 @@
 								</div>
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="BioethicsTheorKnowledge" th:text="#{questionnaire.theoreticalKnowledge}"></label>		
@@ -1919,8 +1919,8 @@
 									<label for="BioethicsTheorKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="BioethicsTheorKnowledge" th:attr="min=(*{courses[4].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[4].theoreticalKnowledge}" class="form-control rate-input" 
@@ -1936,8 +1936,8 @@
 									<label for="BioethicsPractKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="BioethicsPractKnowledge" th:attr="min=(*{courses[4].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[4].practicalKnowledge}" class="form-control rate-input" 
@@ -1958,11 +1958,11 @@
 								th:field="*{courses[5].disabled}"
 								th:disabled="!${questionnaire.status == T(com.khal.intern_survey.entity.Questionnaire.Status).DRAFT}"
 								th:checked="*{courses[5].disabled}">
-								<label style="font-size: 0.8rem" for="LawNotRequired" th:text="#{questionnaire.notRequired}"></label>
+								<label class="questionnaire-not-required-label" for="LawNotRequired" th:text="#{questionnaire.notRequired}"></label>
 						</div>
 						
-						<div id="LawSection" th:class="*{courses[5].disabled} ? d-none">
-							<div class="form-row" style="font-size:0.9rem">
+						<div id="LawSection" class="section-inner-div" th:classappend="*{courses[5].disabled} ? d-none">
+							<div class="form-row">
 								
 								<div class="form-group col-sm-8 col-xl-4">
 									<label for="LawTutorName" th:text="#{questionnaire.tutor}"></label>
@@ -1975,8 +1975,8 @@
 									<label for="LawTutorRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="LawTutorRate" th:attr="min=(*{courses[5].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[5].tutor}" class="form-control rate-input" 
@@ -1995,8 +1995,8 @@
 									<label for="LawUnitRate" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleCommon1} + '<br />' + #{questionnaire.ratingScaleCommon6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="LawUnitRate" th:attr="min=(*{courses[5].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[5].unit}" class="form-control rate-input" 
@@ -2005,7 +2005,7 @@
 								</div>
 							</div>
 							
-							<div class="form-row" style="font-size:0.9rem">
+							<div class="form-row">
 								
 								<div class="col-sm-8 col-xl-4">
 									<label for="LawTheorKnowledge" th:text="#{questionnaire.theoreticalKnowledge}"></label>		
@@ -2015,8 +2015,8 @@
 									<label for="LawTheorKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScaleTheoretKnow1} + '<br />' + #{questionnaire.ratingScaleTheoretKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="LawTheorKnowledge" th:attr="min=(*{courses[5].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[5].theoreticalKnowledge}" class="form-control rate-input" 
@@ -2032,8 +2032,8 @@
 									<label for="LawPractKnowledge" th:text="#{questionnaire.rating}"></label>
 									
 									<a data-toggle="popover" data-html="true" data-placement="top" title="Rating scale" data-content="1 - very poor, 6 - excellent" th:attr="title=#{questionnaire.scalePopoverTitle}
-										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}" style="cursor: pointer">
-										<i class="far fa-question-circle align-baseline mx-1" style="color: #ffc107"></i>	
+										, data-content=#{questionnaire.ratingScalePractKnow1} + '<br />' + #{questionnaire.ratingScalePractKnow6}">
+										<i class="far fa-question-circle align-baseline mx-1 questionnaire-help-icon"></i>	
 									</a>
 									
 									<input type="number" id="LawPractKnowledge" th:attr="min=(*{courses[5].disabled ? 0 : 1})" max="6" step="1" value="0" th:field="*{courses[5].practicalKnowledge}" class="form-control rate-input" 

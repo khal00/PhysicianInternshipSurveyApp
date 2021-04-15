@@ -95,8 +95,7 @@
 				<h1 class="h2 mt-auto mx-auto mr-md-2 text-center text-md-right"
 					th:text="#{index.h1}"></h1>
 				<p class="mr-md-2 mt-1 mb-auto mx-auto text-center text-md-right lead" sec:authorize="isAnonymous()">
-					<a th:href="@{/showLoginForm}" class="text-warning" th:text="#{index.instructionpt1}"
-					style="text-decoration: none"></a>
+					<a th:href="@{/showLoginForm}" class="text-warning" th:text="#{index.instructionpt1}"></a>
 					<span th:text="#{index.instructionpt2}"></span>
 				</p>
 			</div>
@@ -263,8 +262,8 @@
 							<input type="checkbox" class="form-check-input"
 								id="checkboxForAdminForm" name="checkboxForAdminForm"
 								th:checked="${expandAdminForm}"> <label
-								class="form-check-label text-light" for="checkboxForAdminForm"
-								th:text="#{index.registerasadmin}" style="font-size: small"></label>
+								class="admin-check-label text-light" for="checkboxForAdminForm"
+								th:text="#{index.registerasadmin}"></label>
 						</div>
 
 					</form>

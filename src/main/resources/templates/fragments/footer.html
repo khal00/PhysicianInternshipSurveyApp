@@ -8,11 +8,20 @@
 </head>
 <body>
 
-	<div th:fragment="footer" class="row bg-light"
-		style="min-height: 150px">
+	<div th:fragment="footer" class="row footer bg-light">
 
 		<footer class="container-fluid my-auto">
 			<div class="row">
+				<!-- 
+				<ul>
+					<li>
+						<a th:href="@{/contact}" th:text="#{footer.contact}"></a>
+					</li>
+					<li>
+						<a th:href="@{/about}" th:text="#{footer.about}"></a>
+					</li>
+				</ul>
+				 -->
 				<div class="d-flex ml-auto mr-5">
 					<!-- <i class="fas fa-language fa-3x mr-1 my-auto"></i>  -->
 					<div class="my-auto">
@@ -23,14 +32,11 @@
 						<label class="input-group-text" for="locales"
 							th:text="#{index.language}"></label>
 					</div>
-					<select id="locales" class="custom-select border-secondary my-auto"
-						style="max-width: 115px;">
+					<select id="locales" class="custom-select border-secondary my-auto locales-select">
 						<option value="" selected disabled th:text="#{index.language}"></option>
 						<option value="pl_PL" th:text="#{index.polish}"></option>
 						<option value="en" th:text="#{index.english}"></option>
 					</select>
-
-
 				</div>
 			</div>
 

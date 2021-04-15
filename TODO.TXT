@@ -2,6 +2,8 @@ To do:
 
 Current:
 
+all styles to styles.css: questionnaire_view
+
 language button in header
 
 add to footer: contact, terms of service
