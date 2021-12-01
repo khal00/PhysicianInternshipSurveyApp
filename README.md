@@ -4,7 +4,7 @@ Physician Internship Survey Application
 http://physician-survey.herokuapp.com/
 
 Goals:
-1. Automate the proccess of collecting data from postgraduate physician internship survey.
+1. Automate proccess of collecting data from postgraduate physician internship survey.
 2. Shorten the time needed for filling the form (by implementing names of hospitals, wards and tutors).
 3. Public the result of the survey for future interns to help them choose best rated hospitals.
 4. Substitute the paper form questionnaires (9 pages).
